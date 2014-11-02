@@ -1,0 +1,39 @@
+﻿<controls:MetroWindow x:Class="CloudX.SubWindows.AboutUsWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:winForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+                      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                      xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
+                      WindowTransitionsEnabled="False"
+                      Title="AboutUsWindow" Height="600" Width="800" Closed="AboutUsWindow_OnClosed">
+    <i:Interaction.Behaviors>
+        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True"
+                                             AllowsTransparency="False" />
+    </i:Interaction.Behaviors>
+
+    <Grid>
+        <Border BorderBrush="{DynamicResource AccentColorBrush}"
+                Margin="10"
+                BorderThickness="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="CloudX 介绍视频"
+                           Grid.Row="0"
+                           FontSize="24"
+                           Foreground="{DynamicResource BlackBrush}"
+                           HorizontalAlignment="Center" />
+                <WindowsFormsHost Name="VideoBrowser" Grid.Row="1">
+                    <winForms:WebBrowser
+                        Url="http://player.youku.com/player.php/sid/XNjkyMTc4NzYw/v.swf"
+                        ScriptErrorsSuppressed="False"
+                        CausesValidation="False"
+                        IsWebBrowserContextMenuEnabled="False" />
+                </WindowsFormsHost>
+            </Grid>
+        </Border>
+    </Grid>
+</controls:MetroWindow>

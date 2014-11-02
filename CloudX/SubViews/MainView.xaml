@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="CloudX.SubViews.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" Height="590.299" Width="826.119">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Margin="0,10,0,127">
+        <controls:FlipView Height="400" Width="600"
+                           IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                           SelectionChanged="FlipView_SelectionChanged"
+                           Margin="113,18,113,35">
+            <controls:FlipView.Items>
+                <Grid Background="#2E8DEF">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="127*" />
+                        <ColumnDefinition Width="400*" />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Margin="10,33,26,46" Grid.ColumnSpan="2">
+                        <Rectangle.Fill>
+                            <!--<VisualBrush Visual="{StaticResource appbar_xbox}" />-->
+                            <ImageBrush ImageSource="/logo.png" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
+                <Grid Background="#FFFFFF">
+                    <Rectangle Margin="0,0,0,0" Width="600" Height="406">
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="/photo3.jpg" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
+                <Grid Background="#2E8DEF">
+                    <Rectangle Margin="0,-30,0,0" Width="700" Height="372">
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="/photo2.jpg" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
+            </controls:FlipView.Items>
+        </controls:FlipView>
+
+    </Grid>
+</UserControl>
