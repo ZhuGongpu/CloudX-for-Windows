@@ -26,21 +26,21 @@
                     <Rectangle Margin="10,33,26,46" Grid.ColumnSpan="2">
                         <Rectangle.Fill>
                             <!--<VisualBrush Visual="{StaticResource appbar_xbox}" />-->
-                            <ImageBrush ImageSource="/logo.png" />
+                            <ImageBrush ImageSource="/Asset/logo.png" />
                         </Rectangle.Fill>
                     </Rectangle>
                 </Grid>
                 <Grid Background="#FFFFFF">
                     <Rectangle Margin="0,0,0,0" Width="600" Height="406">
                         <Rectangle.Fill>
-                            <ImageBrush ImageSource="/photo3.jpg" />
+                            <ImageBrush ImageSource="/Asset/photo3.jpg" />
                         </Rectangle.Fill>
                     </Rectangle>
                 </Grid>
                 <Grid Background="#2E8DEF">
                     <Rectangle Margin="0,-30,0,0" Width="700" Height="372">
                         <Rectangle.Fill>
-                            <ImageBrush ImageSource="/photo2.jpg" />
+                            <ImageBrush ImageSource="/Asset/photo2.jpg" />
                         </Rectangle.Fill>
                     </Rectangle>
                 </Grid>
