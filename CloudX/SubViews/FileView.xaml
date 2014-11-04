@@ -47,5 +47,35 @@
                 </ListView.View>
             </ListView>
         </StackPanel>
+        <ListView x:Name="FileFolderList" SelectionMode="Multiple" Background="{x:Null}" RenderTransformOrigin="0.5,0.5" Margin="0,95,0,241">
+            <ListView.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="10" BorderBrush="RoyalBlue" BorderThickness="0">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" >
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </ListView.Template>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <StackPanel>
+                                    <Image Name ="FileImage" Source="/Asset/folder.png" Width="100" Height="100" Margin="10" />
+                                    <Label Name ="FileLabel" Width="100" Height="30" Margin="5" />
+                                </StackPanel>
+                           </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </Grid>
 </UserControl>

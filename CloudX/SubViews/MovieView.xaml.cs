@@ -5,11 +5,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
 using CloudX.Models;
 using CloudX.utils;
 using DataFormats = System.Windows.DataFormats;
 using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
+using Label = System.Windows.Controls.Label;
 
 namespace CloudX.SubViews
 {
@@ -33,6 +35,13 @@ namespace CloudX.SubViews
             string[] movieTypeList = {"mkv", "rmvb", "flv", "mp4", "avi", "f4v", "mov", "wmv", "ram", "3gp", "rm"};
             for (int i = 0; i < movieTypeList.Length; i ++)
                 MovieTypeList.Add(movieTypeList[i]);
+
+            /////New
+            //string id = TB_CollectorID.Text.Trim();
+
+            IList<double> values = new List<double>();
+            for (int i = 0; i < 40 ;++i )  values.Add(i);
+            MovieFolderList.ItemsSource = values;
         }
 
         private void RefreshMovieList()
@@ -43,7 +52,10 @@ namespace CloudX.SubViews
 
         private void deleteMovieItem(object sender, EventArgs e)
         {
+          
             SampleData.Artists.Remove(selectMovie);
+
+            selectMovie.Location = null;
 
             MovieList.Items.Refresh();
 
@@ -127,6 +139,10 @@ namespace CloudX.SubViews
         {
             String startUrl = selectMovie.Location + "//" + selectMovie.Name;
 
+            if (selectMovie.Location == null)
+            {
+                return;
+            }
             try
             {
                 Process.Start(startUrl);
@@ -145,5 +161,6 @@ namespace CloudX.SubViews
                 contextMenu.Show((int) point.X, (int) point.Y);
             }
         }
+
     }
 }

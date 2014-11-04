@@ -94,12 +94,14 @@
                                        MouseEnter="ChangeSelectDevice1"
                                        DragEnter="DevicesDragEnter"
                                        Drop="DeviceFileOnDrop"
-                                       AllowDrop="True">
+                                       AllowDrop="True"
+                                       Visibility="Hidden">
                                 <Rectangle.Fill>
                                     <ImageBrush ImageSource="/Asset/tablet.png"/>
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Text="LiZhen的iPad" FontSize="20" Name="DeviceNameBlock1" />
+                            <TextBlock Text="LiZhen的iPad" FontSize="20" Name="DeviceNameBlock1"
+                                       Visibility="Hidden" />
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Margin="10,10,10,10" Name="DevicePanel2">
                             <Rectangle Margin="10,10,10,10" Width="80" Height="130"
@@ -108,12 +110,14 @@
                                        MouseEnter="ChangeSelectDevice2"
                                        DragEnter="DevicesDragEnter"
                                        Drop="DeviceFileOnDrop"
-                                       AllowDrop="True">
+                                       AllowDrop="True"
+                                       Visibility="Hidden">
                                 <Rectangle.Fill>
                                     <ImageBrush ImageSource="/Asset/tablet.png" />
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Text="LiZhen的iPad" FontSize="20" Name="DeviceNameBlock2" />
+                            <TextBlock Text="LiZhen的iPad" FontSize="20" Name="DeviceNameBlock2" 
+                                       Visibility="Hidden"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical" Margin="10,10,10,10" Name="DevicePanel3">
@@ -123,12 +127,14 @@
                                        MouseEnter="ChangeSelectDevice3"
                                        DragEnter="DevicesDragEnter"
                                        Drop="DeviceFileOnDrop"
-                                       AllowDrop="True">
+                                       AllowDrop="True"
+                                       Visibility="Hidden">
                                 <Rectangle.Fill>
                                     <ImageBrush ImageSource="/Asset/tablet.png" />
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Text="LiZhen的iPad" FontSize="20" Name="DeviceNameBlock3" />
+                            <TextBlock Text="LiZhen的iPad" FontSize="20" Name="DeviceNameBlock3" 
+                                       Visibility="Hidden"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical" Margin="10,10,10,10" Name="DevicePanel4">

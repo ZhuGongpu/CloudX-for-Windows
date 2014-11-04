@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +10,7 @@ using CloudX.utils;
 using DataFormats = System.Windows.DataFormats;
 using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
+using Label = System.Windows.Controls.Label;
 
 namespace CloudX.SubViews
 {
@@ -27,6 +29,22 @@ namespace CloudX.SubViews
             contextMenu.Items.Add("删除");
             ToolStripItem tmp = contextMenu.Items[0];
             tmp.Click += deleteFileItem;
+
+            IList<StackPanel> value = new List<StackPanel>();
+            for (int i = 0; i < 10; i++)
+            {
+                StackPanel st = new StackPanel();
+                Image img = new Image();
+                //img.FindResource("/Asset/folder.png");
+                st.Children.Add(img);
+                Label lb = new Label();
+                lb.Content = "text";
+                st.Children.Add(lb);
+                //bug text加入无效
+                value.Add(st);
+            }
+
+            FileFolderList.ItemsSource = value;
         }
 
         private void RefreshFileList()
@@ -103,6 +121,12 @@ namespace CloudX.SubViews
                 Point point = e.MouseDevice.GetPosition(FileList) - (Vector) FileList.PointFromScreen(new Point(0, 0));
                 contextMenu.Show((int) point.X, (int) point.Y);
             }
+        }
+
+        private Image GetFileSubImage(string fileUrl)
+        {
+            //todo
+            throw new NotImplementedException();
         }
     }
 }
