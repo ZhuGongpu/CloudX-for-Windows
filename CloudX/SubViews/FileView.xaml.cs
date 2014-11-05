@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Reflection.Emit;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using CloudX.Models;
 using CloudX.utils;
+using SharpDX.Multimedia;
 using DataFormats = System.Windows.DataFormats;
 using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
+using Image = System.Windows.Controls.Image;
 using Label = System.Windows.Controls.Label;
+using Point = System.Windows.Point;
 
 namespace CloudX.SubViews
 {
@@ -30,34 +36,18 @@ namespace CloudX.SubViews
             ToolStripItem tmp = contextMenu.Items[0];
             tmp.Click += deleteFileItem;
 
-            IList<StackPanel> value = new List<StackPanel>();
-            for (int i = 0; i < 10; i++)
-            {
-                StackPanel st = new StackPanel();
-                Image img = new Image();
-                //img.FindResource("/Asset/folder.png");
-                st.Children.Add(img);
-                Label lb = new Label();
-                lb.Content = "text";
-                st.Children.Add(lb);
-                //bug text加入无效
-                value.Add(st);
-            }
-
-            FileFolderList.ItemsSource = value;
         }
 
         private void RefreshFileList()
         {
-            FileList.Items.Refresh();
+            throw new NotImplementedException();
+            //todo 未必还需要
             Console.WriteLine("FileList Refresh");
         }
 
         private void deleteFileItem(object sender, EventArgs e)
         {
             SampleData.FileList.Remove(selectFile);
-
-            FileList.Items.Refresh();
 
             //todo uncertain
             SQLiteUtils.Delete("file", selectFile.Location + "\\" + selectFile.Name);
@@ -114,18 +104,14 @@ namespace CloudX.SubViews
             }
         }
 
-        private void FileList_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (FileList.SelectedItems.Count != 0)
-            {
-                Point point = e.MouseDevice.GetPosition(FileList) - (Vector) FileList.PointFromScreen(new Point(0, 0));
-                contextMenu.Show((int) point.X, (int) point.Y);
-            }
-        }
-
         private Image GetFileSubImage(string fileUrl)
         {
             //todo
+            throw new NotImplementedException();
+        }
+
+        private void FileFolderScrollViewer_OnDragEnter(object sender, DragEventArgs e)
+        {
             throw new NotImplementedException();
         }
     }

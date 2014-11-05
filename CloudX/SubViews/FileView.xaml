@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:CloudX="clr-namespace:CloudX"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d"
              d:DesignHeight="550" d:DesignWidth="900"
              d:DataContext="{d:DesignInstance CloudX:MainWindowViewModel}">
@@ -18,64 +19,38 @@
     </UserControl.Resources>
 
     <Grid>
-        <StackPanel
-            Grid.Column="0"
-            Width="900">
-            <Label Content="云文件中心"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
-            <ListView x:Name="FileList"
-                      Height="500"
-                      Margin="0, 10, 0, 0"
-                      BorderThickness="0"
-                      ItemsSource="{Binding FileLists}"
-                      MouseDoubleClick="FileList_OnMouseDoubleClick"
-                      SelectionChanged="ListView_SelectionChanged_1" AllowDrop="True"
-                      DragEnter="ListView_DragEnter_1"
-                      Drop="FileList_OnDrop"
-                      MouseRightButtonDown="FileList_OnMouseRightButtonDown"
-                      MouseRightButtonUp="FileList_OnMouseRightButtonDown" RenderTransformOrigin="0.483,0.472">
-
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}"
-                                        Header="文件名" Width="500" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Format}"
-                                        Header="格式" Width="100" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Location}"
-                                        Header="文件位置" Width="400" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </StackPanel>
-        <ListView x:Name="FileFolderList" SelectionMode="Multiple" Background="{x:Null}" RenderTransformOrigin="0.5,0.5" Margin="0,95,0,241">
-            <ListView.Template>
-                <ControlTemplate>
-                    <Border CornerRadius="10" BorderBrush="RoyalBlue" BorderThickness="0">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" >
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </Border>
-                </ControlTemplate>
-            </ListView.Template>
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <StackPanel>
-                                    <Image Name ="FileImage" Source="/Asset/folder.png" Width="100" Height="100" Margin="10" />
-                                    <Label Name ="FileLabel" Width="100" Height="30" Margin="5" />
-                                </StackPanel>
-                           </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
+      
+        <ScrollViewer Name="FileFolderScrollViewer" DragEnter="FileFolderScrollViewer_OnDragEnter"
+                      >
+            <ItemsControl ItemsSource="{Binding FileLists}"
+                      Grid.IsSharedSizeScope="True">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ToolTip="{Binding}"
+                          MinHeight="40"
+                          Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="color" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Image Margin="20" Width="100" Height="100" Source="{Binding typeImgLocation}" />
+                            <TextBlock Grid.Row="1"
+                                   Margin="4,2,4,10"
+                                   FontSize="{DynamicResource NormalFontSize}"
+                                   TextAlignment="Center"
+                                   Text="{Binding Name}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

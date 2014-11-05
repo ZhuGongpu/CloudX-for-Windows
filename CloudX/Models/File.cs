@@ -1,10 +1,14 @@
-﻿namespace CloudX.Models
+﻿using System.Security;
+
+namespace CloudX.Models
 {
     public class File
     {
         public string Name { get; set; }
         public string Format { get; set; }
         public string Location { get; set; }
+
+        public string typeImgLocation { get; set; }
 
         public static File convertFileURLToFileItem(string url)
         {
@@ -31,6 +35,8 @@
             }
             string format = url.Substring(dividePoint + 1, len - dividePoint - 1);
             var addFile = new File {Format = format, Location = Locate, Name = Name};
+
+            addFile.typeImgLocation = @"/Asset/folder.png";
             return addFile;
         }
     }
