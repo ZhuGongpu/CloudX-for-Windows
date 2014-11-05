@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
+using CloudX.DesktopDuplication;
 using CloudX.fileutils;
 using CloudX.Models;
 using CloudX.utils;
@@ -44,6 +45,8 @@ namespace CloudX
         private float scaleRate = 1;
         private int selectedWindowHwnd;
         private Stream stream;
+        //标记是否需要传输完整帧
+        private bool NeedToSendFrame = true;
 
         public Client(Stream stream, string clientIP, Dispatcher dispatcher)
         {
@@ -118,14 +121,15 @@ namespace CloudX
         }
 
         #region DataPacket Processor
+
         private void SharedMessageProcessor(SharedMessage message)
         {
             //notify UI
             dispatcher.BeginInvoke(MainWindow.ShowMessageBox
-                , "复制", "取消", "收到消息：", ByteStringToString(message.Content));
+                , "复制", "取消", "收到消息：", DataTypeConverter.ByteStringToString(message.Content));
 
             Console.WriteLine("Receive a message : "
-                              + ByteStringToString(message.Content));
+                              + DataTypeConverter.ByteStringToString(message.Content));
 
             //send the message to all
             foreach (var entry in ClientDictionary)
@@ -164,7 +168,7 @@ namespace CloudX
                     {
                         var clientInfo = new ClientInfo();
                         clientInfo.ClientIP = clientIP;
-                        clientInfo.ClientName = ByteStringToString(info.DeviceName);
+                        clientInfo.ClientName = DataTypeConverter.ByteStringToString(info.DeviceName);
                         clientInfo.ClientStream = stream;
 
                         if (ClientDictionary.ContainsKey(clientIP))
@@ -180,7 +184,7 @@ namespace CloudX
 
                     break;
                 case Info.Types.InfoType.NormalInfo:
-                    if (info.Height == 0 && info.Width == 0 && info.PortListening == 0)
+                    if (info.Height == 0 && info.Width == 0 && info.PortAvailable == 0)
                     {
                         //deal as a request
                         InfoPacketSender();
@@ -193,7 +197,7 @@ namespace CloudX
                             {
                                 var clientInfo = new ClientInfo();
                                 clientInfo.ClientIP = clientIP;
-                                clientInfo.ClientName = ByteStringToString(info.DeviceName);
+                                clientInfo.ClientName = DataTypeConverter.ByteStringToString(info.DeviceName);
                                 clientInfo.ClientStream = stream;
                                 ClientDictionary[clientIP] = clientInfo;
                             }
@@ -202,8 +206,8 @@ namespace CloudX
                         ClientScreenWidth = info.Width;
                         ClientScreenHeight = info.Height;
 
-                        scaleRate = Math.Min(ClientScreenWidth / (float)Screen.PrimaryScreen.Bounds.Width,
-                            ClientScreenHeight / (float)Screen.PrimaryScreen.Bounds.Height
+                        scaleRate = Math.Min(ClientScreenWidth/(float) Screen.PrimaryScreen.Bounds.Width,
+                            ClientScreenHeight/(float) Screen.PrimaryScreen.Bounds.Height
                             );
                         if (scaleRate > 1)
                             scaleRate = 1;
@@ -230,14 +234,14 @@ namespace CloudX
                     if (!isWindowSelected)
                     {
                         if ((DateTime.Now - lastLeftClickTime).TotalMilliseconds > MinTimeGapBetweenClicks)
-                            MouseUtility.SetCursorPos((int)command.X, (int)command.Y);
+                            MouseUtility.SetCursorPos((int) command.X, (int) command.Y);
 
                         MouseUtility.mouse_event(
                             MouseUtility.MOUSEEVENTF_LEFTDOWN | MouseUtility.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
                         lastLeftClickTime = DateTime.Now;
 
-                        x = (int)command.X;
-                        y = (int)command.Y;
+                        x = (int) command.X;
+                        y = (int) command.Y;
 
                         // MouseUtility.mouse_event(MouseUtility.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
                     }
@@ -246,15 +250,15 @@ namespace CloudX
                         var rect = new WindowCaptureUtility.RECT();
                         WindowsUtility.GetWindowRect(selectedWindowHwnd, ref rect);
                         if ((DateTime.Now - lastLeftClickTime).TotalMilliseconds > MinTimeGapBetweenClicks)
-                            MouseUtility.SetCursorPos((int)command.X + rect.Left,
-                                (int)command.Y + rect.Top);
+                            MouseUtility.SetCursorPos((int) command.X + rect.Left,
+                                (int) command.Y + rect.Top);
 
                         MouseUtility.mouse_event(
                             MouseUtility.MOUSEEVENTF_LEFTDOWN | MouseUtility.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
                         lastLeftClickTime = DateTime.Now;
 
-                        x = (int)command.X + rect.Left;
-                        y = (int)command.Y + rect.Top;
+                        x = (int) command.X + rect.Left;
+                        y = (int) command.Y + rect.Top;
 
                         // MouseUtility.mouse_event(MouseUtility.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
                     }
@@ -267,15 +271,15 @@ namespace CloudX
                     if (!isWindowSelected)
                     {
                         if ((DateTime.Now - lastRightClickTime).TotalMilliseconds > MinTimeGapBetweenClicks)
-                            MouseUtility.SetCursorPos((int)command.X, (int)command.Y);
+                            MouseUtility.SetCursorPos((int) command.X, (int) command.Y);
 
                         MouseUtility.mouse_event
                             (MouseUtility.MOUSEEVENTF_RIGHTDOWN | MouseUtility.MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
 
                         lastRightClickTime = DateTime.Now;
 
-                        x = (int)command.X;
-                        y = (int)command.Y;
+                        x = (int) command.X;
+                        y = (int) command.Y;
                         //MouseUtility.mouse_event(MouseUtility.MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
                     }
                     else
@@ -284,8 +288,8 @@ namespace CloudX
                         WindowsUtility.GetWindowRect(selectedWindowHwnd, ref rect);
 
                         if ((DateTime.Now - lastRightClickTime).TotalMilliseconds > MinTimeGapBetweenClicks)
-                            MouseUtility.SetCursorPos((int)command.X + rect.Left,
-                                (int)command.Y + rect.Top)
+                            MouseUtility.SetCursorPos((int) command.X + rect.Left,
+                                (int) command.Y + rect.Top)
                                 ;
 
                         MouseUtility.mouse_event(
@@ -293,8 +297,8 @@ namespace CloudX
 
                         lastRightClickTime = DateTime.Now;
 
-                        x = (int)command.X + rect.Left;
-                        y = (int)command.Y + rect.Top;
+                        x = (int) command.X + rect.Left;
+                        y = (int) command.Y + rect.Top;
 
                         // MouseUtility.mouse_event(MouseUtility.MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
                     }
@@ -304,14 +308,14 @@ namespace CloudX
                     break;
                 case Command.Types.CommandType.Scroll:
 
-                    MouseUtility.mouse_event(MouseUtility.MOUSEEVENTF_WHEEL, 0, 0, (int)command.Y, 0);
+                    MouseUtility.mouse_event(MouseUtility.MOUSEEVENTF_WHEEL, 0, 0, (int) command.Y, 0);
                     Console.WriteLine("scroll : " + command.Y);
                     break;
                 case Command.Types.CommandType.Minimize:
 
                     hwnd = isWindowSelected
                         ? selectedWindowHwnd
-                        : WindowsUtility.WindowFromPoint((int)command.X, (int)command.Y);
+                        : WindowsUtility.WindowFromPoint((int) command.X, (int) command.Y);
                     //找到主窗口
                     while (WindowsUtility.GetParent(hwnd) != 0)
                         hwnd = WindowsUtility.GetParent(hwnd);
@@ -322,15 +326,15 @@ namespace CloudX
                 case Command.Types.CommandType.SelectWindow:
                     if (command.X > 0 && command.Y > 0)
                     {
-                        selectedWindowHwnd = WindowsUtility.WindowFromPoint((int)command.X, (int)command.Y);
+                        selectedWindowHwnd = WindowsUtility.WindowFromPoint((int) command.X, (int) command.Y);
                         if (selectedWindowHwnd != 0)
                         {
                             var rect = new WindowCaptureUtility.RECT();
 
                             WindowsUtility.GetWindowRect(selectedWindowHwnd, ref rect);
 
-                            scaleRate = Math.Min(ClientScreenWidth / (float)(rect.Right - rect.Left),
-                                ClientScreenHeight / (float)(rect.Bottom - rect.Top)
+                            scaleRate = Math.Min(ClientScreenWidth/(float) (rect.Right - rect.Left),
+                                ClientScreenHeight/(float) (rect.Bottom - rect.Top)
                                 );
 
                             //todo uncertain
@@ -346,8 +350,8 @@ namespace CloudX
                     {
                         isWindowSelected = false;
                         selectedWindowHwnd = 0;
-                        scaleRate = Math.Min(ClientScreenWidth / (float)Screen.PrimaryScreen.Bounds.Width,
-                            ClientScreenHeight / (float)Screen.PrimaryScreen.Bounds.Height
+                        scaleRate = Math.Min(ClientScreenWidth/(float) Screen.PrimaryScreen.Bounds.Width,
+                            ClientScreenHeight/(float) Screen.PrimaryScreen.Bounds.Height
                             );
 
                         //todo uncertain
@@ -360,14 +364,14 @@ namespace CloudX
                 case Command.Types.CommandType.ShutDownApp:
                     hwnd = isWindowSelected
                         ? selectedWindowHwnd
-                        : WindowsUtility.WindowFromPoint((int)command.X, (int)command.Y);
+                        : WindowsUtility.WindowFromPoint((int) command.X, (int) command.Y);
                     WindowsUtility.ShutDownSpecifiedProgram(hwnd);
                     Console.WriteLine("Shut down selected app");
                     break;
                 case Command.Types.CommandType.ShowDesktop:
                     WindowsUtility.ShowDesktop();
                     break;
-                ////todo mute audio and etc
+                    ////todo mute audio and etc
                 case Command.Types.CommandType.StartAudioAndVideoTransmission:
                     //    audioSendingThreadStatus = true;
                     //videoSendingThreadStatus = true;
@@ -375,26 +379,26 @@ namespace CloudX
                     videoSendingThread.Start();
 
                     break;
-                //case Command.Types.CommandType.StartAudioTransmission:
-                //    audioSendingThreadStatus = true;
+                    //case Command.Types.CommandType.StartAudioTransmission:
+                    //    audioSendingThreadStatus = true;
 
-                //    break;
-                //case Command.Types.CommandType.StartVideoTransmission:
-                //    videoSendingThreadStatus = true;
-                //    break;
-                //case Command.Types.CommandType.StopAudioAndVideoTransmission:
-                //    audioSendingThreadStatus = false;
-                //    videoSendingThreadStatus = false;
+                    //    break;
+                    //case Command.Types.CommandType.StartVideoTransmission:
+                    //    videoSendingThreadStatus = true;
+                    //    break;
+                    //case Command.Types.CommandType.StopAudioAndVideoTransmission:
+                    //    audioSendingThreadStatus = false;
+                    //    videoSendingThreadStatus = false;
 
-                //    break;
-                //case Command.Types.CommandType.StopAudioTransmission:
-                //    audioSendingThreadStatus = false;
+                    //    break;
+                    //case Command.Types.CommandType.StopAudioTransmission:
+                    //    audioSendingThreadStatus = false;
 
-                //    break;
-                //case Command.Types.CommandType.StopVideoTransmission:
-                //    videoSendingThreadStatus = false;
+                    //    break;
+                    //case Command.Types.CommandType.StopVideoTransmission:
+                    //    videoSendingThreadStatus = false;
 
-                //    break;
+                    //    break;
                 default:
                     break;
             }
@@ -446,15 +450,13 @@ namespace CloudX
                     //默认不修改音频和视频输出
                     break;
 
-                case Request.Types.RequestType.SendFile://移动终端请求向云端发送文件并加入文件管理中心
-                    
+                case Request.Types.RequestType.SendFile: //移动终端请求向云端发送文件并加入文件管理中心
+
                     Console.WriteLine("*********** send file 1");
 
                     //new FileReceiver("C:\\CloudXDownloads\\" + fileName, stream, dispatcher).Receive();
                     lock (stream)
                     {
-
-
                         Receive("C:\\CloudXDownloads\\" + fileName);
                     }
                     Console.WriteLine("*********** send file 2");
@@ -487,7 +489,7 @@ namespace CloudX
                 if (isRemove)
                 {
                     SQLiteUtils.Delete(tableName, fileName);
-                    SampleData.Artists.Remove(Movie.convertFileURLToMovieItem(fileName));                    
+                    SampleData.Artists.Remove(Movie.convertFileURLToMovieItem(fileName));
                 }
                 else
                 {
@@ -504,6 +506,7 @@ namespace CloudX
                 }
             }
         }
+
         #endregion
 
         public void Receive(string filePath)
@@ -519,7 +522,8 @@ namespace CloudX
                     DataPacket dataPacket = DataPacket.ParseDelimitedFrom(stream);
                     if (dataPacket.HasSharedFile)
                     {
-                        Console.WriteLine("FileReceiver : Receive {0} / {1}", receivedSize, dataPacket.SharedFile.FileLength);
+                        Console.WriteLine("FileReceiver : Receive {0} / {1}", receivedSize,
+                            dataPacket.SharedFile.FileLength);
 
                         if (receivedSize >= dataPacket.SharedFile.FileLength)
                         {
@@ -534,7 +538,8 @@ namespace CloudX
 
                         receivedSize += buffer.Length;
 
-                        Console.WriteLine("FileReceiver : Receive {0} / {1}", receivedSize, dataPacket.SharedFile.FileLength);
+                        Console.WriteLine("FileReceiver : Receive {0} / {1}", receivedSize,
+                            dataPacket.SharedFile.FileLength);
 
 
                         //todo notify ui
@@ -556,8 +561,8 @@ namespace CloudX
             Console.WriteLine("File Transimission Done");
         }
 
-
         #region DataPacket Sender
+
         /// <summary>
         ///     发送单个RequestFeedback
         /// </summary>
@@ -594,10 +599,10 @@ namespace CloudX
                         .SetDataPacketType(DataPacket.Types.DataPacketType.Info)
                         .SetInfo(
                             Info.CreateBuilder()
-                            .SetInfoType(Info.Types.InfoType.NormalInfo)    
-                            .SetPortListening(50324)
-                                .SetHeight(Screen.PrimaryScreen.Bounds.Height)
-                                .SetWidth(Screen.PrimaryScreen.Bounds.Width)
+                                .SetInfoType(Info.Types.InfoType.NormalInfo)
+                                .SetPortAvailable(50324)
+                                .SetHeight(WindowsUtility.GetScreenHeight())
+                                .SetWidth(WindowsUtility.GetScreenWidth())
                         ).Build().WriteDelimitedTo(stream);
                 }
             }
@@ -608,55 +613,70 @@ namespace CloudX
             }
         }
 
+        
+
         private void VideoSender()
         {
             // Console.WriteLine("video sender online");
             //while (videoSendingThreadStatus)
             while (stream != null)
             {
-                //todo
-                //Thread.Sleep(100);
+                //new code here //TODO 暂时不区分是否有窗口选中
 
-                Bitmap bitmap;
-                if (isWindowSelected)
+                FrameData frameData = null;
+                if (NeedToSendFrame)
                 {
-                    bitmap = WindowCaptureUtility.CaptureSelectedWindow(selectedWindowHwnd);
+                    NeedToSendFrame = false;
+                    DuplicationManager.GetInstance().GetFrame(out frameData);
                 }
                 else
-                {
-                    var rect = new WindowCaptureUtility.RECT
-                    {
-                        Left = Screen.PrimaryScreen.Bounds.Left,
-                        Right = Screen.PrimaryScreen.Bounds.Right,
-                        Top = Screen.PrimaryScreen.Bounds.Top,
-                        Bottom = Screen.PrimaryScreen.Bounds.Bottom
-                    };
-
-                    bitmap = WindowCaptureUtility.Capture(rect);
-                }
-
-                if (bitmap == null) continue;
-
-                if (stream != null)
-                 {
-                    try
-                    {
-                        //todo changed
-                        //bitmap.SetResolution(bitmap.Width*scaleRate, bitmap.Height*scaleRate);
-
-                        //send the bitmap
+                    DuplicationManager.GetInstance().GetChangedRects(ref frameData);
+                frameData.WriteToStream(stream);
 
 
-                        SendBitmap(new Bitmap(bitmap, (int)(bitmap.Width * scaleRate), (int)(bitmap.Height * scaleRate)));
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Before Exception : {0}, {1}  {2}", bitmap.Width, bitmap.Height, scaleRate);
+                
+                //Thread.Sleep(100);
 
-                        Console.WriteLine("Client VideoReceiver Run Into An Exception : \n" + e);
-                        ConnectionFailedHandler();
-                    }
-                }
+                //Bitmap bitmap;
+                //if (isWindowSelected)
+                //{
+                //    bitmap = WindowCaptureUtility.CaptureSelectedWindow(selectedWindowHwnd);
+                //}
+                //else
+                //{
+                //    var rect = new WindowCaptureUtility.RECT
+                //    {
+                //        Left = Screen.PrimaryScreen.Bounds.Left,
+                //        Right = Screen.PrimaryScreen.Bounds.Right,
+                //        Top = Screen.PrimaryScreen.Bounds.Top,
+                //        Bottom = Screen.PrimaryScreen.Bounds.Bottom
+                //    };
+
+                //    bitmap = WindowCaptureUtility.Capture(rect);
+                //}
+
+                //if (bitmap == null) continue;
+
+                //if (stream != null)
+                // {
+                //    try
+                //    {
+                //        //todo changed
+                //        //bitmap.SetResolution(bitmap.Width*scaleRate, bitmap.Height*scaleRate);
+
+                //        //send the bitmap
+
+
+                //        SendBitmap(new Bitmap(bitmap, (int)(bitmap.Width * scaleRate), (int)(bitmap.Height * scaleRate)));
+                //    }
+                //    catch (Exception e)
+                //    {
+                //        Console.WriteLine("Before Exception : {0}, {1}  {2}", bitmap.Width, bitmap.Height, scaleRate);
+
+                //        Console.WriteLine("Client VideoReceiver Run Into An Exception : \n" + e);
+                //        ConnectionFailedHandler();
+                //    }
+                //}
             }
         }
 
@@ -670,7 +690,7 @@ namespace CloudX
             if (ClientDictionary[targetIP] != null)
             {
                 //todo changed
-                messageSender(targetIP, ByteString.CopyFrom(StringToBytes(message)));
+                messageSender(targetIP, ByteString.CopyFrom(DataTypeConverter.StringToBytes(message)));
             }
         }
 
@@ -696,32 +716,33 @@ namespace CloudX
             }
         }
 
-        private void SendBitmap(Bitmap bitmap)
-        {
-            //lock (stream)
-            {
-                //TimeSpan timeSpan = new TimeSpan();
-                //DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                //timeSpan = DateTime.Now - new DateTime();
+        //private void SendBitmap(Bitmap bitmap)
+        //{
+        //    //lock (stream)
+        //    {
+        //        //TimeSpan timeSpan = new TimeSpan();
+        //        //DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        //        //timeSpan = DateTime.Now - new DateTime();
 
-                DataPacket.CreateBuilder()
-                    .SetDataPacketType(DataPacket.Types.DataPacketType.Video)
-                    .SetTimeStamp(
-                        ByteString.CopyFromUtf8(DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond)
-                    ) //todo for debug only
-                    .SetVideo(
-                        Video.CreateBuilder()
-                            .SetImage(ByteString.CopyFrom(
-                    //CompressionAndDecompressionUtils.GZipCompress(BitmapToBytes(bitmap)) //compress
-                    //CompressionAndDecompressionUtils.SnappyCompress(BitmapToBytes(bitmap))
-                                BitmapToBytes(bitmap)
-                                ))
-                            .Build()
-                    )
-                    .Build()
-                    .WriteDelimitedTo(stream);
-            }
-        }
+        //        DataPacket.CreateBuilder()
+        //            .SetDataPacketType(DataPacket.Types.DataPacketType.Video)
+        //            .SetTimeStamp(
+        //                ByteString.CopyFromUtf8(DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond)
+        //            ) //todo for debug only
+        //            .SetVideo(
+        //                Video.CreateBuilder()
+        //                    .SetImage(ByteString.CopyFrom(
+        //            //CompressionAndDecompressionUtils.GZipCompress(BitmapToBytes(bitmap)) //compress
+        //            //CompressionAndDecompressionUtils.SnappyCompress(BitmapToBytes(bitmap))
+        //                        DataTypeConverter.BitmapToBytes(bitmap)
+        //                        ))
+        //                    .Build()
+        //            )
+        //            .Build()
+        //            .WriteDelimitedTo(stream);
+        //    }
+        //}
+
         #endregion
 
         public void Finish()
@@ -764,26 +785,6 @@ namespace CloudX
             if (ConnectionFailedTimes > 3)
                 Finish();
         }
-
-        #region utilities
-        private byte[] BitmapToBytes(Bitmap bitmap)
-        {
-            var memoryStream = new MemoryStream();
-            bitmap.Save(memoryStream, ImageFormat.Jpeg);
-            return memoryStream.ToArray();
-        }
-
-        private string ByteStringToString(ByteString byteString)
-        {
-            return Encoding.UTF8.GetString(byteString.ToByteArray());
-        }
-
-        private static byte[] StringToBytes(string s)
-        {
-            return Encoding.UTF8.GetBytes(s);
-        }
-        #endregion
-
     }
 
     #region ClientInfo

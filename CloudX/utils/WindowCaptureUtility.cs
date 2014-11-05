@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using CloudX.DesktopDuplication;
 
 namespace CloudX.utils
 {
     internal class WindowCaptureUtility
     {
+        //TODO 考虑检测获取的changed rect是否在指定rect之内
         public static Bitmap Capture(RECT rect)
         {
             int width = rect.Right - rect.Left;
@@ -19,11 +21,6 @@ namespace CloudX.utils
 
                 IntPtr dc = g.GetHdc();
                 g.ReleaseHdc(dc);
-
-                //            bitmap.Save(Path + "\\" + GenerateFileName() + ".png", ImageFormat.Png);
-                //Console.WriteLine("Captured");
-
-                //g.Clear(Color.Transparent);
                 return bitmap;
             }
             catch (Exception)
@@ -35,12 +32,7 @@ namespace CloudX.utils
         public static Bitmap CaptureSelectedWindow(int hwnd)
         {
             var rect = new RECT();
-
-            //todo
             WindowsUtility.GetWindowRect(hwnd, ref rect);
-
-            Console.WriteLine("Capture Selected Window : " + rect.Left + ", " + rect.Right);
-
             return Capture(rect);
         }
 

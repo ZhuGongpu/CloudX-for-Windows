@@ -80,6 +80,18 @@
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.12.1.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>..\libs\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler">
+      <HintPath>..\libs\SharpDX.D3DCompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11">
+      <HintPath>..\libs\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI">
+      <HintPath>..\libs\SharpDX.DXGI.dll</HintPath>
+    </Reference>
     <Reference Include="SQLite.NET">
       <HintPath>..\libs\SQLite.NET.dll</HintPath>
     </Reference>
@@ -112,6 +124,8 @@
     <Compile Include="client\Client.cs" />
     <Compile Include="common.message\Data.cs" />
     <Compile Include="delegateDefinition\DelegateDeclarations.cs" />
+    <Compile Include="DesktopDuplication\CommonTypes.cs" />
+    <Compile Include="DesktopDuplication\DuplicationManager.cs" />
     <Compile Include="devicefinder\DeviceFinder.cs" />
     <Compile Include="fileutils\FileReceiver.cs" />
     <Compile Include="fileutils\FileSender.cs" />
@@ -267,6 +281,7 @@
   <ItemGroup>
     <Resource Include="Asset\folder.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

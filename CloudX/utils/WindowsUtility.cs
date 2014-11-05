@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace CloudX.utils
 {
@@ -13,6 +14,16 @@ namespace CloudX.utils
         public static extern int mciSendString(string lpstrCommand, string lpstrReturnstring, int uReturnLength,
             int hwndCallback);
 
+
+        public static int GetScreenWidth()
+        {
+            return (int)SystemParameters.PrimaryScreenWidth;
+        }
+
+        public static int GetScreenHeight()
+        {
+            return (int)SystemParameters.PrimaryScreenHeight;
+        }
 
         /// <summary>
         ///     显示和隐藏鼠标指针.
