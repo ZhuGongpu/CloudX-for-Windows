@@ -1,22 +1,11 @@
 ﻿using System;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Windows;
 using System.Windows.Threading;
-using CloudX.Models;
 using CloudX.utils;
-using Finisar.SQLite;
-using MahApps.Metro.Controls;
-
-
 
 namespace CloudX
 {
-
     internal class RemoteDesktopServer
     {
         private readonly TcpListener Server;
@@ -35,8 +24,6 @@ namespace CloudX
             Server = new TcpListener(IPAddress.Parse(ServerIP), ServerPort);
             running = true;
             this.dispatcher = dispatcher;
-
-
         }
 
         public void Start()
@@ -47,10 +34,6 @@ namespace CloudX
             Console.WriteLine("waiting...");
 
             TcpClient client = null;
-
-            // int receivedClientCount = 1;
-
-            WriteFileList();
 
             while (running)
             {
@@ -73,30 +56,6 @@ namespace CloudX
                 }
             }
             //  Finish();
-        }
-
-
-        //[Conditional("ChinaUSMaker")]
-        private void WriteFileList()
-        {
-            FileStream fileStream = new FileStream("C:/CloudX/fileList.txt", FileMode.Create);
-            StreamWriter writer = new StreamWriter(fileStream);
-
-            DataTable table = SQLiteUtils.LoadData("music");
-
-            foreach (DataRow row in table.Rows)
-            {
-                string entry = row[0] + "";
-
-                writer.WriteLine(entry);
-                writer.Flush();
-            }
-            writer.Close();
-            fileStream.Close();
-
-
-
-            Console.WriteLine("WriteFileList Done");
         }
 
 

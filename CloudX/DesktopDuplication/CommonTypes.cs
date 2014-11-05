@@ -63,6 +63,7 @@ namespace CloudX.DesktopDuplication
             }
 
             DataPacket.CreateBuilder()
+                .SetDataPacketType(DataPacket.Types.DataPacketType.Video)
                 .SetVideo(videoBuilder.Build())
                 .Build()
                 .WriteDelimitedTo(stream);
