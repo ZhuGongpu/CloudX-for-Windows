@@ -71,7 +71,7 @@ namespace CloudX.network
                                 .SetDeviceName(ByteString.CopyFromUtf8(deviceName))
                                 .SetWidth(width)
                                 .SetHeight(height)
-                                .SetPortListening(portListening)
+                                .SetPortAvailable(portListening)
                         )
                         .Build());
             }

@@ -158,6 +158,7 @@
     </Compile>
     <Compile Include="utils\AudioCaptureUtils.cs" />
     <Compile Include="utils\CompressionAndDecompressionUtils.cs" />
+    <Compile Include="utils\DataTypeConverter.cs" />
     <Compile Include="utils\HookUtilities.cs" />
     <Compile Include="utils\IPUtils.cs" />
     <Compile Include="utils\KeyboardUtility.cs" />
