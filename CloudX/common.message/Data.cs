@@ -22,6 +22,12 @@ namespace common.message {
     internal static pb::FieldAccess.FieldAccessorTable<global::common.message.Command, global::common.message.Command.Builder> internal__static_common_message_Command__FieldAccessorTable;
     internal static pbd::MessageDescriptor internal__static_common_message_Video__Descriptor;
     internal static pb::FieldAccess.FieldAccessorTable<global::common.message.Video, global::common.message.Video.Builder> internal__static_common_message_Video__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_common_message_Video_Rectangle__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.Video.Types.Rectangle, global::common.message.Video.Types.Rectangle.Builder> internal__static_common_message_Video_Rectangle__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_common_message_Video_Point__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.Video.Types.Point, global::common.message.Video.Types.Point.Builder> internal__static_common_message_Video_Point__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_common_message_Video_MoveRectangle__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.Video.Types.MoveRectangle, global::common.message.Video.Types.MoveRectangle.Builder> internal__static_common_message_Video_MoveRectangle__FieldAccessorTable;
     internal static pbd::MessageDescriptor internal__static_common_message_Audio__Descriptor;
     internal static pb::FieldAccess.FieldAccessorTable<global::common.message.Audio, global::common.message.Audio.Builder> internal__static_common_message_Audio__FieldAccessorTable;
     internal static pbd::MessageDescriptor internal__static_common_message_Info__Descriptor;
@@ -71,22 +77,30 @@ namespace common.message {
           "c3Npb24QCBIZChVTdG9wVmlkZW9UcmFuc21pc3Npb24QCRIhCh1TdG9wQXVk" + 
           "aW9BbmRWaWRlb1RyYW5zbWlzc2lvbhAKEhoKFlN0YXJ0QXVkaW9UcmFuc21p" + 
           "c3Npb24QCxIaChZTdGFydFZpZGVvVHJhbnNtaXNzaW9uEAwSIgoeU3RhcnRB" + 
-          "dWRpb0FuZFZpZGVvVHJhbnNtaXNzaW9uEA0iFgoFVmlkZW8SDQoFaW1hZ2UY" + 
-          "ASABKAwiFgoFQXVkaW8SDQoFc291bmQYASABKAwitAEKBEluZm8SLwoIaW5m" + 
-          "b1R5cGUYASACKA4yHS5jb21tb24ubWVzc2FnZS5JbmZvLkluZm9UeXBlEhIK" + 
-          "CmRldmljZU5hbWUYAiABKAwSDQoFd2lkdGgYAyABKAUSDgoGaGVpZ2h0GAQg" + 
-          "ASgFEhUKDXBvcnRMaXN0ZW5pbmcYBSABKAUiMQoISW5mb1R5cGUSCQoFTG9n" + 
-          "aW4QARIKCgZMb2dvdXQQAhIOCgpOb3JtYWxJbmZvEAMiKwoKUmVzb2x1dGlv" + 
-          "bhINCgV3aWR0aBgBIAEoBRIOCgZoZWlnaHQYAiABKAUi8QEKB1JlcXVlc3QS" + 
-          "OAoLcmVxdWVzdFR5cGUYASACKA4yIy5jb21tb24ubWVzc2FnZS5SZXF1ZXN0" + 
-          "LlJlcXVlc3RUeXBlEhAKCGZpbGVQYXRoGAIgAigMIpkBCgtSZXF1ZXN0VHlw" + 
-          "ZRIJCgVNb3ZpZRABEgkKBU11c2ljEAISCAoERmlsZRADEg8KC1JlbW92ZU1v" + 
-          "dmllEAQSDwoLUmVtb3ZlTXVzaWMQBRIOCgpSZW1vdmVGaWxlEAYSDAoIU2F2" + 
-          "ZUZpbGUQBxINCglTYXZlTXVzaWMQCBINCglTYXZlTW92aWUQCRIMCghTZW5k" + 
-          "RmlsZRAKIiMKD1JlcXVlc3RGZWVkYmFjaxIQCghmaWxlUGF0aBgBIAIoDCJD" + 
-          "CgpTaGFyZWRGaWxlEhAKCGZpbGVOYW1lGAEgASgMEhIKCmZpbGVMZW5ndGgY" + 
-          "AiACKAMSDwoHY29udGVudBgDIAIoDCIgCg1TaGFyZWRNZXNzYWdlEg8KB2Nv" + 
-          "bnRlbnQYASACKAwiIAoNS2V5Ym9hcmRFdmVudBIPCgdrZXlDb2RlGAEgAigF");
+          "dWRpb0FuZFZpZGVvVHJhbnNtaXNzaW9uEA0i9gIKBVZpZGVvEjMKCmRpcnR5" + 
+          "UmVjdHMYASADKAsyHy5jb21tb24ubWVzc2FnZS5WaWRlby5SZWN0YW5nbGUS" + 
+          "NgoJbW92ZVJlY3RzGAIgAygLMiMuY29tbW9uLm1lc3NhZ2UuVmlkZW8uTW92" + 
+          "ZVJlY3RhbmdsZRINCgVmcmFtZRgDIAEoDBpPCglSZWN0YW5nbGUSCQoBeBgB" + 
+          "IAIoBRIJCgF5GAIgAigFEg0KBXdpZHRoGAMgAigFEg4KBmhlaWdodBgEIAIo" + 
+          "BRINCgVpbWFnZRgFIAEoDBodCgVQb2ludBIJCgF4GAEgAigFEgkKAXkYAiAC" + 
+          "KAUagAEKDU1vdmVSZWN0YW5nbGUSPQoUZGVzdGluYXRpb25SZWN0YW5nbGUY" + 
+          "ASACKAsyHy5jb21tb24ubWVzc2FnZS5WaWRlby5SZWN0YW5nbGUSMAoLc291" + 
+          "cmNlUG9pbnQYAiACKAsyGy5jb21tb24ubWVzc2FnZS5WaWRlby5Qb2ludCIW" + 
+          "CgVBdWRpbxINCgVzb3VuZBgBIAEoDCK0AQoESW5mbxIvCghpbmZvVHlwZRgB" + 
+          "IAIoDjIdLmNvbW1vbi5tZXNzYWdlLkluZm8uSW5mb1R5cGUSEgoKZGV2aWNl" + 
+          "TmFtZRgCIAEoDBINCgV3aWR0aBgDIAEoBRIOCgZoZWlnaHQYBCABKAUSFQoN" + 
+          "cG9ydEF2YWlsYWJsZRgFIAEoBSIxCghJbmZvVHlwZRIJCgVMb2dpbhABEgoK" + 
+          "BkxvZ291dBACEg4KCk5vcm1hbEluZm8QAyIrCgpSZXNvbHV0aW9uEg0KBXdp" + 
+          "ZHRoGAEgASgFEg4KBmhlaWdodBgCIAEoBSLxAQoHUmVxdWVzdBI4CgtyZXF1" + 
+          "ZXN0VHlwZRgBIAIoDjIjLmNvbW1vbi5tZXNzYWdlLlJlcXVlc3QuUmVxdWVz" + 
+          "dFR5cGUSEAoIZmlsZVBhdGgYAiACKAwimQEKC1JlcXVlc3RUeXBlEgkKBU1v" + 
+          "dmllEAESCQoFTXVzaWMQAhIICgRGaWxlEAMSDwoLUmVtb3ZlTW92aWUQBBIP" + 
+          "CgtSZW1vdmVNdXNpYxAFEg4KClJlbW92ZUZpbGUQBhIMCghTYXZlRmlsZRAH" + 
+          "Eg0KCVNhdmVNdXNpYxAIEg0KCVNhdmVNb3ZpZRAJEgwKCFNlbmRGaWxlEAoi" + 
+          "IwoPUmVxdWVzdEZlZWRiYWNrEhAKCGZpbGVQYXRoGAEgAigMIkMKClNoYXJl" + 
+          "ZEZpbGUSEAoIZmlsZU5hbWUYASABKAwSEgoKZmlsZUxlbmd0aBgCIAIoAxIP" + 
+          "Cgdjb250ZW50GAMgAigMIiAKDVNoYXJlZE1lc3NhZ2USDwoHY29udGVudBgB" + 
+          "IAIoDCIgCg1LZXlib2FyZEV2ZW50Eg8KB2tleUNvZGUYASACKAU=");
       pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
         descriptor = root;
         internal__static_common_message_DataPacket__Descriptor = Descriptor.MessageTypes[0];
@@ -100,7 +114,19 @@ namespace common.message {
         internal__static_common_message_Video__Descriptor = Descriptor.MessageTypes[2];
         internal__static_common_message_Video__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::common.message.Video, global::common.message.Video.Builder>(internal__static_common_message_Video__Descriptor,
-                new string[] { "Image", });
+                new string[] { "DirtyRects", "MoveRects", "Frame", });
+        internal__static_common_message_Video_Rectangle__Descriptor = internal__static_common_message_Video__Descriptor.NestedTypes[0];
+        internal__static_common_message_Video_Rectangle__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::common.message.Video.Types.Rectangle, global::common.message.Video.Types.Rectangle.Builder>(internal__static_common_message_Video_Rectangle__Descriptor,
+                new string[] { "X", "Y", "Width", "Height", "Image", });
+        internal__static_common_message_Video_Point__Descriptor = internal__static_common_message_Video__Descriptor.NestedTypes[1];
+        internal__static_common_message_Video_Point__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::common.message.Video.Types.Point, global::common.message.Video.Types.Point.Builder>(internal__static_common_message_Video_Point__Descriptor,
+                new string[] { "X", "Y", });
+        internal__static_common_message_Video_MoveRectangle__Descriptor = internal__static_common_message_Video__Descriptor.NestedTypes[2];
+        internal__static_common_message_Video_MoveRectangle__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::common.message.Video.Types.MoveRectangle, global::common.message.Video.Types.MoveRectangle.Builder>(internal__static_common_message_Video_MoveRectangle__Descriptor,
+                new string[] { "DestinationRectangle", "SourcePoint", });
         internal__static_common_message_Audio__Descriptor = Descriptor.MessageTypes[3];
         internal__static_common_message_Audio__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::common.message.Audio, global::common.message.Audio.Builder>(internal__static_common_message_Audio__Descriptor,
@@ -108,7 +134,7 @@ namespace common.message {
         internal__static_common_message_Info__Descriptor = Descriptor.MessageTypes[4];
         internal__static_common_message_Info__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::common.message.Info, global::common.message.Info.Builder>(internal__static_common_message_Info__Descriptor,
-                new string[] { "InfoType", "DeviceName", "Width", "Height", "PortListening", });
+                new string[] { "InfoType", "DeviceName", "Width", "Height", "PortAvailable", });
         internal__static_common_message_Resolution__Descriptor = Descriptor.MessageTypes[5];
         internal__static_common_message_Resolution__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::common.message.Resolution, global::common.message.Resolution.Builder>(internal__static_common_message_Resolution__Descriptor,
@@ -303,6 +329,9 @@ namespace common.message {
         if (!hasDataPacketType) return false;
         if (HasInfo) {
           if (!Info.IsInitialized) return false;
+        }
+        if (HasVideo) {
+          if (!Video.IsInitialized) return false;
         }
         if (HasCommand) {
           if (!Command.IsInitialized) return false;
@@ -1509,8 +1538,8 @@ namespace common.message {
   public sealed partial class Video : pb::GeneratedMessage<Video, Video.Builder> {
     private Video() { }
     private static readonly Video defaultInstance = new Video().MakeReadOnly();
-    private static readonly string[] _videoFieldNames = new string[] { "image" };
-    private static readonly uint[] _videoFieldTags = new uint[] { 10 };
+    private static readonly string[] _videoFieldNames = new string[] { "dirtyRects", "frame", "moveRects" };
+    private static readonly uint[] _videoFieldTags = new uint[] { 10, 26, 18 };
     public static Video DefaultInstance {
       get { return defaultInstance; }
     }
@@ -1531,18 +1560,1183 @@ namespace common.message {
       get { return global::common.message.Data.internal__static_common_message_Video__FieldAccessorTable; }
     }
     
-    public const int ImageFieldNumber = 1;
-    private bool hasImage;
-    private pb::ByteString image_ = pb::ByteString.Empty;
-    public bool HasImage {
-      get { return hasImage; }
+    #region Nested types
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    public static partial class Types {
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+      public sealed partial class Rectangle : pb::GeneratedMessage<Rectangle, Rectangle.Builder> {
+        private Rectangle() { }
+        private static readonly Rectangle defaultInstance = new Rectangle().MakeReadOnly();
+        private static readonly string[] _rectangleFieldNames = new string[] { "height", "image", "width", "x", "y" };
+        private static readonly uint[] _rectangleFieldTags = new uint[] { 32, 42, 24, 8, 16 };
+        public static Rectangle DefaultInstance {
+          get { return defaultInstance; }
+        }
+        
+        public override Rectangle DefaultInstanceForType {
+          get { return DefaultInstance; }
+        }
+        
+        protected override Rectangle ThisMessage {
+          get { return this; }
+        }
+        
+        public static pbd::MessageDescriptor Descriptor {
+          get { return global::common.message.Data.internal__static_common_message_Video_Rectangle__Descriptor; }
+        }
+        
+        protected override pb::FieldAccess.FieldAccessorTable<Rectangle, Rectangle.Builder> InternalFieldAccessors {
+          get { return global::common.message.Data.internal__static_common_message_Video_Rectangle__FieldAccessorTable; }
+        }
+        
+        public const int XFieldNumber = 1;
+        private bool hasX;
+        private int x_;
+        public bool HasX {
+          get { return hasX; }
+        }
+        public int X {
+          get { return x_; }
+        }
+        
+        public const int YFieldNumber = 2;
+        private bool hasY;
+        private int y_;
+        public bool HasY {
+          get { return hasY; }
+        }
+        public int Y {
+          get { return y_; }
+        }
+        
+        public const int WidthFieldNumber = 3;
+        private bool hasWidth;
+        private int width_;
+        public bool HasWidth {
+          get { return hasWidth; }
+        }
+        public int Width {
+          get { return width_; }
+        }
+        
+        public const int HeightFieldNumber = 4;
+        private bool hasHeight;
+        private int height_;
+        public bool HasHeight {
+          get { return hasHeight; }
+        }
+        public int Height {
+          get { return height_; }
+        }
+        
+        public const int ImageFieldNumber = 5;
+        private bool hasImage;
+        private pb::ByteString image_ = pb::ByteString.Empty;
+        public bool HasImage {
+          get { return hasImage; }
+        }
+        public pb::ByteString Image {
+          get { return image_; }
+        }
+        
+        public override bool IsInitialized {
+          get {
+            if (!hasX) return false;
+            if (!hasY) return false;
+            if (!hasWidth) return false;
+            if (!hasHeight) return false;
+            return true;
+          }
+        }
+        
+        public override void WriteTo(pb::ICodedOutputStream output) {
+          int size = SerializedSize;
+          string[] field_names = _rectangleFieldNames;
+          if (hasX) {
+            output.WriteInt32(1, field_names[3], X);
+          }
+          if (hasY) {
+            output.WriteInt32(2, field_names[4], Y);
+          }
+          if (hasWidth) {
+            output.WriteInt32(3, field_names[2], Width);
+          }
+          if (hasHeight) {
+            output.WriteInt32(4, field_names[0], Height);
+          }
+          if (hasImage) {
+            output.WriteBytes(5, field_names[1], Image);
+          }
+          UnknownFields.WriteTo(output);
+        }
+        
+        private int memoizedSerializedSize = -1;
+        public override int SerializedSize {
+          get {
+            int size = memoizedSerializedSize;
+            if (size != -1) return size;
+            
+            size = 0;
+            if (hasX) {
+              size += pb::CodedOutputStream.ComputeInt32Size(1, X);
+            }
+            if (hasY) {
+              size += pb::CodedOutputStream.ComputeInt32Size(2, Y);
+            }
+            if (hasWidth) {
+              size += pb::CodedOutputStream.ComputeInt32Size(3, Width);
+            }
+            if (hasHeight) {
+              size += pb::CodedOutputStream.ComputeInt32Size(4, Height);
+            }
+            if (hasImage) {
+              size += pb::CodedOutputStream.ComputeBytesSize(5, Image);
+            }
+            size += UnknownFields.SerializedSize;
+            memoizedSerializedSize = size;
+            return size;
+          }
+        }
+        
+        public static Rectangle ParseFrom(pb::ByteString data) {
+          return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+        }
+        public static Rectangle ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+          return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+        }
+        public static Rectangle ParseFrom(byte[] data) {
+          return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+        }
+        public static Rectangle ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+          return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+        }
+        public static Rectangle ParseFrom(global::System.IO.Stream input) {
+          return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+        }
+        public static Rectangle ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+          return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+        }
+        public static Rectangle ParseDelimitedFrom(global::System.IO.Stream input) {
+          return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+        }
+        public static Rectangle ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+          return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+        }
+        public static Rectangle ParseFrom(pb::ICodedInputStream input) {
+          return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+        }
+        public static Rectangle ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+          return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+        }
+        private Rectangle MakeReadOnly() {
+          return this;
+        }
+        
+        public static Builder CreateBuilder() { return new Builder(); }
+        public override Builder ToBuilder() { return CreateBuilder(this); }
+        public override Builder CreateBuilderForType() { return new Builder(); }
+        public static Builder CreateBuilder(Rectangle prototype) {
+          return new Builder(prototype);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public sealed partial class Builder : pb::GeneratedBuilder<Rectangle, Builder> {
+          protected override Builder ThisBuilder {
+            get { return this; }
+          }
+          public Builder() {
+            result = DefaultInstance;
+            resultIsReadOnly = true;
+          }
+          internal Builder(Rectangle cloneFrom) {
+            result = cloneFrom;
+            resultIsReadOnly = true;
+          }
+          
+          private bool resultIsReadOnly;
+          private Rectangle result;
+          
+          private Rectangle PrepareBuilder() {
+            if (resultIsReadOnly) {
+              Rectangle original = result;
+              result = new Rectangle();
+              resultIsReadOnly = false;
+              MergeFrom(original);
+            }
+            return result;
+          }
+          
+          public override bool IsInitialized {
+            get { return result.IsInitialized; }
+          }
+          
+          protected override Rectangle MessageBeingBuilt {
+            get { return PrepareBuilder(); }
+          }
+          
+          public override Builder Clear() {
+            result = DefaultInstance;
+            resultIsReadOnly = true;
+            return this;
+          }
+          
+          public override Builder Clone() {
+            if (resultIsReadOnly) {
+              return new Builder(result);
+            } else {
+              return new Builder().MergeFrom(result);
+            }
+          }
+          
+          public override pbd::MessageDescriptor DescriptorForType {
+            get { return global::common.message.Video.Types.Rectangle.Descriptor; }
+          }
+          
+          public override Rectangle DefaultInstanceForType {
+            get { return global::common.message.Video.Types.Rectangle.DefaultInstance; }
+          }
+          
+          public override Rectangle BuildPartial() {
+            if (resultIsReadOnly) {
+              return result;
+            }
+            resultIsReadOnly = true;
+            return result.MakeReadOnly();
+          }
+          
+          public override Builder MergeFrom(pb::IMessage other) {
+            if (other is Rectangle) {
+              return MergeFrom((Rectangle) other);
+            } else {
+              base.MergeFrom(other);
+              return this;
+            }
+          }
+          
+          public override Builder MergeFrom(Rectangle other) {
+            if (other == global::common.message.Video.Types.Rectangle.DefaultInstance) return this;
+            PrepareBuilder();
+            if (other.HasX) {
+              X = other.X;
+            }
+            if (other.HasY) {
+              Y = other.Y;
+            }
+            if (other.HasWidth) {
+              Width = other.Width;
+            }
+            if (other.HasHeight) {
+              Height = other.Height;
+            }
+            if (other.HasImage) {
+              Image = other.Image;
+            }
+            this.MergeUnknownFields(other.UnknownFields);
+            return this;
+          }
+          
+          public override Builder MergeFrom(pb::ICodedInputStream input) {
+            return MergeFrom(input, pb::ExtensionRegistry.Empty);
+          }
+          
+          public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+            PrepareBuilder();
+            pb::UnknownFieldSet.Builder unknownFields = null;
+            uint tag;
+            string field_name;
+            while (input.ReadTag(out tag, out field_name)) {
+              if(tag == 0 && field_name != null) {
+                int field_ordinal = global::System.Array.BinarySearch(_rectangleFieldNames, field_name, global::System.StringComparer.Ordinal);
+                if(field_ordinal >= 0)
+                  tag = _rectangleFieldTags[field_ordinal];
+                else {
+                  if (unknownFields == null) {
+                    unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+                  }
+                  ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+                  continue;
+                }
+              }
+              switch (tag) {
+                case 0: {
+                  throw pb::InvalidProtocolBufferException.InvalidTag();
+                }
+                default: {
+                  if (pb::WireFormat.IsEndGroupTag(tag)) {
+                    if (unknownFields != null) {
+                      this.UnknownFields = unknownFields.Build();
+                    }
+                    return this;
+                  }
+                  if (unknownFields == null) {
+                    unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+                  }
+                  ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+                  break;
+                }
+                case 8: {
+                  result.hasX = input.ReadInt32(ref result.x_);
+                  break;
+                }
+                case 16: {
+                  result.hasY = input.ReadInt32(ref result.y_);
+                  break;
+                }
+                case 24: {
+                  result.hasWidth = input.ReadInt32(ref result.width_);
+                  break;
+                }
+                case 32: {
+                  result.hasHeight = input.ReadInt32(ref result.height_);
+                  break;
+                }
+                case 42: {
+                  result.hasImage = input.ReadBytes(ref result.image_);
+                  break;
+                }
+              }
+            }
+            
+            if (unknownFields != null) {
+              this.UnknownFields = unknownFields.Build();
+            }
+            return this;
+          }
+          
+          
+          public bool HasX {
+            get { return result.hasX; }
+          }
+          public int X {
+            get { return result.X; }
+            set { SetX(value); }
+          }
+          public Builder SetX(int value) {
+            PrepareBuilder();
+            result.hasX = true;
+            result.x_ = value;
+            return this;
+          }
+          public Builder ClearX() {
+            PrepareBuilder();
+            result.hasX = false;
+            result.x_ = 0;
+            return this;
+          }
+          
+          public bool HasY {
+            get { return result.hasY; }
+          }
+          public int Y {
+            get { return result.Y; }
+            set { SetY(value); }
+          }
+          public Builder SetY(int value) {
+            PrepareBuilder();
+            result.hasY = true;
+            result.y_ = value;
+            return this;
+          }
+          public Builder ClearY() {
+            PrepareBuilder();
+            result.hasY = false;
+            result.y_ = 0;
+            return this;
+          }
+          
+          public bool HasWidth {
+            get { return result.hasWidth; }
+          }
+          public int Width {
+            get { return result.Width; }
+            set { SetWidth(value); }
+          }
+          public Builder SetWidth(int value) {
+            PrepareBuilder();
+            result.hasWidth = true;
+            result.width_ = value;
+            return this;
+          }
+          public Builder ClearWidth() {
+            PrepareBuilder();
+            result.hasWidth = false;
+            result.width_ = 0;
+            return this;
+          }
+          
+          public bool HasHeight {
+            get { return result.hasHeight; }
+          }
+          public int Height {
+            get { return result.Height; }
+            set { SetHeight(value); }
+          }
+          public Builder SetHeight(int value) {
+            PrepareBuilder();
+            result.hasHeight = true;
+            result.height_ = value;
+            return this;
+          }
+          public Builder ClearHeight() {
+            PrepareBuilder();
+            result.hasHeight = false;
+            result.height_ = 0;
+            return this;
+          }
+          
+          public bool HasImage {
+            get { return result.hasImage; }
+          }
+          public pb::ByteString Image {
+            get { return result.Image; }
+            set { SetImage(value); }
+          }
+          public Builder SetImage(pb::ByteString value) {
+            pb::ThrowHelper.ThrowIfNull(value, "value");
+            PrepareBuilder();
+            result.hasImage = true;
+            result.image_ = value;
+            return this;
+          }
+          public Builder ClearImage() {
+            PrepareBuilder();
+            result.hasImage = false;
+            result.image_ = pb::ByteString.Empty;
+            return this;
+          }
+        }
+        static Rectangle() {
+          object.ReferenceEquals(global::common.message.Data.Descriptor, null);
+        }
+      }
+      
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+      public sealed partial class Point : pb::GeneratedMessage<Point, Point.Builder> {
+        private Point() { }
+        private static readonly Point defaultInstance = new Point().MakeReadOnly();
+        private static readonly string[] _pointFieldNames = new string[] { "x", "y" };
+        private static readonly uint[] _pointFieldTags = new uint[] { 8, 16 };
+        public static Point DefaultInstance {
+          get { return defaultInstance; }
+        }
+        
+        public override Point DefaultInstanceForType {
+          get { return DefaultInstance; }
+        }
+        
+        protected override Point ThisMessage {
+          get { return this; }
+        }
+        
+        public static pbd::MessageDescriptor Descriptor {
+          get { return global::common.message.Data.internal__static_common_message_Video_Point__Descriptor; }
+        }
+        
+        protected override pb::FieldAccess.FieldAccessorTable<Point, Point.Builder> InternalFieldAccessors {
+          get { return global::common.message.Data.internal__static_common_message_Video_Point__FieldAccessorTable; }
+        }
+        
+        public const int XFieldNumber = 1;
+        private bool hasX;
+        private int x_;
+        public bool HasX {
+          get { return hasX; }
+        }
+        public int X {
+          get { return x_; }
+        }
+        
+        public const int YFieldNumber = 2;
+        private bool hasY;
+        private int y_;
+        public bool HasY {
+          get { return hasY; }
+        }
+        public int Y {
+          get { return y_; }
+        }
+        
+        public override bool IsInitialized {
+          get {
+            if (!hasX) return false;
+            if (!hasY) return false;
+            return true;
+          }
+        }
+        
+        public override void WriteTo(pb::ICodedOutputStream output) {
+          int size = SerializedSize;
+          string[] field_names = _pointFieldNames;
+          if (hasX) {
+            output.WriteInt32(1, field_names[0], X);
+          }
+          if (hasY) {
+            output.WriteInt32(2, field_names[1], Y);
+          }
+          UnknownFields.WriteTo(output);
+        }
+        
+        private int memoizedSerializedSize = -1;
+        public override int SerializedSize {
+          get {
+            int size = memoizedSerializedSize;
+            if (size != -1) return size;
+            
+            size = 0;
+            if (hasX) {
+              size += pb::CodedOutputStream.ComputeInt32Size(1, X);
+            }
+            if (hasY) {
+              size += pb::CodedOutputStream.ComputeInt32Size(2, Y);
+            }
+            size += UnknownFields.SerializedSize;
+            memoizedSerializedSize = size;
+            return size;
+          }
+        }
+        
+        public static Point ParseFrom(pb::ByteString data) {
+          return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+        }
+        public static Point ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+          return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+        }
+        public static Point ParseFrom(byte[] data) {
+          return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+        }
+        public static Point ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+          return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+        }
+        public static Point ParseFrom(global::System.IO.Stream input) {
+          return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+        }
+        public static Point ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+          return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+        }
+        public static Point ParseDelimitedFrom(global::System.IO.Stream input) {
+          return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+        }
+        public static Point ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+          return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+        }
+        public static Point ParseFrom(pb::ICodedInputStream input) {
+          return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+        }
+        public static Point ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+          return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+        }
+        private Point MakeReadOnly() {
+          return this;
+        }
+        
+        public static Builder CreateBuilder() { return new Builder(); }
+        public override Builder ToBuilder() { return CreateBuilder(this); }
+        public override Builder CreateBuilderForType() { return new Builder(); }
+        public static Builder CreateBuilder(Point prototype) {
+          return new Builder(prototype);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public sealed partial class Builder : pb::GeneratedBuilder<Point, Builder> {
+          protected override Builder ThisBuilder {
+            get { return this; }
+          }
+          public Builder() {
+            result = DefaultInstance;
+            resultIsReadOnly = true;
+          }
+          internal Builder(Point cloneFrom) {
+            result = cloneFrom;
+            resultIsReadOnly = true;
+          }
+          
+          private bool resultIsReadOnly;
+          private Point result;
+          
+          private Point PrepareBuilder() {
+            if (resultIsReadOnly) {
+              Point original = result;
+              result = new Point();
+              resultIsReadOnly = false;
+              MergeFrom(original);
+            }
+            return result;
+          }
+          
+          public override bool IsInitialized {
+            get { return result.IsInitialized; }
+          }
+          
+          protected override Point MessageBeingBuilt {
+            get { return PrepareBuilder(); }
+          }
+          
+          public override Builder Clear() {
+            result = DefaultInstance;
+            resultIsReadOnly = true;
+            return this;
+          }
+          
+          public override Builder Clone() {
+            if (resultIsReadOnly) {
+              return new Builder(result);
+            } else {
+              return new Builder().MergeFrom(result);
+            }
+          }
+          
+          public override pbd::MessageDescriptor DescriptorForType {
+            get { return global::common.message.Video.Types.Point.Descriptor; }
+          }
+          
+          public override Point DefaultInstanceForType {
+            get { return global::common.message.Video.Types.Point.DefaultInstance; }
+          }
+          
+          public override Point BuildPartial() {
+            if (resultIsReadOnly) {
+              return result;
+            }
+            resultIsReadOnly = true;
+            return result.MakeReadOnly();
+          }
+          
+          public override Builder MergeFrom(pb::IMessage other) {
+            if (other is Point) {
+              return MergeFrom((Point) other);
+            } else {
+              base.MergeFrom(other);
+              return this;
+            }
+          }
+          
+          public override Builder MergeFrom(Point other) {
+            if (other == global::common.message.Video.Types.Point.DefaultInstance) return this;
+            PrepareBuilder();
+            if (other.HasX) {
+              X = other.X;
+            }
+            if (other.HasY) {
+              Y = other.Y;
+            }
+            this.MergeUnknownFields(other.UnknownFields);
+            return this;
+          }
+          
+          public override Builder MergeFrom(pb::ICodedInputStream input) {
+            return MergeFrom(input, pb::ExtensionRegistry.Empty);
+          }
+          
+          public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+            PrepareBuilder();
+            pb::UnknownFieldSet.Builder unknownFields = null;
+            uint tag;
+            string field_name;
+            while (input.ReadTag(out tag, out field_name)) {
+              if(tag == 0 && field_name != null) {
+                int field_ordinal = global::System.Array.BinarySearch(_pointFieldNames, field_name, global::System.StringComparer.Ordinal);
+                if(field_ordinal >= 0)
+                  tag = _pointFieldTags[field_ordinal];
+                else {
+                  if (unknownFields == null) {
+                    unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+                  }
+                  ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+                  continue;
+                }
+              }
+              switch (tag) {
+                case 0: {
+                  throw pb::InvalidProtocolBufferException.InvalidTag();
+                }
+                default: {
+                  if (pb::WireFormat.IsEndGroupTag(tag)) {
+                    if (unknownFields != null) {
+                      this.UnknownFields = unknownFields.Build();
+                    }
+                    return this;
+                  }
+                  if (unknownFields == null) {
+                    unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+                  }
+                  ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+                  break;
+                }
+                case 8: {
+                  result.hasX = input.ReadInt32(ref result.x_);
+                  break;
+                }
+                case 16: {
+                  result.hasY = input.ReadInt32(ref result.y_);
+                  break;
+                }
+              }
+            }
+            
+            if (unknownFields != null) {
+              this.UnknownFields = unknownFields.Build();
+            }
+            return this;
+          }
+          
+          
+          public bool HasX {
+            get { return result.hasX; }
+          }
+          public int X {
+            get { return result.X; }
+            set { SetX(value); }
+          }
+          public Builder SetX(int value) {
+            PrepareBuilder();
+            result.hasX = true;
+            result.x_ = value;
+            return this;
+          }
+          public Builder ClearX() {
+            PrepareBuilder();
+            result.hasX = false;
+            result.x_ = 0;
+            return this;
+          }
+          
+          public bool HasY {
+            get { return result.hasY; }
+          }
+          public int Y {
+            get { return result.Y; }
+            set { SetY(value); }
+          }
+          public Builder SetY(int value) {
+            PrepareBuilder();
+            result.hasY = true;
+            result.y_ = value;
+            return this;
+          }
+          public Builder ClearY() {
+            PrepareBuilder();
+            result.hasY = false;
+            result.y_ = 0;
+            return this;
+          }
+        }
+        static Point() {
+          object.ReferenceEquals(global::common.message.Data.Descriptor, null);
+        }
+      }
+      
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+      public sealed partial class MoveRectangle : pb::GeneratedMessage<MoveRectangle, MoveRectangle.Builder> {
+        private MoveRectangle() { }
+        private static readonly MoveRectangle defaultInstance = new MoveRectangle().MakeReadOnly();
+        private static readonly string[] _moveRectangleFieldNames = new string[] { "destinationRectangle", "sourcePoint" };
+        private static readonly uint[] _moveRectangleFieldTags = new uint[] { 10, 18 };
+        public static MoveRectangle DefaultInstance {
+          get { return defaultInstance; }
+        }
+        
+        public override MoveRectangle DefaultInstanceForType {
+          get { return DefaultInstance; }
+        }
+        
+        protected override MoveRectangle ThisMessage {
+          get { return this; }
+        }
+        
+        public static pbd::MessageDescriptor Descriptor {
+          get { return global::common.message.Data.internal__static_common_message_Video_MoveRectangle__Descriptor; }
+        }
+        
+        protected override pb::FieldAccess.FieldAccessorTable<MoveRectangle, MoveRectangle.Builder> InternalFieldAccessors {
+          get { return global::common.message.Data.internal__static_common_message_Video_MoveRectangle__FieldAccessorTable; }
+        }
+        
+        public const int DestinationRectangleFieldNumber = 1;
+        private bool hasDestinationRectangle;
+        private global::common.message.Video.Types.Rectangle destinationRectangle_;
+        public bool HasDestinationRectangle {
+          get { return hasDestinationRectangle; }
+        }
+        public global::common.message.Video.Types.Rectangle DestinationRectangle {
+          get { return destinationRectangle_ ?? global::common.message.Video.Types.Rectangle.DefaultInstance; }
+        }
+        
+        public const int SourcePointFieldNumber = 2;
+        private bool hasSourcePoint;
+        private global::common.message.Video.Types.Point sourcePoint_;
+        public bool HasSourcePoint {
+          get { return hasSourcePoint; }
+        }
+        public global::common.message.Video.Types.Point SourcePoint {
+          get { return sourcePoint_ ?? global::common.message.Video.Types.Point.DefaultInstance; }
+        }
+        
+        public override bool IsInitialized {
+          get {
+            if (!hasDestinationRectangle) return false;
+            if (!hasSourcePoint) return false;
+            if (!DestinationRectangle.IsInitialized) return false;
+            if (!SourcePoint.IsInitialized) return false;
+            return true;
+          }
+        }
+        
+        public override void WriteTo(pb::ICodedOutputStream output) {
+          int size = SerializedSize;
+          string[] field_names = _moveRectangleFieldNames;
+          if (hasDestinationRectangle) {
+            output.WriteMessage(1, field_names[0], DestinationRectangle);
+          }
+          if (hasSourcePoint) {
+            output.WriteMessage(2, field_names[1], SourcePoint);
+          }
+          UnknownFields.WriteTo(output);
+        }
+        
+        private int memoizedSerializedSize = -1;
+        public override int SerializedSize {
+          get {
+            int size = memoizedSerializedSize;
+            if (size != -1) return size;
+            
+            size = 0;
+            if (hasDestinationRectangle) {
+              size += pb::CodedOutputStream.ComputeMessageSize(1, DestinationRectangle);
+            }
+            if (hasSourcePoint) {
+              size += pb::CodedOutputStream.ComputeMessageSize(2, SourcePoint);
+            }
+            size += UnknownFields.SerializedSize;
+            memoizedSerializedSize = size;
+            return size;
+          }
+        }
+        
+        public static MoveRectangle ParseFrom(pb::ByteString data) {
+          return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+        }
+        public static MoveRectangle ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+          return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+        }
+        public static MoveRectangle ParseFrom(byte[] data) {
+          return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+        }
+        public static MoveRectangle ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+          return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+        }
+        public static MoveRectangle ParseFrom(global::System.IO.Stream input) {
+          return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+        }
+        public static MoveRectangle ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+          return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+        }
+        public static MoveRectangle ParseDelimitedFrom(global::System.IO.Stream input) {
+          return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+        }
+        public static MoveRectangle ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+          return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+        }
+        public static MoveRectangle ParseFrom(pb::ICodedInputStream input) {
+          return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+        }
+        public static MoveRectangle ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+          return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+        }
+        private MoveRectangle MakeReadOnly() {
+          return this;
+        }
+        
+        public static Builder CreateBuilder() { return new Builder(); }
+        public override Builder ToBuilder() { return CreateBuilder(this); }
+        public override Builder CreateBuilderForType() { return new Builder(); }
+        public static Builder CreateBuilder(MoveRectangle prototype) {
+          return new Builder(prototype);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public sealed partial class Builder : pb::GeneratedBuilder<MoveRectangle, Builder> {
+          protected override Builder ThisBuilder {
+            get { return this; }
+          }
+          public Builder() {
+            result = DefaultInstance;
+            resultIsReadOnly = true;
+          }
+          internal Builder(MoveRectangle cloneFrom) {
+            result = cloneFrom;
+            resultIsReadOnly = true;
+          }
+          
+          private bool resultIsReadOnly;
+          private MoveRectangle result;
+          
+          private MoveRectangle PrepareBuilder() {
+            if (resultIsReadOnly) {
+              MoveRectangle original = result;
+              result = new MoveRectangle();
+              resultIsReadOnly = false;
+              MergeFrom(original);
+            }
+            return result;
+          }
+          
+          public override bool IsInitialized {
+            get { return result.IsInitialized; }
+          }
+          
+          protected override MoveRectangle MessageBeingBuilt {
+            get { return PrepareBuilder(); }
+          }
+          
+          public override Builder Clear() {
+            result = DefaultInstance;
+            resultIsReadOnly = true;
+            return this;
+          }
+          
+          public override Builder Clone() {
+            if (resultIsReadOnly) {
+              return new Builder(result);
+            } else {
+              return new Builder().MergeFrom(result);
+            }
+          }
+          
+          public override pbd::MessageDescriptor DescriptorForType {
+            get { return global::common.message.Video.Types.MoveRectangle.Descriptor; }
+          }
+          
+          public override MoveRectangle DefaultInstanceForType {
+            get { return global::common.message.Video.Types.MoveRectangle.DefaultInstance; }
+          }
+          
+          public override MoveRectangle BuildPartial() {
+            if (resultIsReadOnly) {
+              return result;
+            }
+            resultIsReadOnly = true;
+            return result.MakeReadOnly();
+          }
+          
+          public override Builder MergeFrom(pb::IMessage other) {
+            if (other is MoveRectangle) {
+              return MergeFrom((MoveRectangle) other);
+            } else {
+              base.MergeFrom(other);
+              return this;
+            }
+          }
+          
+          public override Builder MergeFrom(MoveRectangle other) {
+            if (other == global::common.message.Video.Types.MoveRectangle.DefaultInstance) return this;
+            PrepareBuilder();
+            if (other.HasDestinationRectangle) {
+              MergeDestinationRectangle(other.DestinationRectangle);
+            }
+            if (other.HasSourcePoint) {
+              MergeSourcePoint(other.SourcePoint);
+            }
+            this.MergeUnknownFields(other.UnknownFields);
+            return this;
+          }
+          
+          public override Builder MergeFrom(pb::ICodedInputStream input) {
+            return MergeFrom(input, pb::ExtensionRegistry.Empty);
+          }
+          
+          public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+            PrepareBuilder();
+            pb::UnknownFieldSet.Builder unknownFields = null;
+            uint tag;
+            string field_name;
+            while (input.ReadTag(out tag, out field_name)) {
+              if(tag == 0 && field_name != null) {
+                int field_ordinal = global::System.Array.BinarySearch(_moveRectangleFieldNames, field_name, global::System.StringComparer.Ordinal);
+                if(field_ordinal >= 0)
+                  tag = _moveRectangleFieldTags[field_ordinal];
+                else {
+                  if (unknownFields == null) {
+                    unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+                  }
+                  ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+                  continue;
+                }
+              }
+              switch (tag) {
+                case 0: {
+                  throw pb::InvalidProtocolBufferException.InvalidTag();
+                }
+                default: {
+                  if (pb::WireFormat.IsEndGroupTag(tag)) {
+                    if (unknownFields != null) {
+                      this.UnknownFields = unknownFields.Build();
+                    }
+                    return this;
+                  }
+                  if (unknownFields == null) {
+                    unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+                  }
+                  ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+                  break;
+                }
+                case 10: {
+                  global::common.message.Video.Types.Rectangle.Builder subBuilder = global::common.message.Video.Types.Rectangle.CreateBuilder();
+                  if (result.hasDestinationRectangle) {
+                    subBuilder.MergeFrom(DestinationRectangle);
+                  }
+                  input.ReadMessage(subBuilder, extensionRegistry);
+                  DestinationRectangle = subBuilder.BuildPartial();
+                  break;
+                }
+                case 18: {
+                  global::common.message.Video.Types.Point.Builder subBuilder = global::common.message.Video.Types.Point.CreateBuilder();
+                  if (result.hasSourcePoint) {
+                    subBuilder.MergeFrom(SourcePoint);
+                  }
+                  input.ReadMessage(subBuilder, extensionRegistry);
+                  SourcePoint = subBuilder.BuildPartial();
+                  break;
+                }
+              }
+            }
+            
+            if (unknownFields != null) {
+              this.UnknownFields = unknownFields.Build();
+            }
+            return this;
+          }
+          
+          
+          public bool HasDestinationRectangle {
+           get { return result.hasDestinationRectangle; }
+          }
+          public global::common.message.Video.Types.Rectangle DestinationRectangle {
+            get { return result.DestinationRectangle; }
+            set { SetDestinationRectangle(value); }
+          }
+          public Builder SetDestinationRectangle(global::common.message.Video.Types.Rectangle value) {
+            pb::ThrowHelper.ThrowIfNull(value, "value");
+            PrepareBuilder();
+            result.hasDestinationRectangle = true;
+            result.destinationRectangle_ = value;
+            return this;
+          }
+          public Builder SetDestinationRectangle(global::common.message.Video.Types.Rectangle.Builder builderForValue) {
+            pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+            PrepareBuilder();
+            result.hasDestinationRectangle = true;
+            result.destinationRectangle_ = builderForValue.Build();
+            return this;
+          }
+          public Builder MergeDestinationRectangle(global::common.message.Video.Types.Rectangle value) {
+            pb::ThrowHelper.ThrowIfNull(value, "value");
+            PrepareBuilder();
+            if (result.hasDestinationRectangle &&
+                result.destinationRectangle_ != global::common.message.Video.Types.Rectangle.DefaultInstance) {
+                result.destinationRectangle_ = global::common.message.Video.Types.Rectangle.CreateBuilder(result.destinationRectangle_).MergeFrom(value).BuildPartial();
+            } else {
+              result.destinationRectangle_ = value;
+            }
+            result.hasDestinationRectangle = true;
+            return this;
+          }
+          public Builder ClearDestinationRectangle() {
+            PrepareBuilder();
+            result.hasDestinationRectangle = false;
+            result.destinationRectangle_ = null;
+            return this;
+          }
+          
+          public bool HasSourcePoint {
+           get { return result.hasSourcePoint; }
+          }
+          public global::common.message.Video.Types.Point SourcePoint {
+            get { return result.SourcePoint; }
+            set { SetSourcePoint(value); }
+          }
+          public Builder SetSourcePoint(global::common.message.Video.Types.Point value) {
+            pb::ThrowHelper.ThrowIfNull(value, "value");
+            PrepareBuilder();
+            result.hasSourcePoint = true;
+            result.sourcePoint_ = value;
+            return this;
+          }
+          public Builder SetSourcePoint(global::common.message.Video.Types.Point.Builder builderForValue) {
+            pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+            PrepareBuilder();
+            result.hasSourcePoint = true;
+            result.sourcePoint_ = builderForValue.Build();
+            return this;
+          }
+          public Builder MergeSourcePoint(global::common.message.Video.Types.Point value) {
+            pb::ThrowHelper.ThrowIfNull(value, "value");
+            PrepareBuilder();
+            if (result.hasSourcePoint &&
+                result.sourcePoint_ != global::common.message.Video.Types.Point.DefaultInstance) {
+                result.sourcePoint_ = global::common.message.Video.Types.Point.CreateBuilder(result.sourcePoint_).MergeFrom(value).BuildPartial();
+            } else {
+              result.sourcePoint_ = value;
+            }
+            result.hasSourcePoint = true;
+            return this;
+          }
+          public Builder ClearSourcePoint() {
+            PrepareBuilder();
+            result.hasSourcePoint = false;
+            result.sourcePoint_ = null;
+            return this;
+          }
+        }
+        static MoveRectangle() {
+          object.ReferenceEquals(global::common.message.Data.Descriptor, null);
+        }
+      }
+      
     }
-    public pb::ByteString Image {
-      get { return image_; }
+    #endregion
+    
+    public const int DirtyRectsFieldNumber = 1;
+    private pbc::PopsicleList<global::common.message.Video.Types.Rectangle> dirtyRects_ = new pbc::PopsicleList<global::common.message.Video.Types.Rectangle>();
+    public scg::IList<global::common.message.Video.Types.Rectangle> DirtyRectsList {
+      get { return dirtyRects_; }
+    }
+    public int DirtyRectsCount {
+      get { return dirtyRects_.Count; }
+    }
+    public global::common.message.Video.Types.Rectangle GetDirtyRects(int index) {
+      return dirtyRects_[index];
+    }
+    
+    public const int MoveRectsFieldNumber = 2;
+    private pbc::PopsicleList<global::common.message.Video.Types.MoveRectangle> moveRects_ = new pbc::PopsicleList<global::common.message.Video.Types.MoveRectangle>();
+    public scg::IList<global::common.message.Video.Types.MoveRectangle> MoveRectsList {
+      get { return moveRects_; }
+    }
+    public int MoveRectsCount {
+      get { return moveRects_.Count; }
+    }
+    public global::common.message.Video.Types.MoveRectangle GetMoveRects(int index) {
+      return moveRects_[index];
+    }
+    
+    public const int FrameFieldNumber = 3;
+    private bool hasFrame;
+    private pb::ByteString frame_ = pb::ByteString.Empty;
+    public bool HasFrame {
+      get { return hasFrame; }
+    }
+    public pb::ByteString Frame {
+      get { return frame_; }
     }
     
     public override bool IsInitialized {
       get {
+        foreach (global::common.message.Video.Types.Rectangle element in DirtyRectsList) {
+          if (!element.IsInitialized) return false;
+        }
+        foreach (global::common.message.Video.Types.MoveRectangle element in MoveRectsList) {
+          if (!element.IsInitialized) return false;
+        }
         return true;
       }
     }
@@ -1550,8 +2744,14 @@ namespace common.message {
     public override void WriteTo(pb::ICodedOutputStream output) {
       int size = SerializedSize;
       string[] field_names = _videoFieldNames;
-      if (hasImage) {
-        output.WriteBytes(1, field_names[0], Image);
+      if (dirtyRects_.Count > 0) {
+        output.WriteMessageArray(1, field_names[0], dirtyRects_);
+      }
+      if (moveRects_.Count > 0) {
+        output.WriteMessageArray(2, field_names[2], moveRects_);
+      }
+      if (hasFrame) {
+        output.WriteBytes(3, field_names[1], Frame);
       }
       UnknownFields.WriteTo(output);
     }
@@ -1563,8 +2763,14 @@ namespace common.message {
         if (size != -1) return size;
         
         size = 0;
-        if (hasImage) {
-          size += pb::CodedOutputStream.ComputeBytesSize(1, Image);
+        foreach (global::common.message.Video.Types.Rectangle element in DirtyRectsList) {
+          size += pb::CodedOutputStream.ComputeMessageSize(1, element);
+        }
+        foreach (global::common.message.Video.Types.MoveRectangle element in MoveRectsList) {
+          size += pb::CodedOutputStream.ComputeMessageSize(2, element);
+        }
+        if (hasFrame) {
+          size += pb::CodedOutputStream.ComputeBytesSize(3, Frame);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
@@ -1603,6 +2809,8 @@ namespace common.message {
       return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
     }
     private Video MakeReadOnly() {
+      dirtyRects_.MakeReadOnly();
+      moveRects_.MakeReadOnly();
       return this;
     }
     
@@ -1690,8 +2898,14 @@ namespace common.message {
       public override Builder MergeFrom(Video other) {
         if (other == global::common.message.Video.DefaultInstance) return this;
         PrepareBuilder();
-        if (other.HasImage) {
-          Image = other.Image;
+        if (other.dirtyRects_.Count != 0) {
+          result.dirtyRects_.Add(other.dirtyRects_);
+        }
+        if (other.moveRects_.Count != 0) {
+          result.moveRects_.Add(other.moveRects_);
+        }
+        if (other.HasFrame) {
+          Frame = other.Frame;
         }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
@@ -1737,7 +2951,15 @@ namespace common.message {
               break;
             }
             case 10: {
-              result.hasImage = input.ReadBytes(ref result.image_);
+              input.ReadMessageArray(tag, field_name, result.dirtyRects_, global::common.message.Video.Types.Rectangle.DefaultInstance, extensionRegistry);
+              break;
+            }
+            case 18: {
+              input.ReadMessageArray(tag, field_name, result.moveRects_, global::common.message.Video.Types.MoveRectangle.DefaultInstance, extensionRegistry);
+              break;
+            }
+            case 26: {
+              result.hasFrame = input.ReadBytes(ref result.frame_);
               break;
             }
           }
@@ -1750,24 +2972,112 @@ namespace common.message {
       }
       
       
-      public bool HasImage {
-        get { return result.hasImage; }
+      public pbc::IPopsicleList<global::common.message.Video.Types.Rectangle> DirtyRectsList {
+        get { return PrepareBuilder().dirtyRects_; }
       }
-      public pb::ByteString Image {
-        get { return result.Image; }
-        set { SetImage(value); }
+      public int DirtyRectsCount {
+        get { return result.DirtyRectsCount; }
       }
-      public Builder SetImage(pb::ByteString value) {
+      public global::common.message.Video.Types.Rectangle GetDirtyRects(int index) {
+        return result.GetDirtyRects(index);
+      }
+      public Builder SetDirtyRects(int index, global::common.message.Video.Types.Rectangle value) {
         pb::ThrowHelper.ThrowIfNull(value, "value");
         PrepareBuilder();
-        result.hasImage = true;
-        result.image_ = value;
+        result.dirtyRects_[index] = value;
         return this;
       }
-      public Builder ClearImage() {
+      public Builder SetDirtyRects(int index, global::common.message.Video.Types.Rectangle.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
         PrepareBuilder();
-        result.hasImage = false;
-        result.image_ = pb::ByteString.Empty;
+        result.dirtyRects_[index] = builderForValue.Build();
+        return this;
+      }
+      public Builder AddDirtyRects(global::common.message.Video.Types.Rectangle value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.dirtyRects_.Add(value);
+        return this;
+      }
+      public Builder AddDirtyRects(global::common.message.Video.Types.Rectangle.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.dirtyRects_.Add(builderForValue.Build());
+        return this;
+      }
+      public Builder AddRangeDirtyRects(scg::IEnumerable<global::common.message.Video.Types.Rectangle> values) {
+        PrepareBuilder();
+        result.dirtyRects_.Add(values);
+        return this;
+      }
+      public Builder ClearDirtyRects() {
+        PrepareBuilder();
+        result.dirtyRects_.Clear();
+        return this;
+      }
+      
+      public pbc::IPopsicleList<global::common.message.Video.Types.MoveRectangle> MoveRectsList {
+        get { return PrepareBuilder().moveRects_; }
+      }
+      public int MoveRectsCount {
+        get { return result.MoveRectsCount; }
+      }
+      public global::common.message.Video.Types.MoveRectangle GetMoveRects(int index) {
+        return result.GetMoveRects(index);
+      }
+      public Builder SetMoveRects(int index, global::common.message.Video.Types.MoveRectangle value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.moveRects_[index] = value;
+        return this;
+      }
+      public Builder SetMoveRects(int index, global::common.message.Video.Types.MoveRectangle.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.moveRects_[index] = builderForValue.Build();
+        return this;
+      }
+      public Builder AddMoveRects(global::common.message.Video.Types.MoveRectangle value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.moveRects_.Add(value);
+        return this;
+      }
+      public Builder AddMoveRects(global::common.message.Video.Types.MoveRectangle.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.moveRects_.Add(builderForValue.Build());
+        return this;
+      }
+      public Builder AddRangeMoveRects(scg::IEnumerable<global::common.message.Video.Types.MoveRectangle> values) {
+        PrepareBuilder();
+        result.moveRects_.Add(values);
+        return this;
+      }
+      public Builder ClearMoveRects() {
+        PrepareBuilder();
+        result.moveRects_.Clear();
+        return this;
+      }
+      
+      public bool HasFrame {
+        get { return result.hasFrame; }
+      }
+      public pb::ByteString Frame {
+        get { return result.Frame; }
+        set { SetFrame(value); }
+      }
+      public Builder SetFrame(pb::ByteString value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.hasFrame = true;
+        result.frame_ = value;
+        return this;
+      }
+      public Builder ClearFrame() {
+        PrepareBuilder();
+        result.hasFrame = false;
+        result.frame_ = pb::ByteString.Empty;
         return this;
       }
     }
@@ -2051,7 +3361,7 @@ namespace common.message {
   public sealed partial class Info : pb::GeneratedMessage<Info, Info.Builder> {
     private Info() { }
     private static readonly Info defaultInstance = new Info().MakeReadOnly();
-    private static readonly string[] _infoFieldNames = new string[] { "deviceName", "height", "infoType", "portListening", "width" };
+    private static readonly string[] _infoFieldNames = new string[] { "deviceName", "height", "infoType", "portAvailable", "width" };
     private static readonly uint[] _infoFieldTags = new uint[] { 18, 32, 8, 40, 24 };
     public static Info DefaultInstance {
       get { return defaultInstance; }
@@ -2125,14 +3435,14 @@ namespace common.message {
       get { return height_; }
     }
     
-    public const int PortListeningFieldNumber = 5;
-    private bool hasPortListening;
-    private int portListening_;
-    public bool HasPortListening {
-      get { return hasPortListening; }
+    public const int PortAvailableFieldNumber = 5;
+    private bool hasPortAvailable;
+    private int portAvailable_;
+    public bool HasPortAvailable {
+      get { return hasPortAvailable; }
     }
-    public int PortListening {
-      get { return portListening_; }
+    public int PortAvailable {
+      get { return portAvailable_; }
     }
     
     public override bool IsInitialized {
@@ -2157,8 +3467,8 @@ namespace common.message {
       if (hasHeight) {
         output.WriteInt32(4, field_names[1], Height);
       }
-      if (hasPortListening) {
-        output.WriteInt32(5, field_names[3], PortListening);
+      if (hasPortAvailable) {
+        output.WriteInt32(5, field_names[3], PortAvailable);
       }
       UnknownFields.WriteTo(output);
     }
@@ -2182,8 +3492,8 @@ namespace common.message {
         if (hasHeight) {
           size += pb::CodedOutputStream.ComputeInt32Size(4, Height);
         }
-        if (hasPortListening) {
-          size += pb::CodedOutputStream.ComputeInt32Size(5, PortListening);
+        if (hasPortAvailable) {
+          size += pb::CodedOutputStream.ComputeInt32Size(5, PortAvailable);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
@@ -2321,8 +3631,8 @@ namespace common.message {
         if (other.HasHeight) {
           Height = other.Height;
         }
-        if (other.HasPortListening) {
-          PortListening = other.PortListening;
+        if (other.HasPortAvailable) {
+          PortAvailable = other.PortAvailable;
         }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
@@ -2392,7 +3702,7 @@ namespace common.message {
               break;
             }
             case 40: {
-              result.hasPortListening = input.ReadInt32(ref result.portListening_);
+              result.hasPortAvailable = input.ReadInt32(ref result.portAvailable_);
               break;
             }
           }
@@ -2486,23 +3796,23 @@ namespace common.message {
         return this;
       }
       
-      public bool HasPortListening {
-        get { return result.hasPortListening; }
+      public bool HasPortAvailable {
+        get { return result.hasPortAvailable; }
       }
-      public int PortListening {
-        get { return result.PortListening; }
-        set { SetPortListening(value); }
+      public int PortAvailable {
+        get { return result.PortAvailable; }
+        set { SetPortAvailable(value); }
       }
-      public Builder SetPortListening(int value) {
+      public Builder SetPortAvailable(int value) {
         PrepareBuilder();
-        result.hasPortListening = true;
-        result.portListening_ = value;
+        result.hasPortAvailable = true;
+        result.portAvailable_ = value;
         return this;
       }
-      public Builder ClearPortListening() {
+      public Builder ClearPortAvailable() {
         PrepareBuilder();
-        result.hasPortListening = false;
-        result.portListening_ = 0;
+        result.hasPortAvailable = false;
+        result.portAvailable_ = 0;
         return this;
       }
     }
