@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.Common;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using Finisar.SQLite;
 
@@ -15,7 +16,13 @@ namespace CloudX.utils
         private static void InitConnection()
         {
             Console.WriteLine(Application.UserAppDataPath);
-            string dataPath = Application.UserAppDataPath + "\\" + "data";
+
+            string userAppDataPath = Encoding.UTF8.GetString(Encoding.Convert(Encoding.Default, Encoding.UTF8,
+                Encoding.Default.GetBytes(Application.UserAppDataPath)));
+
+            Console.WriteLine("UserAppDataPath : " + userAppDataPath);
+
+            string dataPath = userAppDataPath + "\\" + "data";
 
             if (Directory.Exists(dataPath) && File.Exists(dataPath + "\\database.db"))
             {
