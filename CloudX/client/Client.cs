@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Net.Sockets;
 using System.Security;
@@ -12,7 +10,6 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using CloudX.DesktopDuplication;
-using CloudX.fileutils;
 using CloudX.Models;
 using CloudX.utils;
 using common.message;
@@ -38,6 +35,7 @@ namespace CloudX
         private int ClientScreenWidth;
 
         private int ConnectionFailedTimes;
+        private bool NeedToSendFrame = true;
 
         private bool isWindowSelected;
         private DateTime lastLeftClickTime = DateTime.Now;
@@ -46,7 +44,6 @@ namespace CloudX
         private int selectedWindowHwnd;
         private Stream stream;
         //标记是否需要传输完整帧
-        private bool NeedToSendFrame = true;
 
         public Client(Stream stream, string clientIP, Dispatcher dispatcher)
         {
@@ -120,6 +117,281 @@ namespace CloudX
             Finish();
         }
 
+        public void Receive(string filePath)
+        {
+            var file = new FileStream(filePath, FileMode.Create);
+
+            Console.WriteLine("FileReceiver : Receive");
+            long receivedSize = 0;
+            while (true)
+            {
+                try
+                {
+                    DataPacket dataPacket = DataPacket.ParseDelimitedFrom(stream);
+                    if (dataPacket.HasSharedFile)
+                    {
+                        Console.WriteLine("FileReceiver : Receive {0} / {1}", receivedSize,
+                            dataPacket.SharedFile.FileLength);
+
+                        if (receivedSize >= dataPacket.SharedFile.FileLength)
+                        {
+                            file.Close();
+                            Console.WriteLine("File Transimission Done");
+                            return;
+                        }
+
+                        byte[] buffer = dataPacket.SharedFile.Content.ToByteArray();
+                        file.Write(buffer, 0, buffer.Length);
+                        file.Flush();
+
+                        receivedSize += buffer.Length;
+
+                        Console.WriteLine("FileReceiver : Receive {0} / {1}", receivedSize,
+                            dataPacket.SharedFile.FileLength);
+
+
+                        //todo notify ui
+                        //dispatcher.BeginInvoke(MainWindow.UpdateProgress, (double)receivedSize / dataPacket.SharedFile.FileLength);
+                    }
+                }
+                catch (Exception)
+                {
+                    //todo notify UI
+                    //dispatcher.BeginInvoke(MainWindow.ShowMessageBox, null, null, "文件传输已中断", null);
+
+                    Console.WriteLine("File Transimission Failed");
+
+                    break;
+                }
+            }
+
+            file.Close();
+            Console.WriteLine("File Transimission Done");
+        }
+
+        public void Finish()
+        {
+            try
+            {
+                if (dataReceivingThread != null && dataReceivingThread.IsAlive)
+                    dataReceivingThread.Abort();
+
+                if (videoSendingThread != null && videoSendingThread.IsAlive)
+                    videoSendingThread.Abort();
+            }
+            catch (SecurityException exception)
+            {
+                Console.WriteLine("Client Finish " + exception);
+            }
+            catch (ThreadStateException exception)
+            {
+                Console.WriteLine("Client Finish " + exception);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Client Finish " + e);
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Dispose();
+
+                stream = null;
+            }
+        }
+
+        /// <summary>
+        ///     用于在catch中解决网络异常
+        /// </summary>
+        private void ConnectionFailedHandler()
+        {
+            ConnectionFailedTimes++;
+            if (ConnectionFailedTimes > 3)
+                Finish();
+        }
+
+        #region DataPacket Sender
+
+        /// <summary>
+        ///     发送单个RequestFeedback
+        /// </summary>
+        private void RequestFeedbackSender(string name)
+        {
+            try
+            {
+                //lock (stream) //todo 不能加锁，否则可能会造成死锁
+                {
+                    DataPacket.CreateBuilder().SetDataPacketType(DataPacket.Types.DataPacketType.RequestFeedback)
+                        .SetRequestFeedback(
+                            RequestFeedback.CreateBuilder()
+                                .SetFilePath(ByteString.CopyFrom(name, Encoding.UTF8)
+                                ).Build()
+                        ).Build().WriteDelimitedTo(stream);
+                    Console.WriteLine("request feed back sent  " + name);
+                }
+            }
+            catch (Exception)
+            {
+                ConnectionFailedHandler();
+            }
+        }
+
+        /// <summary>
+        ///     发送主机分辨率
+        /// </summary>
+        private void InfoPacketSender()
+        {
+            try
+            {
+                {
+                    DataPacket.CreateBuilder()
+                        .SetDataPacketType(DataPacket.Types.DataPacketType.Info)
+                        .SetInfo(
+                            Info.CreateBuilder()
+                                .SetInfoType(Info.Types.InfoType.NormalInfo)
+                                .SetPortAvailable(50324)
+                                .SetHeight(WindowsUtility.GetScreenHeight())
+                                .SetWidth(WindowsUtility.GetScreenWidth())
+                        ).Build().WriteDelimitedTo(stream);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                ConnectionFailedHandler();
+            }
+        }
+
+
+        private void VideoSender()
+        {
+            // Console.WriteLine("video sender online");
+            //while (videoSendingThreadStatus)
+            while (stream != null)
+            {
+                //new code here //TODO 暂时不区分是否有窗口选中
+
+                FrameData frameData = null;
+                if (NeedToSendFrame)
+                {
+                    NeedToSendFrame = false;
+                    DuplicationManager.GetInstance().GetFrame(out frameData);
+                }
+                else
+                    DuplicationManager.GetInstance().GetChangedRects(ref frameData);
+                frameData.WriteToStream(stream);
+
+
+                //Thread.Sleep(100);
+
+                //Bitmap bitmap;
+                //if (isWindowSelected)
+                //{
+                //    bitmap = WindowCaptureUtility.CaptureSelectedWindow(selectedWindowHwnd);
+                //}
+                //else
+                //{
+                //    var rect = new WindowCaptureUtility.RECT
+                //    {
+                //        Left = Screen.PrimaryScreen.Bounds.Left,
+                //        Right = Screen.PrimaryScreen.Bounds.Right,
+                //        Top = Screen.PrimaryScreen.Bounds.Top,
+                //        Bottom = Screen.PrimaryScreen.Bounds.Bottom
+                //    };
+
+                //    bitmap = WindowCaptureUtility.Capture(rect);
+                //}
+
+                //if (bitmap == null) continue;
+
+                //if (stream != null)
+                // {
+                //    try
+                //    {
+                //        //todo changed
+                //        //bitmap.SetResolution(bitmap.Width*scaleRate, bitmap.Height*scaleRate);
+
+                //        //send the bitmap
+
+
+                //        SendBitmap(new Bitmap(bitmap, (int)(bitmap.Width * scaleRate), (int)(bitmap.Height * scaleRate)));
+                //    }
+                //    catch (Exception e)
+                //    {
+                //        Console.WriteLine("Before Exception : {0}, {1}  {2}", bitmap.Width, bitmap.Height, scaleRate);
+
+                //        Console.WriteLine("Client VideoReceiver Run Into An Exception : \n" + e);
+                //        ConnectionFailedHandler();
+                //    }
+                //}
+            }
+        }
+
+        /// <summary>
+        ///     向targetIP的avtive input发送消息
+        /// </summary>
+        /// <param name="targetIP"></param>
+        /// <param name="message"></param>
+        private static void messageSender(string targetIP, string message)
+        {
+            if (ClientDictionary[targetIP] != null)
+            {
+                //todo changed
+                messageSender(targetIP, ByteString.CopyFrom(DataTypeConverter.StringToBytes(message)));
+            }
+        }
+
+        private static void messageSender(string targetIP, ByteString message)
+        {
+            var tcpClient = new TcpClient(targetIP, 50323);
+
+            if (tcpClient.Connected)
+            {
+                messageSender(tcpClient.GetStream(), message);
+                tcpClient.Close();
+            }
+        }
+
+        private static void messageSender(Stream targetStream, ByteString message)
+        {
+            if (targetStream != null)
+            {
+                DataPacket.CreateBuilder().SetDataPacketType(DataPacket.Types.DataPacketType.SharedMessage)
+                    .SetSharedMessage(
+                        SharedMessage.CreateBuilder().SetContent(message).Build()
+                    ).Build().WriteDelimitedTo(targetStream);
+            }
+        }
+
+        //private void SendBitmap(Bitmap bitmap)
+        //{
+        //    //lock (stream)
+        //    {
+        //        //TimeSpan timeSpan = new TimeSpan();
+        //        //DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        //        //timeSpan = DateTime.Now - new DateTime();
+
+        //        DataPacket.CreateBuilder()
+        //            .SetDataPacketType(DataPacket.Types.DataPacketType.Video)
+        //            .SetTimeStamp(
+        //                ByteString.CopyFromUtf8(DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond)
+        //            ) //todo for debug only
+        //            .SetVideo(
+        //                Video.CreateBuilder()
+        //                    .SetImage(ByteString.CopyFrom(
+        //            //CompressionAndDecompressionUtils.GZipCompress(BitmapToBytes(bitmap)) //compress
+        //            //CompressionAndDecompressionUtils.SnappyCompress(BitmapToBytes(bitmap))
+        //                        DataTypeConverter.BitmapToBytes(bitmap)
+        //                        ))
+        //                    .Build()
+        //            )
+        //            .Build()
+        //            .WriteDelimitedTo(stream);
+        //    }
+        //}
+
+        #endregion
+
         #region DataPacket Processor
 
         private void SharedMessageProcessor(SharedMessage message)
@@ -164,6 +436,7 @@ namespace CloudX
             switch (info.InfoType)
             {
                 case Info.Types.InfoType.Login:
+                {
                     if (!ClientDictionary.ContainsKey(clientIP))
                     {
                         var clientInfo = new ClientInfo();
@@ -171,11 +444,21 @@ namespace CloudX
                         clientInfo.ClientName = DataTypeConverter.ByteStringToString(info.DeviceName);
                         clientInfo.ClientStream = stream;
 
+                        ClientScreenWidth = info.Width;
+                        ClientScreenHeight = info.Height;
+
+                        scaleRate = Math.Min(ClientScreenWidth/(float) Screen.PrimaryScreen.Bounds.Width,
+                            ClientScreenHeight/(float) Screen.PrimaryScreen.Bounds.Height
+                            );
+                        if (scaleRate > 1)
+                            scaleRate = 1;
+
                         if (ClientDictionary.ContainsKey(clientIP))
                             ClientDictionary[clientIP] = clientInfo;
                         else
                             ClientDictionary.Add(clientIP, clientInfo);
                     }
+                }
                     break;
                 case Info.Types.InfoType.Logout:
 
@@ -184,6 +467,18 @@ namespace CloudX
 
                     break;
                 case Info.Types.InfoType.NormalInfo:
+                {
+                    var clientInfo = new ClientInfo();
+                    clientInfo.ClientIP = clientIP;
+                    clientInfo.ClientName = DataTypeConverter.ByteStringToString(info.DeviceName);
+                    clientInfo.ClientStream = stream;
+
+
+                    if (ClientDictionary.ContainsKey(clientIP))
+                        ClientDictionary[clientIP] = clientInfo;
+                    else
+                        ClientDictionary.Add(clientIP, clientInfo);
+
                     if (info.Height == 0 && info.Width == 0 && info.PortAvailable == 0)
                     {
                         //deal as a request
@@ -195,10 +490,6 @@ namespace CloudX
                         {
                             if (ClientDictionary.ContainsKey(clientIP))
                             {
-                                var clientInfo = new ClientInfo();
-                                clientInfo.ClientIP = clientIP;
-                                clientInfo.ClientName = DataTypeConverter.ByteStringToString(info.DeviceName);
-                                clientInfo.ClientStream = stream;
                                 ClientDictionary[clientIP] = clientInfo;
                             }
                         }
@@ -212,6 +503,7 @@ namespace CloudX
                         if (scaleRate > 1)
                             scaleRate = 1;
                     }
+                }
                     break;
             }
 
@@ -508,283 +800,6 @@ namespace CloudX
         }
 
         #endregion
-
-        public void Receive(string filePath)
-        {
-            var file = new FileStream(filePath, FileMode.Create);
-
-            Console.WriteLine("FileReceiver : Receive");
-            long receivedSize = 0;
-            while (true)
-            {
-                try
-                {
-                    DataPacket dataPacket = DataPacket.ParseDelimitedFrom(stream);
-                    if (dataPacket.HasSharedFile)
-                    {
-                        Console.WriteLine("FileReceiver : Receive {0} / {1}", receivedSize,
-                            dataPacket.SharedFile.FileLength);
-
-                        if (receivedSize >= dataPacket.SharedFile.FileLength)
-                        {
-                            file.Close();
-                            Console.WriteLine("File Transimission Done");
-                            return;
-                        }
-
-                        byte[] buffer = dataPacket.SharedFile.Content.ToByteArray();
-                        file.Write(buffer, 0, buffer.Length);
-                        file.Flush();
-
-                        receivedSize += buffer.Length;
-
-                        Console.WriteLine("FileReceiver : Receive {0} / {1}", receivedSize,
-                            dataPacket.SharedFile.FileLength);
-
-
-                        //todo notify ui
-                        //dispatcher.BeginInvoke(MainWindow.UpdateProgress, (double)receivedSize / dataPacket.SharedFile.FileLength);
-                    }
-                }
-                catch (Exception)
-                {
-                    //todo notify UI
-                    //dispatcher.BeginInvoke(MainWindow.ShowMessageBox, null, null, "文件传输已中断", null);
-
-                    Console.WriteLine("File Transimission Failed");
-
-                    break;
-                }
-            }
-
-            file.Close();
-            Console.WriteLine("File Transimission Done");
-        }
-
-        #region DataPacket Sender
-
-        /// <summary>
-        ///     发送单个RequestFeedback
-        /// </summary>
-        private void RequestFeedbackSender(string name)
-        {
-            try
-            {
-                //lock (stream) //todo 不能加锁，否则可能会造成死锁
-                {
-                    DataPacket.CreateBuilder().SetDataPacketType(DataPacket.Types.DataPacketType.RequestFeedback)
-                        .SetRequestFeedback(
-                            RequestFeedback.CreateBuilder()
-                                .SetFilePath(ByteString.CopyFrom(name, Encoding.UTF8)
-                                ).Build()
-                        ).Build().WriteDelimitedTo(stream);
-                    Console.WriteLine("request feed back sent  " + name);
-                }
-            }
-            catch (Exception)
-            {
-                ConnectionFailedHandler();
-            }
-        }
-
-        /// <summary>
-        /// 发送主机分辨率
-        /// </summary>
-        private void InfoPacketSender()
-        {
-            try
-            {
-                {
-                    DataPacket.CreateBuilder()
-                        .SetDataPacketType(DataPacket.Types.DataPacketType.Info)
-                        .SetInfo(
-                            Info.CreateBuilder()
-                                .SetInfoType(Info.Types.InfoType.NormalInfo)
-                                .SetPortAvailable(50324)
-                                .SetHeight(WindowsUtility.GetScreenHeight())
-                                .SetWidth(WindowsUtility.GetScreenWidth())
-                        ).Build().WriteDelimitedTo(stream);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                ConnectionFailedHandler();
-            }
-        }
-
-        
-
-        private void VideoSender()
-        {
-            // Console.WriteLine("video sender online");
-            //while (videoSendingThreadStatus)
-            while (stream != null)
-            {
-                //new code here //TODO 暂时不区分是否有窗口选中
-
-                FrameData frameData = null;
-                if (NeedToSendFrame)
-                {
-                    NeedToSendFrame = false;
-                    DuplicationManager.GetInstance().GetFrame(out frameData);
-                }
-                else
-                    DuplicationManager.GetInstance().GetChangedRects(ref frameData);
-                frameData.WriteToStream(stream);
-
-
-                
-                //Thread.Sleep(100);
-
-                //Bitmap bitmap;
-                //if (isWindowSelected)
-                //{
-                //    bitmap = WindowCaptureUtility.CaptureSelectedWindow(selectedWindowHwnd);
-                //}
-                //else
-                //{
-                //    var rect = new WindowCaptureUtility.RECT
-                //    {
-                //        Left = Screen.PrimaryScreen.Bounds.Left,
-                //        Right = Screen.PrimaryScreen.Bounds.Right,
-                //        Top = Screen.PrimaryScreen.Bounds.Top,
-                //        Bottom = Screen.PrimaryScreen.Bounds.Bottom
-                //    };
-
-                //    bitmap = WindowCaptureUtility.Capture(rect);
-                //}
-
-                //if (bitmap == null) continue;
-
-                //if (stream != null)
-                // {
-                //    try
-                //    {
-                //        //todo changed
-                //        //bitmap.SetResolution(bitmap.Width*scaleRate, bitmap.Height*scaleRate);
-
-                //        //send the bitmap
-
-
-                //        SendBitmap(new Bitmap(bitmap, (int)(bitmap.Width * scaleRate), (int)(bitmap.Height * scaleRate)));
-                //    }
-                //    catch (Exception e)
-                //    {
-                //        Console.WriteLine("Before Exception : {0}, {1}  {2}", bitmap.Width, bitmap.Height, scaleRate);
-
-                //        Console.WriteLine("Client VideoReceiver Run Into An Exception : \n" + e);
-                //        ConnectionFailedHandler();
-                //    }
-                //}
-            }
-        }
-
-        /// <summary>
-        ///     向targetIP的avtive input发送消息
-        /// </summary>
-        /// <param name="targetIP"></param>
-        /// <param name="message"></param>
-        private static void messageSender(string targetIP, string message)
-        {
-            if (ClientDictionary[targetIP] != null)
-            {
-                //todo changed
-                messageSender(targetIP, ByteString.CopyFrom(DataTypeConverter.StringToBytes(message)));
-            }
-        }
-
-        private static void messageSender(string targetIP, ByteString message)
-        {
-            var tcpClient = new TcpClient(targetIP, 50323);
-
-            if (tcpClient.Connected)
-            {
-                messageSender(tcpClient.GetStream(), message);
-                tcpClient.Close();
-            }
-        }
-
-        private static void messageSender(Stream targetStream, ByteString message)
-        {
-            if (targetStream != null)
-            {
-                DataPacket.CreateBuilder().SetDataPacketType(DataPacket.Types.DataPacketType.SharedMessage)
-                    .SetSharedMessage(
-                        SharedMessage.CreateBuilder().SetContent(message).Build()
-                    ).Build().WriteDelimitedTo(targetStream);
-            }
-        }
-
-        //private void SendBitmap(Bitmap bitmap)
-        //{
-        //    //lock (stream)
-        //    {
-        //        //TimeSpan timeSpan = new TimeSpan();
-        //        //DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-        //        //timeSpan = DateTime.Now - new DateTime();
-
-        //        DataPacket.CreateBuilder()
-        //            .SetDataPacketType(DataPacket.Types.DataPacketType.Video)
-        //            .SetTimeStamp(
-        //                ByteString.CopyFromUtf8(DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond)
-        //            ) //todo for debug only
-        //            .SetVideo(
-        //                Video.CreateBuilder()
-        //                    .SetImage(ByteString.CopyFrom(
-        //            //CompressionAndDecompressionUtils.GZipCompress(BitmapToBytes(bitmap)) //compress
-        //            //CompressionAndDecompressionUtils.SnappyCompress(BitmapToBytes(bitmap))
-        //                        DataTypeConverter.BitmapToBytes(bitmap)
-        //                        ))
-        //                    .Build()
-        //            )
-        //            .Build()
-        //            .WriteDelimitedTo(stream);
-        //    }
-        //}
-
-        #endregion
-
-        public void Finish()
-        {
-            try
-            {
-                if (dataReceivingThread != null && dataReceivingThread.IsAlive)
-                    dataReceivingThread.Abort();
-
-                if (videoSendingThread != null && videoSendingThread.IsAlive)
-                    videoSendingThread.Abort();
-            }
-            catch (SecurityException exception)
-            {
-                Console.WriteLine("Client Finish " + exception);
-            }
-            catch (ThreadStateException exception)
-            {
-                Console.WriteLine("Client Finish " + exception);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Client Finish " + e);
-            }
-            finally
-            {
-                if (stream != null)
-                    stream.Dispose();
-
-                stream = null;
-            }
-        }
-
-        /// <summary>
-        ///     用于在catch中解决网络异常
-        /// </summary>
-        private void ConnectionFailedHandler()
-        {
-            ConnectionFailedTimes++;
-            if (ConnectionFailedTimes > 3)
-                Finish();
-        }
     }
 
     #region ClientInfo
