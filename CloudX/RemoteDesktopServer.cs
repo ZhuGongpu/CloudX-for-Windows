@@ -20,7 +20,7 @@ namespace CloudX
 
         public RemoteDesktopServer(Dispatcher dispatcher)
         {
-            Console.WriteLine("Server IP = {0}", ServerIP);
+            Console.WriteLine("Server IP = {0}：{1}", ServerIP, ServerPort);
             Server = new TcpListener(IPAddress.Parse(ServerIP), ServerPort);
             running = true;
             this.dispatcher = dispatcher;

@@ -91,6 +91,8 @@ namespace CloudX.DesktopDuplication
             duplicatedOutput = output1.DuplicateOutput(device);
 
             screenTexture = new Texture2D(device, textureDesc);
+
+            FrameData.Device = device;
         }
 
         private void GetDirtyAndMoveRects(ref FrameData data, Resource screenResource,
@@ -105,12 +107,13 @@ namespace CloudX.DesktopDuplication
 
             if (bufSize <= 0) return;
 
+            int moveCount = (int)
+                Math.Ceiling((double) bufSize/
+                             Marshal.SizeOf(typeof (OutputDuplicateMoveRectangle)));
             var moveRectangles =
                 new OutputDuplicateMoveRectangle
                     [
-                    (int)
-                        Math.Ceiling((double) bufSize/
-                                     Marshal.SizeOf(typeof (OutputDuplicateMoveRectangle)))
+                    moveCount
                     ];
 
             Console.WriteLine("Move : {0}  {1}  {2}  {3}", moveRectangles.Length, bufSize,
@@ -120,12 +123,13 @@ namespace CloudX.DesktopDuplication
             //get move rects
             if (moveRectangles.Length > 0)
                 duplicatedOutput.GetFrameMoveRects(bufSize, moveRectangles, out bufSize);
-
+            
             data.MoveRectangles = moveRectangles;
-            data.MoveCount = bufSize;
+            data.MoveCount = moveCount;
 
             bufSize = duplicateFrameInformation.TotalMetadataBufferSize - bufSize;
-            var dirtyRectangles = new Rectangle[bufSize/Marshal.SizeOf(typeof (System.Drawing.Rectangle))];
+            int dirtyCount = bufSize/Marshal.SizeOf(typeof (System.Drawing.Rectangle));
+            var dirtyRectangles = new Rectangle[dirtyCount];
             Console.WriteLine("Dirty : {0}  {1}  {2}  {3}", dirtyRectangles.Length, bufSize,
                 Marshal.SizeOf(typeof (System.Drawing.Rectangle)),
                 bufSize/Marshal.SizeOf(typeof (System.Drawing.Rectangle)));
@@ -133,7 +137,7 @@ namespace CloudX.DesktopDuplication
             if (dirtyRectangles.Length > 0)
                 duplicatedOutput.GetFrameDirtyRects(bufSize, dirtyRectangles, out bufSize);
             data.DirtyRectangles = dirtyRectangles;
-            data.DirtyCount = bufSize;
+            data.DirtyCount = dirtyCount;
 
             data.Frame = screenTexture;
 
@@ -149,7 +153,7 @@ namespace CloudX.DesktopDuplication
                 data = new FrameData();
 
             bool captured = false;
-            lock (duplicatedOutput)
+            //lock (duplicatedOutput)
                 for (int i = 0; !captured; i++)
                 {
                     try
@@ -180,7 +184,7 @@ namespace CloudX.DesktopDuplication
         {
             data = new FrameData();
             bool captureDone = false;
-            lock (duplicatedOutput)
+            //lock (duplicatedOutput)
                 for (int i = 0; !captureDone; i++)
                     try
                     {
@@ -200,6 +204,8 @@ namespace CloudX.DesktopDuplication
                             data.Frame = screenTexture;
                             data.Width = Width;
                             data.Height = Height;
+
+                            Texture2DToBitmap().Save("save.bmp");
 
                             // Capture done
                             captureDone = true;

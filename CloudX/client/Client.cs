@@ -272,6 +272,7 @@ namespace CloudX
                 //new code here //TODO 暂时不区分是否有窗口选中
 
                 FrameData frameData = null;
+                //DuplicationManager.GetInstance().GetFrame(out frameData);//测试只传输完整Frame
                 if (NeedToSendFrame)
                 {
                     NeedToSendFrame = false;
@@ -279,7 +280,10 @@ namespace CloudX
                 }
                 else
                     DuplicationManager.GetInstance().GetChangedRects(ref frameData);
+
                 frameData.WriteToStream(stream);
+
+                Console.WriteLine("video sent");
 
 
                 //Thread.Sleep(100);

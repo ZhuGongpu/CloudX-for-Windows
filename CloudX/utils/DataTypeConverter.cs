@@ -32,9 +32,9 @@ namespace CloudX.utils
             return Encoding.UTF8.GetBytes(s);
         }
 
-        public static byte[] IntPtrToBytes(IntPtr ptr,int length)
+        public static byte[] IntPtrToBytes(IntPtr ptr, int length)
         {
-            var data =  new byte[length];
+            var data = new byte[length];
             Marshal.Copy(ptr, data, 0, length);
             return data;
         }
@@ -44,39 +44,48 @@ namespace CloudX.utils
             return ByteString.CopyFrom(bytes);
         }
 
-        public static ByteString TextureRegionToByteString(ref Texture2D texture, int originX, int originY, int width, int height)
+        public static ByteString TextureRegionToByteString(ref SharpDX.Direct3D11.Device device, ref Texture2D texture,
+            int originX, int originY, int width, int height)
         {
-            // Get the desktop capture screenTexture
-            DataBox mapSource = texture.Device.ImmediateContext.MapSubresource(texture, 0, MapMode.Read,
-                MapFlags.None);
-
-            // Create Drawing.Bitmap
-            var bitmap = new Bitmap(width, height, PixelFormat.Format32bppRgb); //不能是ARGB
-            var boundsRect = new System.Drawing.Rectangle(0, 0, width, height);
-
-            // Copy pixels from screen capture Texture to GDI bitmap
-            BitmapData mapDest = bitmap.LockBits(boundsRect, ImageLockMode.WriteOnly, bitmap.PixelFormat);
-            IntPtr sourcePtr = mapSource.DataPointer;
-            IntPtr destPtr = mapDest.Scan0;
-
-            sourcePtr = IntPtr.Add(sourcePtr, originY * mapSource.RowPitch + originX * 4);
-            for (int y = 0; y < height; y++)
+           //lock(device)
             {
-                // Copy a single line 
+                // Get the desktop capture screenTexture
 
-                Utilities.CopyMemory(destPtr, sourcePtr, width * 4);
-                
-                // Advance pointers
-                if (y != height - 1)
-                    sourcePtr = IntPtr.Add(sourcePtr, mapSource.RowPitch);
-                destPtr = IntPtr.Add(destPtr, mapDest.Stride);
+                Console.WriteLine("TextureRegionToByteString : texture {0}", texture == null);
+                Console.WriteLine("TextureRegionToByteSTring : device {0}", device == null);
+
+                DataBox mapSource = device
+                    .ImmediateContext.MapSubresource(texture, 0, MapMode.Read,
+                        MapFlags.None);
+
+                // Create Drawing.Bitmap
+                var bitmap = new Bitmap(width, height, PixelFormat.Format32bppRgb); //不能是ARGB
+                var boundsRect = new System.Drawing.Rectangle(0, 0, width, height);
+
+                // Copy pixels from screen capture Texture to GDI bitmap
+                BitmapData mapDest = bitmap.LockBits(boundsRect, ImageLockMode.WriteOnly, bitmap.PixelFormat);
+                IntPtr sourcePtr = mapSource.DataPointer;
+                IntPtr destPtr = mapDest.Scan0;
+
+                sourcePtr = IntPtr.Add(sourcePtr, originY*mapSource.RowPitch + originX*4);
+                for (int y = 0; y < height; y++)
+                {
+                    // Copy a single line 
+
+                    Utilities.CopyMemory(destPtr, sourcePtr, width*4);
+
+                    // Advance pointers
+                    if (y != height - 1)
+                        sourcePtr = IntPtr.Add(sourcePtr, mapSource.RowPitch);
+                    destPtr = IntPtr.Add(destPtr, mapDest.Stride);
+                }
+
+                // Release source and dest locks
+                bitmap.UnlockBits(mapDest);
+                texture.Device.ImmediateContext.UnmapSubresource(texture, 0);
+
+                return BytesToByteString(BitmapToBytes(bitmap));
             }
-
-            // Release source and dest locks
-            bitmap.UnlockBits(mapDest);
-            texture.Device.ImmediateContext.UnmapSubresource(texture, 0);
-
-            return BytesToByteString(BitmapToBytes(bitmap));
         }
     }
 }
