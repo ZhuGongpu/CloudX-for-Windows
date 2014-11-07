@@ -267,13 +267,16 @@ namespace CloudX
         {
             // Console.WriteLine("video sender online");
             //while (videoSendingThreadStatus)
+
+            int frameCounter = 0;//当其为0时，发送完整帧数据
+            int frameCounterThreshold = 10;//frameCounter达到这个值之后自动清零，并发送完整帧数据
             while (stream != null)
             {
                 //new code here //TODO 暂时不区分是否有窗口选中
 
                 FrameData frameData = null;
                 //DuplicationManager.GetInstance().GetFrame(out frameData);//测试只传输完整Frame
-                if (NeedToSendFrame)
+                if (NeedToSendFrame || frameCounter == 0)
                 {
                     NeedToSendFrame = false;
                     DuplicationManager.GetInstance().GetFrame(out frameData);
@@ -285,6 +288,7 @@ namespace CloudX
 
                 Console.WriteLine("video sent");
 
+                frameCounter = (frameCounter + 1)%frameCounterThreshold;
 
                 //Thread.Sleep(100);
 
