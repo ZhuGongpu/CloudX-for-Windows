@@ -86,12 +86,42 @@ namespace CloudX.CloudStorage
         /// <param name="destinationPath"></param>
         public static void DownloadPublicResource(string sourceURL, string destinationPath)
         {
-            var fileStream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write);
+            try
+            {
+                var uri = new Uri(sourceURL);
+                var request = (HttpWebRequest) WebRequest.Create(uri);
+                request.Method = "GET";
+                request.ContentType = "application/x-www-form-urlencoded";
 
-            HttpWebResponse response;
-            //TODO
+                var response = (HttpWebResponse) request.GetResponse();
 
-            fileStream.Close();
+                Stream responseStream = response.GetResponseStream();
+                var fileStream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write);
+
+
+                long contentLength = response.ContentLength;
+                Console.WriteLine(contentLength);
+
+                long receivedSize = 0;
+                if (responseStream != null)
+                    while (receivedSize < contentLength)
+                    {
+                        var buffer = new byte[1024];
+                        receivedSize += responseStream.Read(buffer, 0, buffer.Length);
+                        fileStream.Write(buffer, 0, buffer.Length);
+                        fileStream.Flush();
+                        //double progress = (double) receivedSize/contentLength;
+                        //Console.WriteLine("Progress : {0:0.00}", progress);
+                    }
+                if (responseStream != null)
+                    responseStream.Close();
+                response.Close();
+                fileStream.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
