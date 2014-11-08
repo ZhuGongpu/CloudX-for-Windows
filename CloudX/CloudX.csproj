@@ -122,6 +122,7 @@
     </ApplicationDefinition>
     <Compile Include="AudioServer.cs" />
     <Compile Include="client\Client.cs" />
+    <Compile Include="CloudStorage\CloudStorage.cs" />
     <Compile Include="common.message\Data.cs" />
     <Compile Include="delegateDefinition\DelegateDeclarations.cs" />
     <Compile Include="DesktopDuplication\CommonTypes.cs" />
@@ -257,6 +258,10 @@
     <ProjectReference Include="..\NAudio\NAudio.csproj">
       <Project>{DA4F02E3-0B5E-42CD-B8D9-5583FA51D66E}</Project>
       <Name>NAudio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QiniuSDK\Qiniu.csproj">
+      <Project>{8d120aca-4bf9-42a7-81c6-8be39ff5ed42}</Project>
+      <Name>Qiniu</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

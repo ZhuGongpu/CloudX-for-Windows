@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudX", "CloudX\CloudX.csproj", "{1BD49CFB-D5B0-49B4-A355-146E5B3EF6B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NAudio", "NAudio\NAudio.csproj", "{DA4F02E3-0B5E-42CD-B8D9-5583FA51D66E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qiniu", "QiniuSDK\Qiniu.csproj", "{8D120ACA-4BF9-42A7-81C6-8BE39FF5ED42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{DA4F02E3-0B5E-42CD-B8D9-5583FA51D66E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA4F02E3-0B5E-42CD-B8D9-5583FA51D66E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA4F02E3-0B5E-42CD-B8D9-5583FA51D66E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D120ACA-4BF9-42A7-81C6-8BE39FF5ED42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D120ACA-4BF9-42A7-81C6-8BE39FF5ED42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D120ACA-4BF9-42A7-81C6-8BE39FF5ED42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D120ACA-4BF9-42A7-81C6-8BE39FF5ED42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
