@@ -45,6 +45,7 @@ namespace CloudX
         private readonly MainView mainView = new MainView();
         private readonly MovieView movieView = new MovieView();
         private readonly MusicView musicView = new MusicView();
+        private readonly FileView fileView = new FileView();
 
         private readonly RemoteDesktopServer remoteDesktopServer;
         private int currentDeviceCount;
@@ -82,6 +83,15 @@ namespace CloudX
             deviceList.Add(new Device(DevicePanel2, DeviceNameBlock2, ""));
             deviceList.Add(new Device(DevicePanel3, DeviceNameBlock3, ""));
 
+            
+            ///  打开窗口时打开文件管理窗口
+            mainWindow = Application.Current.MainWindow as MainWindow;
+            if (mainWindow != null)
+            {
+                StackPanel stackPanel = mainWindow.RightView;
+                CheckRightViewContains(stackPanel);
+            }
+            tablControl.Visibility = Visibility.Visible;
             //挂载
             ShowMessageBox = ShowMessageDialog;
             RefreshDeviceList = RefreshDevices;
@@ -308,7 +318,7 @@ namespace CloudX
             currentSelectDeviceIndex = 0;
         }
 
-        private void ToALLButtonOnClick(object sender, RoutedEventArgs e)
+        private void ToAllButtonOnClick(object sender, RoutedEventArgs e)
         {
             ShowInputDialog(sender, e);
         }

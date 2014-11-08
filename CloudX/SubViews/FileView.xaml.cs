@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Reflection.Emit;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -16,6 +17,7 @@ using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
 using Image = System.Windows.Controls.Image;
 using Label = System.Windows.Controls.Label;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
 
 namespace CloudX.SubViews
@@ -35,20 +37,18 @@ namespace CloudX.SubViews
             contextMenu.Items.Add("删除");
             ToolStripItem tmp = contextMenu.Items[0];
             tmp.Click += deleteFileItem;
-
         }
 
-        private void RefreshFileList()
+        void RefreshFileList()
         {
-            throw new NotImplementedException();
-            //todo 未必还需要
-            Console.WriteLine("FileList Refresh");
+            FileFolderScrollViewer.Items.Refresh();
+            Console.WriteLine("FileList Refreshed");
         }
-
         private void deleteFileItem(object sender, EventArgs e)
         {
             SampleData.FileList.Remove(selectFile);
 
+            RefreshFileList();
             //todo uncertain
             SQLiteUtils.Delete("file", selectFile.Location + "\\" + selectFile.Name);
         }
@@ -61,27 +61,6 @@ namespace CloudX.SubViews
         private bool isFileType(string name)
         {
             return true;
-        }
-
-        private void FileList_OnDrop(object sender, DragEventArgs e)
-        {
-            var filePath = (string[]) e.Data.GetData(DataFormats.FileDrop);
-            foreach (string file in filePath)
-            {
-                File addFile = File.convertFileURLToFileItem(file);
-                if (isFileType(addFile.Name))
-                {
-                    SampleData.FileList.Add(addFile);
-
-                    SQLiteUtils.Insert("file", file);
-
-                    RefreshFileList();
-                }
-                else
-                {
-                    MainWindow.ShowMessageBox("确定", "取消", "注意：", "这个文件应该不是添加在这里的哟！");
-                }
-            }
         }
 
         private void ListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -110,9 +89,57 @@ namespace CloudX.SubViews
             throw new NotImplementedException();
         }
 
-        private void FileFolderScrollViewer_OnDragEnter(object sender, DragEventArgs e)
+        private void FileFolderScrollViewer_OnDrop(object sender, DragEventArgs e)
         {
-            throw new NotImplementedException();
+            var filePath = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in filePath)
+            {
+                File addFile = File.convertFileURLToFileItem(file);
+                if (isFileType(addFile.Name))
+                {
+                    SampleData.FileList.Add(addFile);
+
+                    SQLiteUtils.Insert("file", file);
+
+                    RefreshFileList();
+                }
+                else
+                {
+                    MainWindow.ShowMessageBox("确定", "取消", "注意：", "这个文件应该不是添加在这里的哟！");
+                }
+            }
+        }
+
+        private void UIElement_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine(FileFolderScrollViewer.Items.GetItemAt(0).GetType().ToString());
+        }
+
+        private void TextBox_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine(((TextBlock)sender).Text);
+        }
+
+        private void FileImage_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            int fileTag = (int)((Image) sender).Tag;
+            File openedFile = null;
+            foreach (var file in SampleData.FileList)
+            {
+                if (file.fileTag == fileTag)
+                {
+                    openedFile = file;
+                    break;
+                }
+            }
+            try
+            {
+                Console.WriteLine(openedFile.Location.ToString());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

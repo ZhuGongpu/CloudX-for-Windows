@@ -7,7 +7,7 @@ namespace CloudX.Models
         public string Name { get; set; }
         public string Format { get; set; }
         public string Location { get; set; }
-
+        public int fileTag { get; set; }
         public string typeImgLocation { get; set; }
 
         public static File convertFileURLToFileItem(string url)
@@ -37,6 +37,7 @@ namespace CloudX.Models
             var addFile = new File {Format = format, Location = Locate, Name = Name};
 
             addFile.typeImgLocation = @"/Asset/folder.png";
+            addFile.fileTag = Locate.GetHashCode();
             return addFile;
         }
     }

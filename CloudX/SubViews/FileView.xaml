@@ -20,10 +20,12 @@
 
     <Grid>
       
-        <ScrollViewer Name="FileFolderScrollViewer" DragEnter="FileFolderScrollViewer_OnDragEnter"
-                      >
+        <ListView Name="FileFolderScrollViewer" Drop="FileFolderScrollViewer_OnDrop" AllowDrop="True" 
+                  ScrollViewer.CanContentScroll="True" Height="550" Width="820" MaxWidth="820" 
+                  
+                  >
             <ItemsControl ItemsSource="{Binding FileLists}"
-                      Grid.IsSharedSizeScope="True">
+                      Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" MaxWidth="820" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel />
@@ -33,24 +35,30 @@
                     <DataTemplate>
                         <Grid ToolTip="{Binding}"
                           MinHeight="40"
-                          Margin="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition SharedSizeGroup="color" />
-                            </Grid.ColumnDefinitions>
+                          Margin="5"
+                          MaxWidth="800"
+                              >
+                            
                             <Grid.RowDefinitions>
                                 <RowDefinition />
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Image Margin="20" Width="100" Height="100" Source="{Binding typeImgLocation}" />
+                            
+                            <Image Margin="20" Width="100" Height="100" Source="{Binding typeImgLocation}" 
+                                   Tag="{Binding fileTag}"
+                                   MouseLeftButtonDown="FileImage_OnMouseLeftButtonDown"
+                                   />
                             <TextBlock Grid.Row="1"
                                    Margin="4,2,4,10"
                                    FontSize="{DynamicResource NormalFontSize}"
                                    TextAlignment="Center"
-                                   Text="{Binding Name}"/>
+                                   Text="{Binding Name}"
+                                   MouseEnter="TextBox_OnMouseEnter"
+                                   />
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </ScrollViewer>
+        </ListView>
     </Grid>
 </UserControl>

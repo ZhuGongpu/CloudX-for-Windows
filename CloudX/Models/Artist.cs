@@ -7,6 +7,7 @@
         public string Location { get; set; }
         public string Artist { get; set; }
 
+
         public static Movie convertFileURLToMovieItem(string url)
         {
             int len = url.Length, dividePoint = 0;

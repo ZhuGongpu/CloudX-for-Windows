@@ -62,6 +62,7 @@
             </TabItem>
 
         </Controls:MetroAnimatedSingleRowTabControl>
+        <!--
         <DockPanel Margin="-17,19,775,43" Grid.RowSpan="2" Visibility="Hidden">
             <ListBox Margin="30" Width="140" x:Name="lb" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBoxItem>
@@ -75,6 +76,7 @@
                 </ListBoxItem>
             </ListBox>
         </DockPanel>
+        -->
         <Controls:TransitioningContentControl x:Name="tc"
                                               Content="{Binding ElementName=lb,Path=SelectedItem}" Margin="151,0,10,10"
                                               Grid.RowSpan="2" />
@@ -163,7 +165,7 @@
                                     FontSize="16"
                                     Style="{DynamicResource MetroCircleButtonStyle}"
                                     MouseEnter="ToAllButtonOnMouseEnter"
-                                    Click="ToALLButtonOnClick"
+                                    Click="ToAllButtonOnClick"
                                     AllowDrop="True"
                                     DragEnter="DevicesDragEnter"
                                     Drop="DeviceFileOnDrop">
