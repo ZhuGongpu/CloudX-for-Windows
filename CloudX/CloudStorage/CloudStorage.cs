@@ -1,86 +1,130 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Threading;
-using qiniu;
+using Qiniu.Conf;
+using Qiniu.IO;
+using Qiniu.IO.Resumable;
+using Qiniu.RPC;
+using Qiniu.RS;
+using Qiniu.RSF;
 
 namespace CloudX.CloudStorage
 {
     internal class CloudStorage
     {
+        private const string AccessKey = "VDWt42uEpY7Q4ED4ZtePI_2XrD1WHwlbLhihPvei";
+        private const string SecretKey = "pLWHe6Qf3DCd3fMd_rkqbDJfMuK5AwT-Iqdmq4_X";
+
+        /// <summary>
+        ///     初始化
+        /// </summary>
         public static void Init()
         {
-            // 初始化qiniu配置，主要是API Keys
-            Config.ACCESS_KEY = "VDWt42uEpY7Q4ED4ZtePI_2XrD1WHwlbLhihPvei";
-            Config.SECRET_KEY = "pLWHe6Qf3DCd3fMd_rkqbDJfMuK5AwT-Iqdmq4_X";
+            Config.ACCESS_KEY = AccessKey;
+            Config.SECRET_KEY = SecretKey;
         }
 
-
         /// <summary>
-        ///     将本地文件传到云端，云端key(即文件名)为本地路径（路径中的\均替换为/）
+        ///     生成token
         /// </summary>
         /// <param name="bucket"></param>
-        /// <param name="filePath">本地文件的路径</param>
-        /// <param name="uploadCompleted"></param>
-        /// <param name="uploadFailed"></param>
-        /// <param name="progressChanged"></param>
-        public static void UploadFile(string bucket, string filePath,
-            EventHandler<QiniuUploadCompletedEventArgs> uploadCompleted,
-            EventHandler<QiniuUploadFailedEventArgs> uploadFailed,
-            EventHandler<QiniuUploadProgressChangedEventArgs> progressChanged)
+        /// <param name="expireTime">token有效时间，单位为秒</param>
+        /// <returns></returns>
+        public static string GenToken(string bucket, uint expireTime = 3600)
         {
-            var info = new FileInfo(filePath);
-            if (!info.Exists) return;
+            return new PutPolicy(bucket, expireTime).Token();
+        }
 
-            //替换路径中的\
-            string fileName = info.FullName.Replace('\\', '/');
+        /// <summary>
+        ///     普通上传
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <param name="filePath"></param>
+        /// <param name="finished"></param>
+        public static void PutFile(string bucket, string filePath, EventHandler<PutRet> finished)
+        {
+            string upToken = GenToken(bucket);
+            var extra = new PutExtra();
+            var client = new IOClient();
+            client.PutFinished += finished; //必须放在执行client.PutFile之前
 
-            var qfile = new QiniuFile(bucket, fileName, fileName);
-            var puttedCtx = new ResumbleUploadEx(fileName);
-            var done = new ManualResetEvent(false);
+            client.PutFile(upToken, filePath, filePath, extra);
+        }
 
-            qfile.UploadCompleted +=
-                (sender, e) =>
-                {
-                    uploadCompleted(sender, e);
-                    Console.WriteLine("Completed: key:{0}  hash:{1}", e.key, e.Hash);
-                    done.Set();
-                };
-            qfile.UploadFailed += (sender, e) =>
-            {
-                uploadFailed(sender, e);
-                Console.WriteLine(e.Error.ToString());
-                puttedCtx.Save();
-                done.Set();
-            };
+        /// <summary>
+        ///     断点续传
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <param name="filePath"></param>
+        /// <param name="progress"></param>
+        /// <param name="finished"></param>
+        /// <param name="failed"></param>
+        public static void ResumablePutFile(string bucket, string filePath, Action<float> progress,
+            EventHandler<CallRet> finished, EventHandler<CallRet> failed = null
+            )
+        {
+            string upToken = GenToken(bucket);
+            var setting = new Settings();
+            var extra = new ResumablePutExtra();
+            var client = new ResumablePut(setting, extra);
+            client.Progress += progress;
+            client.PutFinished += finished;
+            client.PutFailure += failed;
+            client.PutFile(upToken, filePath, filePath);
+        }
 
-            qfile.UploadProgressChanged += (sender, e) =>
-            {
-                var percentage = (int) (100*e.BytesSent/e.TotalBytes);
-                //TODO Console.WriteLine(percentage);
+        /// <summary>
+        ///     获取存储空间中的文件列表
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <param name="limit">返回结果的数量</param>
+        /// <returns></returns>
+        public static List<DumpItem> GetFileList(string bucket, int limit)
+        {
+            var client = new RSFClient(bucket);
+            client.Limit = limit;
+            DumpRet results = client.ListPrefix(bucket);
 
-                progressChanged(sender, e);
-            };
-            qfile.UploadBlockCompleted += (sender, e) =>
-            {
-                puttedCtx.Add(e.Index, e.Ctx);
-                puttedCtx.Save();
-            };
-            qfile.UploadBlockFailed += (sender, e) =>
-            {
-                //
-            };
+            //Console.WriteLine("FileListSize = {0}", results.Items.Count);
+            //foreach (DumpItem dumpItem in results.Items)
+            //{
+            //    Console.WriteLine("Key:{0}  Hash:{1}  PutTime:{2}  EndUser:{3}", dumpItem.Key, dumpItem.Hash,
+            //        dumpItem.PutTime, dumpItem.EndUser);
+            //}
+            //Console.WriteLine();
 
-            //上传为异步操作
-            //上传本地文件到七牛云存储
-            //qfile.Upload (puttedCtx.PuttedCtx);
-            qfile.Upload();
-            done.WaitOne();
+            return results.Items;
         }
 
 
         /// <summary>
-        ///     下载公共资源
+        ///     从存储空间中删除文件
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static bool DeleteFile(string bucket, string key)
+        {
+            var client = new RSClient();
+            CallRet ret = client.Delete(new EntryPath(bucket, key));
+            return ret.OK;
+        }
+
+        /// <summary>
+        ///     获取文件状态
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <param name="key">文件名</param>
+        /// <returns></returns>
+        public static Entry GetFileState(string bucket, string key)
+        {
+            var client = new RSClient();
+            return client.Stat(new EntryPath(bucket, key));
+        }
+
+        /// <summary>
+        ///     下载公共资源,非异步
         /// </summary>
         /// <param name="sourceURL"></param>
         /// <param name="destinationPath"></param>
@@ -89,18 +133,16 @@ namespace CloudX.CloudStorage
             try
             {
                 var uri = new Uri(sourceURL);
-                var request = (HttpWebRequest) WebRequest.Create(uri);
+                var request = (HttpWebRequest)WebRequest.Create(uri);
                 request.Method = "GET";
                 request.ContentType = "application/x-www-form-urlencoded";
 
-                var response = (HttpWebResponse) request.GetResponse();
-
+                var response = (HttpWebResponse)request.GetResponse();
                 Stream responseStream = response.GetResponseStream();
                 var fileStream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write);
 
-
                 long contentLength = response.ContentLength;
-                Console.WriteLine(contentLength);
+                //Console.WriteLine(contentLength);
 
                 long receivedSize = 0;
                 if (responseStream != null)

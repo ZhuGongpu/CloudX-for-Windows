@@ -80,6 +80,12 @@
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.12.1.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Qiniu.4.0">
+      <HintPath>..\packages\Qiniu.6.1.7.3\lib\Net40\Qiniu.4.0.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX">
       <HintPath>..\libs\SharpDX.dll</HintPath>
     </Reference>
@@ -258,10 +264,6 @@
     <ProjectReference Include="..\NAudio\NAudio.csproj">
       <Project>{DA4F02E3-0B5E-42CD-B8D9-5583FA51D66E}</Project>
       <Name>NAudio</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QiniuSDK\Qiniu.csproj">
-      <Project>{8d120aca-4bf9-42a7-81c6-8be39ff5ed42}</Project>
-      <Name>Qiniu</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
