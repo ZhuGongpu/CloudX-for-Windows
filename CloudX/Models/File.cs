@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using System.Runtime.InteropServices;
+using System.Security;
 
 namespace CloudX.Models
 {
@@ -37,7 +38,7 @@ namespace CloudX.Models
             var addFile = new File {Format = format, Location = Locate, Name = Name};
 
             addFile.typeImgLocation = @"/Asset/folder.png";
-            addFile.fileTag = Locate.GetHashCode();
+            addFile.fileTag = Locate.GetHashCode() + Name.GetHashCode();
             return addFile;
         }
     }

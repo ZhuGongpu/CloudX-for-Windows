@@ -36,16 +36,18 @@ namespace CloudX.SubViews
             contextMenu.Items.Clear();
             contextMenu.Items.Add("删除");
             ToolStripItem tmp = contextMenu.Items[0];
-            tmp.Click += deleteFileItem;
+            tmp.Click += DeleteFileItem;
         }
 
         void RefreshFileList()
         {
-            FileFolderScrollViewer.Items.Refresh();
+            FileListBox.Items.Refresh();
             Console.WriteLine("FileList Refreshed");
         }
-        private void deleteFileItem(object sender, EventArgs e)
+        private void DeleteFileItem(object sender, EventArgs e)
         {
+            selectFile = (File)FileListBox.SelectedItem;
+
             SampleData.FileList.Remove(selectFile);
 
             RefreshFileList();
@@ -89,7 +91,7 @@ namespace CloudX.SubViews
             throw new NotImplementedException();
         }
 
-        private void FileFolderScrollViewer_OnDrop(object sender, DragEventArgs e)
+        private void FileListBox_OnDrop(object sender, DragEventArgs e)
         {
             var filePath = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach (string file in filePath)
@@ -110,10 +112,6 @@ namespace CloudX.SubViews
             }
         }
 
-        private void UIElement_OnMouseEnter(object sender, MouseEventArgs e)
-        {
-            Console.WriteLine(FileFolderScrollViewer.Items.GetItemAt(0).GetType().ToString());
-        }
 
         private void TextBox_OnMouseEnter(object sender, MouseEventArgs e)
         {
@@ -122,6 +120,7 @@ namespace CloudX.SubViews
 
         private void FileImage_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (e.ClickCount != 2) return;
             int fileTag = (int)((Image) sender).Tag;
             File openedFile = null;
             foreach (var file in SampleData.FileList)
@@ -140,6 +139,32 @@ namespace CloudX.SubViews
             {
                 throw;
             }
+
+            String startUrl = openedFile.Location + "\\" + openedFile.Name;
+
+            Console.WriteLine(startUrl);
+            if (openedFile.Location == null)
+            {
+                return;
+            }
+            try
+            {
+                Process.Start(startUrl);
+            }
+            catch (Exception)
+            {
+                MainWindow.ShowMessageBox("确定", "取消", "注意：", "本设备上找不到该文件！");
+            }
         }
+
+        private void FileImage_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (FileListBox.SelectedItems.Count != 0)
+            {
+                Point point = e.MouseDevice.GetPosition(FileListBox) - (Vector)FileListBox.PointFromScreen(new Point(0, 0));
+                contextMenu.Show((int)point.X, (int)point.Y);
+            }
+        }
+
     }
 }

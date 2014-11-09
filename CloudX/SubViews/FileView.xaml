@@ -19,46 +19,43 @@
     </UserControl.Resources>
 
     <Grid>
-      
-        <ListView Name="FileFolderScrollViewer" Drop="FileFolderScrollViewer_OnDrop" AllowDrop="True" 
-                  ScrollViewer.CanContentScroll="True" Height="550" Width="820" MaxWidth="820" 
-                  
-                  >
-            <ItemsControl ItemsSource="{Binding FileLists}"
-                      Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" MaxWidth="820" >
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid ToolTip="{Binding}"
+        <ListBox ItemsSource="{Binding FileLists}" Name="FileListBox" AllowDrop="True" Drop="FileListBox_OnDrop">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="4" Width="800"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid ToolTip="{Binding}"
                           MinHeight="40"
                           Margin="5"
-                          MaxWidth="800"
-                              >
-                            
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            
-                            <Image Margin="20" Width="100" Height="100" Source="{Binding typeImgLocation}" 
-                                   Tag="{Binding fileTag}"
-                                   MouseLeftButtonDown="FileImage_OnMouseLeftButtonDown"
-                                   />
-                            <TextBlock Grid.Row="1"
+                          Width="200"
+                          Height="180"
+                          >
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+
+                        <Image Margin="10" Width="100" Height="100" Source="{Binding typeImgLocation}"
+                               Tag="{Binding fileTag}"
+                               MouseLeftButtonDown="FileImage_OnMouseLeftButtonDown"
+                               MouseRightButtonDown="FileImage_OnMouseRightButtonDown" />
+                        
+                        <TextBlock Grid.Row="1"
                                    Margin="4,2,4,10"
+                                   Width="160"
+                                   Height="Auto"
                                    FontSize="{DynamicResource NormalFontSize}"
                                    TextAlignment="Center"
                                    Text="{Binding Name}"
-                                   MouseEnter="TextBox_OnMouseEnter"
-                                   />
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ListView>
+                                   MouseEnter="TextBox_OnMouseEnter" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

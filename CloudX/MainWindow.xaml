@@ -45,21 +45,25 @@
               Margin="5"
               VerticalAlignment="Stretch"
               HorizontalAlignment="Left">
+            <!--
             <MenuItem Header="主页" Click="ClickedMainButton" />
             <MenuItem Header="文件管理" Click="FileManageButtonOnClick" />
-            <MenuItem Header="设备管理" Click="ShowBottom" />
+            -->
+            <MenuItem Header="设备管理中心" Click="ShowBottom" />
+            <!--
             <MenuItem Header="关于我们" Click="ShowAboutUs" />
+            -->
         </Menu>
         <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1" Margin="10,0,0,0" Name="tablControl">
-            <TabItem Header="电影">
-                <subViews:MovieView DataContext="{Binding}" />
-            </TabItem>
-            <TabItem Header="音乐">
-                <subViews:MusicView DataContext="{Binding}" />
-            </TabItem>
-            <TabItem Header="文件">
+            
+            <TabItem Header="云文件中心">
                 <subViews:FileView DataContext="{Binding}" />
             </TabItem>
+            <!--
+            <TabItem Header="设备管理中心" MouseLeftButtonDown="ShowBottom">
+                <subViews:FileView DataContext="{Binding}" />
+            </TabItem>
+            -->
 
         </Controls:MetroAnimatedSingleRowTabControl>
         <!--
@@ -86,8 +90,8 @@
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
             <Controls:Flyout
-                Position="Bottom">
-                <Grid HorizontalAlignment="Left" Height="200">
+                Position="Bottom" >
+                <Grid HorizontalAlignment="Left" Height="200" >
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Vertical" Margin="10,10,10,10" Name="DevicePanel1">
                             <Rectangle Margin="10,10,10,10" Width="80" Height="130"
@@ -97,7 +101,8 @@
                                        DragEnter="DevicesDragEnter"
                                        Drop="DeviceFileOnDrop"
                                        AllowDrop="True"
-                                       Visibility="Hidden">
+                                       Visibility="Hidden"
+                                       >
                                 <Rectangle.Fill>
                                     <ImageBrush ImageSource="/Asset/tablet.png"/>
                                 </Rectangle.Fill>
