@@ -165,5 +165,16 @@ namespace CloudX.CloudStorage
                 Console.WriteLine(e.Message);
             }
         }
+
+        /// <summary>
+        /// 生成公开资源下载连接
+        /// </summary>
+        /// <param name="bucket">云存储空间名称</param>
+        /// <param name="key">云存储空间中的文件名</param>
+        /// <returns></returns>
+        public static string GenPublicResourceDownloadURL(string bucket, string key)
+        {
+            return String.Format("http://{0}.qiniudn.com/{1}", bucket, key);
+        }
     }
 }
