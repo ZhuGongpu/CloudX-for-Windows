@@ -36,6 +36,7 @@ namespace CloudX.utils
                     lock (outputStream)
                     {
                         DataPacket.CreateBuilder()
+                            .SetUnixTimeStamp(0)//TODO set time stamp
                             .SetDataPacketType(DataPacket.Types.DataPacketType.Audio)
                             .SetAudio(
                                 Audio.CreateBuilder()

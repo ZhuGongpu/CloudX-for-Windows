@@ -472,7 +472,7 @@ namespace CloudX.Client
                 case Command.Types.CommandType.StartAudioTransmission:
                     if (audioSender != null) audioSender.Finish();
                     audioSender = new AudioSender(stream);
-                   //TODO audioSender.Start();
+                    audioSender.Start();
                     break;
                 case Command.Types.CommandType.StartVideoTransmission:
                     if (videoSenderThread != null && videoSenderThread.IsAlive) videoSenderThread.Abort();
