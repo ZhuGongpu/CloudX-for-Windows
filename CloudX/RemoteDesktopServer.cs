@@ -33,10 +33,10 @@ namespace CloudX
 
             Console.WriteLine("waiting...");
 
-            TcpClient client = null;
 
             while (running)
             {
+                TcpClient client = null;
                 try
                 {
                     client = Server.AcceptTcpClient();
@@ -44,7 +44,7 @@ namespace CloudX
                     clientIp = clientIp.Split(':')[0];
 
                     Console.WriteLine("Accepted From " + clientIp);
-                    new Client(client.GetStream(), clientIp, dispatcher).Start();
+                    new Client.Client(client.GetStream(), clientIp, dispatcher).Start();
                     //  receivedClientCount++;
                 }
                 catch (Exception e)

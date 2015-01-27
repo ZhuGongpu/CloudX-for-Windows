@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using CloudX.Client;
 using CloudX.fileutils;
 using CloudX.SubViews;
 using CloudX.SubWindows;
@@ -37,7 +38,7 @@ namespace CloudX
         public static DelegateDeclarations.RefreshDeviceUI RefreshDeviceList;
 
         public static DelegateDeclarations.RefreshProgressUI UpdateProgress;
-        private readonly AudioServer audioServer;
+        //private readonly AudioServer audioServer;
 
         private readonly ContextMenuStrip contextMenu = new ContextMenuStrip();
         private readonly List<Device> deviceList = new List<Device>();
@@ -105,9 +106,9 @@ namespace CloudX
             try
             {
                 remoteDesktopServer = new RemoteDesktopServer(Dispatcher);
-                audioServer = new AudioServer();
+                //audioServer = new AudioServer();
                 new Thread(remoteDesktopServer.Start).Start();
-                new Thread(audioServer.Start).Start();
+                //new Thread(audioServer.Start).Start();
             }
             catch (Exception e)
             {
@@ -125,7 +126,7 @@ namespace CloudX
                 curDevice.deviceName.Visibility = Visibility.Hidden;
             }
             currentDeviceCount = 0;
-            foreach (var entry in Client.ClientDictionary)
+            foreach (var entry in Client.Client.ClientDictionary)
             {
                 ClientInfo info = entry.Value;
                 if (info != null)
@@ -150,8 +151,8 @@ namespace CloudX
             base.OnClosing(e);
             if (remoteDesktopServer != null)
                 remoteDesktopServer.Finish();
-            if (audioServer != null)
-                audioServer.Finish();
+            //if (audioServer != null)
+            //    audioServer.Finish();
         }
 
         public void CheckRightViewContains(StackPanel stackPanel)
@@ -235,7 +236,7 @@ namespace CloudX
 
             //给设备发送消息
             Dispatcher
-                .BeginInvoke(Client.SendMessageToDevice, currentSelectDevice.ip, result);
+                .BeginInvoke(Client.Client.SendMessageToDevice, currentSelectDevice.ip, result);
 
             await this.ShowMessageAsync("成功发送消息", result + "!");
         }

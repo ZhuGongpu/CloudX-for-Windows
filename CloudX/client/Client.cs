@@ -11,11 +11,11 @@ using System.Windows.Forms;
 using System.Windows.Threading;
 using CloudX.DesktopDuplication;
 using CloudX.Models;
+using CloudX.network;
 using CloudX.utils;
 using common.message;
-using Google.ProtocolBuffers;
 
-namespace CloudX
+namespace CloudX.Client
 {
     internal class Client
     {
@@ -28,14 +28,13 @@ namespace CloudX
 
         private readonly string clientIP;
 
-        private readonly Thread dataReceivingThread;
         private readonly Dispatcher dispatcher;
-        private readonly Thread videoSendingThread;
+        private readonly Thread inputThread;
         private int ClientScreenHeight;
         private int ClientScreenWidth;
 
         private int ConnectionFailedTimes;
-        private bool NeedToSendFrame = true;
+        private bool NeedToSendFrame = true; //标记是否需要传输完整帧
 
         private bool isWindowSelected;
         private DateTime lastLeftClickTime = DateTime.Now;
@@ -43,7 +42,8 @@ namespace CloudX
         private float scaleRate = 1;
         private int selectedWindowHwnd;
         private Stream stream;
-        //标记是否需要传输完整帧
+        private Thread videoSenderThread;
+
 
         public Client(Stream stream, string clientIP, Dispatcher dispatcher)
         {
@@ -51,15 +51,14 @@ namespace CloudX
             this.clientIP = clientIP;
             this.dispatcher = dispatcher;
 
-            dataReceivingThread = new Thread(DataReceiver);
-            videoSendingThread = new Thread(VideoSender);
+            inputThread = new Thread(DataReceiver);
         }
 
         public void Start()
         {
             try
             {
-                dataReceivingThread.Start();
+                inputThread.Start();
             }
             catch (Exception e)
             {
@@ -68,6 +67,9 @@ namespace CloudX
             }
         }
 
+        /// <summary>
+        ///     处理所有接收的输入
+        /// </summary>
         private void DataReceiver()
         {
             Console.WriteLine("data receiver online");
@@ -80,36 +82,34 @@ namespace CloudX
                 try
                 {
                     dataPacket = DataPacket.ParseDelimitedFrom(stream);
-
-                    if (dataPacket.HasCommand) // command
+                    if (dataPacket == null) continue;
+                    switch (dataPacket.DataPacketType)
                     {
-                        CommandProcessor(dataPacket.Command);
-                    }
-                    else if (dataPacket.HasRequest) // request
-                    {
-                        RequestProcessor(dataPacket.Request, stream);
-                    }
-                    else if (dataPacket.HasInfo) // info 
-                    {
-                        InfoProcessor(dataPacket.Info);
-                    }
-                    else if (dataPacket.HasSharedMessage) // message
-                    {
-                        SharedMessageProcessor(dataPacket.SharedMessage);
-                    }
-                    else if (dataPacket.HasSharedFile) // file
-                    {
-                        SharedFileProcessor(dataPacket.SharedFile);
-                    }
-                    else if (dataPacket.HasKeyboardEvent) // keyboard
-                    {
-                        KeyBoardEventProcessor(dataPacket.KeyboardEvent);
+                        case DataPacket.Types.DataPacketType.DeviceInfo:
+                            //TODO
+                            break;
+                        case DataPacket.Types.DataPacketType.Command:
+                            CommandProcessor(dataPacket.Command);
+                            break;
+                        case DataPacket.Types.DataPacketType.FileRequest:
+                            //TODO
+                            break;
+                        case DataPacket.Types.DataPacketType.KeyboardEvent:
+                            KeyBoardEventProcessor(dataPacket.KeyboardEvent);
+                            break;
+                        case DataPacket.Types.DataPacketType.SharedMessage:
+                            SharedMessageProcessor(dataPacket.SharedMessage);
+                            break;
+                        case DataPacket.Types.DataPacketType.FileInfo:
+                            //TODO
+                            break;
+                        default:
+                            break;
                     }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine("Client dataReceiver  " + (dataPacket == null) + "  " + e);
-                    //stream.Flush();
                     ConnectionFailedHandler();
                 }
             }
@@ -117,67 +117,67 @@ namespace CloudX
             Finish();
         }
 
-        public void Receive(string filePath)
-        {
-            var file = new FileStream(filePath, FileMode.Create);
+        //public void ReceiveFile(string filePath)
+        //{
+        //    var file = new FileStream(filePath, FileMode.Create);
 
-            Console.WriteLine("FileReceiver : Receive");
-            long receivedSize = 0;
-            while (true)
-            {
-                try
-                {
-                    DataPacket dataPacket = DataPacket.ParseDelimitedFrom(stream);
-                    if (dataPacket.HasSharedFile)
-                    {
-                        Console.WriteLine("FileReceiver : Receive {0} / {1}", receivedSize,
-                            dataPacket.SharedFile.FileLength);
+        //    Console.WriteLine("FileReceiver : ReceiveFile");
+        //    long receivedSize = 0;
+        //    while (true)
+        //    {
+        //        try
+        //        {
+        //            DataPacket dataPacket = DataPacket.ParseDelimitedFrom(stream);
+        //            if (dataPacket.HasFileBlock)
+        //            {
+        //                Console.WriteLine("FileReceiver : ReceiveFile {0} / {1}", receivedSize,
+        //                    dataPacket.file.FileLength);
 
-                        if (receivedSize >= dataPacket.SharedFile.FileLength)
-                        {
-                            file.Close();
-                            Console.WriteLine("File Transimission Done");
-                            return;
-                        }
+        //                if (receivedSize >= dataPacket.SharedFile.FileLength)
+        //                {
+        //                    file.Close();
+        //                    Console.WriteLine("File Transimission Done");
+        //                    return;
+        //                }
 
-                        byte[] buffer = dataPacket.SharedFile.Content.ToByteArray();
-                        file.Write(buffer, 0, buffer.Length);
-                        file.Flush();
+        //                byte[] buffer = dataPacket.SharedFile.Content.ToByteArray();
+        //                file.Write(buffer, 0, buffer.Length);
+        //                file.Flush();
 
-                        receivedSize += buffer.Length;
+        //                receivedSize += buffer.Length;
 
-                        Console.WriteLine("FileReceiver : Receive {0} / {1}", receivedSize,
-                            dataPacket.SharedFile.FileLength);
+        //                Console.WriteLine("FileReceiver : ReceiveFile {0} / {1}", receivedSize,
+        //                    dataPacket.SharedFile.FileLength);
 
 
-                        //todo notify ui
-                        //dispatcher.BeginInvoke(MainWindow.UpdateProgress, (double)receivedSize / dataPacket.SharedFile.FileLength);
-                    }
-                }
-                catch (Exception)
-                {
-                    //todo notify UI
-                    //dispatcher.BeginInvoke(MainWindow.ShowMessageBox, null, null, "文件传输已中断", null);
+        //                //todo notify ui
+        //                //dispatcher.BeginInvoke(MainWindow.UpdateProgress, (double)receivedSize / dataPacket.SharedFile.FileLength);
+        //            }
+        //        }
+        //        catch (Exception)
+        //        {
+        //            //todo notify UI
+        //            //dispatcher.BeginInvoke(MainWindow.ShowMessageBox, null, null, "文件传输已中断", null);
 
-                    Console.WriteLine("File Transimission Failed");
+        //            Console.WriteLine("File Transimission Failed");
 
-                    break;
-                }
-            }
+        //            break;
+        //        }
+        //    }
 
-            file.Close();
-            Console.WriteLine("File Transimission Done");
-        }
+        //    file.Close();
+        //    Console.WriteLine("File Transimission Done");
+        //}
 
         public void Finish()
         {
             try
             {
-                if (dataReceivingThread != null && dataReceivingThread.IsAlive)
-                    dataReceivingThread.Abort();
+                if (inputThread != null && inputThread.IsAlive)
+                    inputThread.Abort();
 
-                if (videoSendingThread != null && videoSendingThread.IsAlive)
-                    videoSendingThread.Abort();
+                if (videoSenderThread != null && videoSenderThread.IsAlive)
+                    videoSenderThread.Abort();
             }
             catch (SecurityException exception)
             {
@@ -212,70 +212,16 @@ namespace CloudX
 
         #region DataPacket Sender
 
-        /// <summary>
-        ///     发送单个RequestFeedback
-        /// </summary>
-        private void RequestFeedbackSender(string name)
-        {
-            try
-            {
-                //lock (stream) //todo 不能加锁，否则可能会造成死锁
-                {
-                    DataPacket.CreateBuilder().SetDataPacketType(DataPacket.Types.DataPacketType.RequestFeedback)
-                        .SetRequestFeedback(
-                            RequestFeedback.CreateBuilder()
-                                .SetFilePath(ByteString.CopyFrom(name, Encoding.UTF8)
-                                ).Build()
-                        ).Build().WriteDelimitedTo(stream);
-                    Console.WriteLine("request feed back sent  " + name);
-                }
-            }
-            catch (Exception)
-            {
-                ConnectionFailedHandler();
-            }
-        }
-
-        /// <summary>
-        ///     发送主机分辨率
-        /// </summary>
-        private void InfoPacketSender()
-        {
-            try
-            {
-                {
-                    DataPacket.CreateBuilder()
-                        .SetDataPacketType(DataPacket.Types.DataPacketType.Info)
-                        .SetInfo(
-                            Info.CreateBuilder()
-                                .SetInfoType(Info.Types.InfoType.NormalInfo)
-                                .SetPortAvailable(50324)
-                                .SetHeight(WindowsUtility.GetScreenHeight())
-                                .SetWidth(WindowsUtility.GetScreenWidth())
-                        ).Build().WriteDelimitedTo(stream);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                ConnectionFailedHandler();
-            }
-        }
-
-
         private void VideoSender()
         {
-            // Console.WriteLine("video sender online");
-            //while (videoSendingThreadStatus)
-
-            int frameCounter = 0;//当其为0时，发送完整帧数据
-            int frameCounterThreshold = 10;//frameCounter达到这个值之后自动清零，并发送完整帧数据
+            int frameCounter = 0; //当其为0时，发送完整帧数据
+            const int frameCounterThreshold = 10; //frameCounter达到这个值之后自动清零，并发送完整帧数据
             while (stream != null)
             {
-                //new code here //TODO 暂时不区分是否有窗口选中
+                // 暂时不区分是否有窗口选中
 
                 FrameData frameData = null;
-                //DuplicationManager.GetInstance().GetFrame(out frameData);//测试只传输完整Frame
+
                 if (NeedToSendFrame || frameCounter == 0)
                 {
                     NeedToSendFrame = false;
@@ -286,52 +232,7 @@ namespace CloudX
 
                 frameData.WriteToStream(stream);
 
-                Console.WriteLine("video sent");
-
                 frameCounter = (frameCounter + 1)%frameCounterThreshold;
-
-                //Thread.Sleep(100);
-
-                //Bitmap bitmap;
-                //if (isWindowSelected)
-                //{
-                //    bitmap = WindowCaptureUtility.CaptureSelectedWindow(selectedWindowHwnd);
-                //}
-                //else
-                //{
-                //    var rect = new WindowCaptureUtility.RECT
-                //    {
-                //        Left = Screen.PrimaryScreen.Bounds.Left,
-                //        Right = Screen.PrimaryScreen.Bounds.Right,
-                //        Top = Screen.PrimaryScreen.Bounds.Top,
-                //        Bottom = Screen.PrimaryScreen.Bounds.Bottom
-                //    };
-
-                //    bitmap = WindowCaptureUtility.Capture(rect);
-                //}
-
-                //if (bitmap == null) continue;
-
-                //if (stream != null)
-                // {
-                //    try
-                //    {
-                //        //todo changed
-                //        //bitmap.SetResolution(bitmap.Width*scaleRate, bitmap.Height*scaleRate);
-
-                //        //send the bitmap
-
-
-                //        SendBitmap(new Bitmap(bitmap, (int)(bitmap.Width * scaleRate), (int)(bitmap.Height * scaleRate)));
-                //    }
-                //    catch (Exception e)
-                //    {
-                //        Console.WriteLine("Before Exception : {0}, {1}  {2}", bitmap.Width, bitmap.Height, scaleRate);
-
-                //        Console.WriteLine("Client VideoReceiver Run Into An Exception : \n" + e);
-                //        ConnectionFailedHandler();
-                //    }
-                //}
             }
         }
 
@@ -344,63 +245,21 @@ namespace CloudX
         {
             if (ClientDictionary[targetIP] != null)
             {
-                //todo changed
-                messageSender(targetIP, ByteString.CopyFrom(DataTypeConverter.StringToBytes(message)));
+                var tcpClient = new TcpClient(targetIP, 50323);
+
+                if (tcpClient.Connected)
+                {
+                    ProtoBufHelper.WriteMessage(tcpClient.GetStream(), message);
+                    tcpClient.Close();
+                }
             }
         }
-
-        private static void messageSender(string targetIP, ByteString message)
-        {
-            var tcpClient = new TcpClient(targetIP, 50323);
-
-            if (tcpClient.Connected)
-            {
-                messageSender(tcpClient.GetStream(), message);
-                tcpClient.Close();
-            }
-        }
-
-        private static void messageSender(Stream targetStream, ByteString message)
-        {
-            if (targetStream != null)
-            {
-                DataPacket.CreateBuilder().SetDataPacketType(DataPacket.Types.DataPacketType.SharedMessage)
-                    .SetSharedMessage(
-                        SharedMessage.CreateBuilder().SetContent(message).Build()
-                    ).Build().WriteDelimitedTo(targetStream);
-            }
-        }
-
-        //private void SendBitmap(Bitmap bitmap)
-        //{
-        //    //lock (stream)
-        //    {
-        //        //TimeSpan timeSpan = new TimeSpan();
-        //        //DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-        //        //timeSpan = DateTime.Now - new DateTime();
-
-        //        DataPacket.CreateBuilder()
-        //            .SetDataPacketType(DataPacket.Types.DataPacketType.Video)
-        //            .SetTimeStamp(
-        //                ByteString.CopyFromUtf8(DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond)
-        //            ) //todo for debug only
-        //            .SetVideo(
-        //                Video.CreateBuilder()
-        //                    .SetImage(ByteString.CopyFrom(
-        //            //CompressionAndDecompressionUtils.GZipCompress(BitmapToBytes(bitmap)) //compress
-        //            //CompressionAndDecompressionUtils.SnappyCompress(BitmapToBytes(bitmap))
-        //                        DataTypeConverter.BitmapToBytes(bitmap)
-        //                        ))
-        //                    .Build()
-        //            )
-        //            .Build()
-        //            .WriteDelimitedTo(stream);
-        //    }
-        //}
 
         #endregion
 
         #region DataPacket Processor
+
+        private AudioSender audioSender;
 
         private void SharedMessageProcessor(SharedMessage message)
         {
@@ -408,7 +267,7 @@ namespace CloudX
             dispatcher.BeginInvoke(MainWindow.ShowMessageBox
                 , "复制", "取消", "收到消息：", DataTypeConverter.ByteStringToString(message.Content));
 
-            Console.WriteLine("Receive a message : "
+            Console.WriteLine("ReceiveFile a message : "
                               + DataTypeConverter.ByteStringToString(message.Content));
 
             //send the message to all
@@ -416,15 +275,9 @@ namespace CloudX
             {
                 if (!entry.Key.Equals(clientIP))
                 {
-                    messageSender(entry.Key, message.Content);
+                    messageSender(entry.Key, DataTypeConverter.ByteStringToString(message.Content));
                 }
             }
-        }
-
-        private void SharedFileProcessor(SharedFile file)
-        {
-            //todo
-            Console.WriteLine("Receive a file");
         }
 
         private void KeyBoardEventProcessor(KeyboardEvent keyboardEvent)
@@ -439,81 +292,26 @@ namespace CloudX
         ///     处理收到的Info包
         /// </summary>
         /// <param name="info"></param>
-        private void InfoProcessor(Info info)
+        private void InfoProcessor(DeviceInfo info)
         {
-            switch (info.InfoType)
-            {
-                case Info.Types.InfoType.Login:
-                {
-                    if (!ClientDictionary.ContainsKey(clientIP))
-                    {
-                        var clientInfo = new ClientInfo();
-                        clientInfo.ClientIP = clientIP;
-                        clientInfo.ClientName = DataTypeConverter.ByteStringToString(info.DeviceName);
-                        clientInfo.ClientStream = stream;
+            var clientInfo = new ClientInfo();
+            clientInfo.ClientIP = clientIP;
+            clientInfo.ClientName = DataTypeConverter.ByteStringToString(info.DeviceName);
+            clientInfo.ClientStream = stream;
 
-                        ClientScreenWidth = info.Width;
-                        ClientScreenHeight = info.Height;
+            ClientScreenWidth = info.Resolution.Width;
+            ClientScreenHeight = info.Resolution.Height;
 
-                        scaleRate = Math.Min(ClientScreenWidth/(float) Screen.PrimaryScreen.Bounds.Width,
-                            ClientScreenHeight/(float) Screen.PrimaryScreen.Bounds.Height
-                            );
-                        if (scaleRate > 1)
-                            scaleRate = 1;
+            scaleRate = Math.Min(ClientScreenWidth/(float) Screen.PrimaryScreen.Bounds.Width,
+                ClientScreenHeight/(float) Screen.PrimaryScreen.Bounds.Height
+                );
+            if (scaleRate > 1)
+                scaleRate = 1;
 
-                        if (ClientDictionary.ContainsKey(clientIP))
-                            ClientDictionary[clientIP] = clientInfo;
-                        else
-                            ClientDictionary.Add(clientIP, clientInfo);
-                    }
-                }
-                    break;
-                case Info.Types.InfoType.Logout:
-
-                    if (ClientDictionary.ContainsKey(clientIP))
-                        ClientDictionary.Remove(clientIP);
-
-                    break;
-                case Info.Types.InfoType.NormalInfo:
-                {
-                    var clientInfo = new ClientInfo();
-                    clientInfo.ClientIP = clientIP;
-                    clientInfo.ClientName = DataTypeConverter.ByteStringToString(info.DeviceName);
-                    clientInfo.ClientStream = stream;
-
-
-                    if (ClientDictionary.ContainsKey(clientIP))
-                        ClientDictionary[clientIP] = clientInfo;
-                    else
-                        ClientDictionary.Add(clientIP, clientInfo);
-
-                    if (info.Height == 0 && info.Width == 0 && info.PortAvailable == 0)
-                    {
-                        //deal as a request
-                        InfoPacketSender();
-                    }
-                    else
-                    {
-                        if (info.HasDeviceName)
-                        {
-                            if (ClientDictionary.ContainsKey(clientIP))
-                            {
-                                ClientDictionary[clientIP] = clientInfo;
-                            }
-                        }
-
-                        ClientScreenWidth = info.Width;
-                        ClientScreenHeight = info.Height;
-
-                        scaleRate = Math.Min(ClientScreenWidth/(float) Screen.PrimaryScreen.Bounds.Width,
-                            ClientScreenHeight/(float) Screen.PrimaryScreen.Bounds.Height
-                            );
-                        if (scaleRate > 1)
-                            scaleRate = 1;
-                    }
-                }
-                    break;
-            }
+            if (ClientDictionary.ContainsKey(clientIP))
+                ClientDictionary[clientIP] = clientInfo;
+            else
+                ClientDictionary.Add(clientIP, clientInfo);
 
             //notify UI
             dispatcher.BeginInvoke(MainWindow.RefreshDeviceList);
@@ -671,34 +469,27 @@ namespace CloudX
                 case Command.Types.CommandType.ShowDesktop:
                     WindowsUtility.ShowDesktop();
                     break;
-                    ////todo mute audio and etc
-                case Command.Types.CommandType.StartAudioAndVideoTransmission:
-                    //    audioSendingThreadStatus = true;
-                    //videoSendingThreadStatus = true;
-
-                    videoSendingThread.Start();
-
+                case Command.Types.CommandType.StartAudioTransmission:
+                    if (audioSender != null) audioSender.Finish();
+                    audioSender = new AudioSender(stream);
+                   //TODO audioSender.Start();
                     break;
-                    //case Command.Types.CommandType.StartAudioTransmission:
-                    //    audioSendingThreadStatus = true;
-
-                    //    break;
-                    //case Command.Types.CommandType.StartVideoTransmission:
-                    //    videoSendingThreadStatus = true;
-                    //    break;
-                    //case Command.Types.CommandType.StopAudioAndVideoTransmission:
-                    //    audioSendingThreadStatus = false;
-                    //    videoSendingThreadStatus = false;
-
-                    //    break;
-                    //case Command.Types.CommandType.StopAudioTransmission:
-                    //    audioSendingThreadStatus = false;
-
-                    //    break;
-                    //case Command.Types.CommandType.StopVideoTransmission:
-                    //    videoSendingThreadStatus = false;
-
-                    //    break;
+                case Command.Types.CommandType.StartVideoTransmission:
+                    if (videoSenderThread != null && videoSenderThread.IsAlive) videoSenderThread.Abort();
+                    videoSenderThread = new Thread(VideoSender);
+                    videoSenderThread.Start();
+                    break;
+                case Command.Types.CommandType.StopAudioTransmission:
+                    if (audioSender != null)
+                        audioSender.Finish();
+                    break;
+                case Command.Types.CommandType.StopVideoTransmission:
+                    if (videoSenderThread != null && videoSenderThread.IsAlive)
+                        videoSenderThread.Abort();
+                    break;
+                case Command.Types.CommandType.FindMyDevice:
+                    //TODO 待定
+                    break;
                 default:
                     break;
             }
@@ -713,105 +504,106 @@ namespace CloudX
         /// </summary>
         /// <param name="request"></param>
         /// <param name="stream"></param>
-        private void RequestProcessor(Request request, Stream stream)
-        {
-            string fileName = Encoding.UTF8.GetString(request.FilePath.ToByteArray());
-            string tableName = null;
+        //private void RequestProcessor(Request request, Stream stream)
+        //{
+        //    string fileName = Encoding.UTF8.GetString(request.FilePath.ToByteArray());
+        //    string tableName = null;
 
-            Console.WriteLine("RequestProcessor : " + request.RequestType);
+        //    Console.WriteLine("RequestProcessor : " + request.RequestType);
 
-            bool isRemove = false;
-            switch (request.RequestType)
-            {
-                case Request.Types.RequestType.Music:
-                    tableName = "music";
-                    //videoSendingThreadStatus = false;
-                    //audioSendingThreadStatus = true;
-                    break;
-                case Request.Types.RequestType.RemoveMusic:
-                    tableName = "music";
-                    isRemove = true;
-                    break;
-                case Request.Types.RequestType.Movie:
-                    tableName = "movie";
-                    //videoSendingThreadStatus = true;
-                    //audioSendingThreadStatus = true;
-                    break;
-                case Request.Types.RequestType.RemoveMovie:
-                    tableName = "movie";
-                    isRemove = true;
-                    break;
-                case Request.Types.RequestType.File:
-                    tableName = "file";
-                    break;
-                case Request.Types.RequestType.RemoveFile:
-                    tableName = "file";
-                    isRemove = true;
-                    //默认不修改音频和视频输出
-                    break;
+        //    bool isRemove = false;
+        //    switch (request.RequestType)
+        //    {
+        //        case Request.Types.RequestType.Music:
+        //            tableName = "music";
+        //            //videoSendingThreadStatus = false;
+        //            //audioSendingThreadStatus = true;
+        //            break;
+        //        case Request.Types.RequestType.RemoveMusic:
+        //            tableName = "music";
+        //            isRemove = true;
+        //            break;
+        //        case Request.Types.RequestType.Movie:
+        //            tableName = "movie";
+        //            //videoSendingThreadStatus = true;
+        //            //audioSendingThreadStatus = true;
+        //            break;
+        //        case Request.Types.RequestType.RemoveMovie:
+        //            tableName = "movie";
+        //            isRemove = true;
+        //            break;
+        //        case Request.Types.RequestType.File:
+        //            tableName = "file";
+        //            break;
+        //        case Request.Types.RequestType.RemoveFile:
+        //            tableName = "file";
+        //            isRemove = true;
+        //            //默认不修改音频和视频输出
+        //            break;
 
-                case Request.Types.RequestType.SendFile: //移动终端请求向云端发送文件并加入文件管理中心
+        //        case Request.Types.RequestType.SendFile: //移动终端请求向云端发送文件并加入文件管理中心
 
-                    Console.WriteLine("*********** send file 1");
+        //            Console.WriteLine("*********** send file 1");
 
-                    //new FileReceiver("C:\\CloudXDownloads\\" + fileName, stream, dispatcher).Receive();
-                    lock (stream)
-                    {
-                        Receive("C:\\CloudXDownloads\\" + fileName);
-                    }
-                    Console.WriteLine("*********** send file 2");
-                    //todo notify UI to pick up a folder and store the file.
-                    //dispatcher.BeginInvoke(MainWindow.PromptToSave, fileName, stream);
-                    return;
-                default:
-                    //send the file
-                    var sender = new FileSender(clientIP, fileName, null);
-                    sender.BeginSend();
-                    break;
-            }
+        //            //new FileReceiver("C:\\CloudXDownloads\\" + fileName, stream, dispatcher).ReceiveFile();
+        //            lock (stream)
+        //            {
+        //                ReceiveFile("C:\\CloudXDownloads\\" + fileName);
+        //            }
+        //            Console.WriteLine("*********** send file 2");
+        //            //todo notify UI to pick up a folder and store the file.
+        //            //dispatcher.BeginInvoke(MainWindow.PromptToSave, fileName, stream);
+        //            return;
+        //        default:
+        //            //send the file
+        //            var sender = new FileSender(clientIP, fileName, null);
+        //            sender.BeginSend();
+        //            break;
+        //    }
 
-            Console.WriteLine("receive the request of " + tableName + " search for " + fileName);
+        //    Console.WriteLine("receive the request of " + tableName + " search for " + fileName);
 
-            if (fileName.Equals("*"))
-            {
-                //query the whole table
-                DataTable dataTable = SQLiteUtils.LoadData(tableName);
+        //    if (fileName.Equals("*"))
+        //    {
+        //        //query the whole table
+        //        DataTable dataTable = SQLiteUtils.LoadData(tableName);
 
-                foreach (DataRow dataRow in dataTable.Rows) //send all the entries
-                {
-                    RequestFeedbackSender(dataRow[0].ToString());
-                }
+        //        foreach (DataRow dataRow in dataTable.Rows) //send all the entries
+        //        {
+        //            RequestFeedbackSender(dataRow[0].ToString());
+        //        }
 
-                RequestFeedbackSender("<NULL>"); //send a null entry as an end
-            }
-            else
-            {
-                if (isRemove)
-                {
-                    SQLiteUtils.Delete(tableName, fileName);
-                    SampleData.Artists.Remove(Movie.convertFileURLToMovieItem(fileName));
-                }
-                else
-                {
-                    try
-                    {
-                        Process.Start(fileName); //open the file by the default application
+        //        RequestFeedbackSender("<NULL>"); //send a null entry as an end
+        //    }
+        //    else
+        //    {
+        //        if (isRemove)
+        //        {
+        //            SQLiteUtils.Delete(tableName, fileName);
+        //            SampleData.Artists.Remove(Movie.convertFileURLToMovieItem(fileName));
+        //        }
+        //        else
+        //        {
+        //            try
+        //            {
+        //                Process.Start(fileName); //open the file by the default application
 
-                        Console.WriteLine("Start " + fileName);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                }
-            }
-        }
+        //                Console.WriteLine("Start " + fileName);
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                Console.WriteLine(e);
+        //            }
+        //        }
+        //    }
+        //}
 
         #endregion
     }
 
     #region ClientInfo
 
+    //TODO 
     public class ClientInfo
     {
         public string ClientIP { get; set; }
@@ -821,61 +613,43 @@ namespace CloudX
 
     #endregion
 
-    #region 发送音频
+    public class AudioSender
+    {
+        private readonly Stream stream;
+        private AudioCaptureUtils audioCaptureUtils;
+        private bool running = true;
 
-    //public class AudioSender
-    //{
-    //    private readonly TcpListener audioSocketListener;
+        public AudioSender(Stream stream)
+        {
+            this.stream = stream;
+        }
 
-    //    private AudioCaptureUtils audioCaptureUtils;
-    //    private TcpClient audioClient;
+        public void Start()
+        {
+            audioCaptureUtils = new AudioCaptureUtils();
+            audioCaptureUtils.StartCapture(stream);
+        }
 
-    //    public AudioSender(string ip, int port)
-    //    {
-    //        audioSocketListener = new TcpListener(IPAddress.Parse(ip), port);
-    //        audioSocketListener.Start();
-    //    }
+        public void Pause()
+        {
+            if (audioCaptureUtils != null)
+                audioCaptureUtils.StopRecording();
+            audioCaptureUtils = null;
+        }
 
-    //    public void Start()
-    //    {
-    //        while (true)
-    //        {
-    //            audioClient = audioSocketListener.AcceptTcpClient();
-
-    //            audioCaptureUtils = new AudioCaptureUtils();
-    //            audioCaptureUtils.StartCapture(audioClient.GetStream());
-    //        }
-    //    }
-
-    //    public void Pause()
-    //    {
-    //        if (audioCaptureUtils != null)
-    //            audioCaptureUtils.StopRecording();
-    //        audioCaptureUtils = null;
-    //        if (audioClient != null)
-    //            audioClient.Close();
-    //    }
-
-    //    //整个Client结束时调用
-    //    public void Finish()
-    //    {
-    //        try
-    //        {
-    //            Pause();
-    //            if (audioClient != null)
-    //                audioClient.Close();
-    //        }
-    //        catch (SocketException exception)
-    //        {
-    //            Console.WriteLine("AudioSender Finish " + exception);
-    //        }
-    //        finally
-    //        {
-    //            if (audioSocketListener != null)
-    //                audioSocketListener.Stop();
-    //        }
-    //    }
-    //}
-
-    #endregion
+        //整个Client结束时调用
+        public void Finish()
+        {
+            try
+            {
+                Pause();
+                if (stream != null)
+                    stream.Dispose();
+            }
+            catch (SocketException exception)
+            {
+                Console.WriteLine("AudioSender Finish " + exception);
+            }
+        }
+    }
 }

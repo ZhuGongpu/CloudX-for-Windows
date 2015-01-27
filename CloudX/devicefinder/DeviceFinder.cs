@@ -34,7 +34,8 @@ namespace CloudX
                 targetStream = tcpClient.GetStream();
 
                 DataPacket.CreateBuilder()
-                    .SetDataPacketType(DataPacket.Types.DataPacketType.FindMyPhone)
+                    .SetDataPacketType(DataPacket.Types.DataPacketType.Command)
+                    .SetCommand(Command.CreateBuilder().SetCommandType(Command.Types.CommandType.FindMyDevice))
                     .Build()
                     .WriteDelimitedTo(targetStream);
 

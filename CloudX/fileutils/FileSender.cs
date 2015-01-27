@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows.Threading;
+using CloudX.Client;
 using common.message;
 using Google.ProtocolBuffers;
 
@@ -57,23 +58,23 @@ namespace CloudX
                 var buffer = new byte[bufferSize];
                 int readLength;
                 long readLengthInTotal = 0;
-                while ((readLength = fileStream.Read(buffer, 0, bufferSize)) > 0)
-                {
-                    DataPacket.CreateBuilder().SetDataPacketType(DataPacket.Types.DataPacketType.SharedFile)
-                        .SetSharedFile(
-                            SharedFile.CreateBuilder()
-                                .SetFileLength(fileLength)
-                                .SetFileName(fileName)
-                                .SetContent(ByteString.CopyFrom(buffer))
-                        ).Build()
-                        .WriteDelimitedTo(outputStream);
-                    readLengthInTotal += readLength;
+                //while ((readLength = fileStream.Read(buffer, 0, bufferSize)) > 0)
+                //{
+                //    DataPacket.CreateBuilder().SetDataPacketType(DataPacket.Types.DataPacketType.SharedFile)
+                //        .SetSharedFile(
+                //            SharedFile.CreateBuilder()
+                //                .SetFileLength(fileLength)
+                //                .SetFileName(fileName)
+                //                .SetContent(ByteString.CopyFrom(buffer))
+                //        ).Build()
+                //        .WriteDelimitedTo(outputStream);
+                //    readLengthInTotal += readLength;
 
-                    Console.WriteLine(Encoding.UTF8.GetString(fileName.ToByteArray()) + " " + readLengthInTotal);
-                    //notify UI with progress
-                    if(dispatcher != null)
-                    dispatcher.BeginInvoke(MainWindow.UpdateProgress, ((double) readLengthInTotal/(double) fileLength));
-                }
+                //    Console.WriteLine(Encoding.UTF8.GetString(fileName.ToByteArray()) + " " + readLengthInTotal);
+                //    //notify UI with progress
+                //    if(dispatcher != null)
+                //    dispatcher.BeginInvoke(MainWindow.UpdateProgress, ((double) readLengthInTotal/(double) fileLength));
+                //}
 
                 Console.WriteLine("File Transmission Completed");
             }

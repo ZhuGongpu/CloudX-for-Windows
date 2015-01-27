@@ -44,6 +44,11 @@ namespace CloudX.utils
             return ByteString.CopyFrom(bytes);
         }
 
+        public static ByteString StringToByteString(string str)
+        {
+            return BytesToByteString(StringToBytes(str));
+        }
+
         public static ByteString TextureRegionToByteString(ref SharpDX.Direct3D11.Device device, ref Texture2D texture,
             int originX, int originY, int width, int height)
         {

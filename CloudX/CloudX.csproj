@@ -126,8 +126,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AudioServer.cs" />
-    <Compile Include="client\Client.cs" />
+    <Compile Include="Client\Client.cs" />
     <Compile Include="CloudStorage\CloudStorage.cs" />
     <Compile Include="common.message\Data.cs" />
     <Compile Include="delegateDefinition\DelegateDeclarations.cs" />
@@ -143,7 +142,7 @@
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Music.cs" />
     <Compile Include="Models\SimpleCommand.cs" />
-    <Compile Include="network\DataWriter.cs" />
+    <Compile Include="network\ProtoBufHelper.cs" />
     <Compile Include="RemoteDesktopServer.cs" />
     <Compile Include="SubViews\FileView.xaml.cs">
       <DependentUpon>FileView.xaml</DependentUpon>
@@ -163,16 +162,16 @@
     <Compile Include="SubWindows\AboutUsWindow.xaml.cs">
       <DependentUpon>AboutUsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="utils\AudioCaptureUtils.cs" />
-    <Compile Include="utils\CompressionAndDecompressionUtils.cs" />
-    <Compile Include="utils\DataTypeConverter.cs" />
-    <Compile Include="utils\HookUtilities.cs" />
-    <Compile Include="utils\IPUtils.cs" />
-    <Compile Include="utils\KeyboardUtility.cs" />
-    <Compile Include="utils\MouseUtility.cs" />
-    <Compile Include="utils\SqliteUtils.cs" />
-    <Compile Include="utils\WindowCaptureUtility.cs" />
-    <Compile Include="utils\WindowsUtility.cs" />
+    <Compile Include="Utils\AudioCaptureUtils.cs" />
+    <Compile Include="Utils\CompressionAndDecompressionUtils.cs" />
+    <Compile Include="Utils\DataTypeConverter.cs" />
+    <Compile Include="Utils\HookUtilities.cs" />
+    <Compile Include="Utils\IPUtils.cs" />
+    <Compile Include="Utils\KeyboardUtility.cs" />
+    <Compile Include="Utils\MouseUtility.cs" />
+    <Compile Include="Utils\SqliteUtils.cs" />
+    <Compile Include="Utils\WindowCaptureUtility.cs" />
+    <Compile Include="Utils\WindowsUtility.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

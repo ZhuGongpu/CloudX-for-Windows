@@ -30,16 +30,20 @@ namespace common.message {
     internal static pb::FieldAccess.FieldAccessorTable<global::common.message.Video.Types.MoveRectangle, global::common.message.Video.Types.MoveRectangle.Builder> internal__static_common_message_Video_MoveRectangle__FieldAccessorTable;
     internal static pbd::MessageDescriptor internal__static_common_message_Audio__Descriptor;
     internal static pb::FieldAccess.FieldAccessorTable<global::common.message.Audio, global::common.message.Audio.Builder> internal__static_common_message_Audio__FieldAccessorTable;
-    internal static pbd::MessageDescriptor internal__static_common_message_Info__Descriptor;
-    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.Info, global::common.message.Info.Builder> internal__static_common_message_Info__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_common_message_DeviceInfo__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.DeviceInfo, global::common.message.DeviceInfo.Builder> internal__static_common_message_DeviceInfo__FieldAccessorTable;
     internal static pbd::MessageDescriptor internal__static_common_message_Resolution__Descriptor;
     internal static pb::FieldAccess.FieldAccessorTable<global::common.message.Resolution, global::common.message.Resolution.Builder> internal__static_common_message_Resolution__FieldAccessorTable;
-    internal static pbd::MessageDescriptor internal__static_common_message_Request__Descriptor;
-    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.Request, global::common.message.Request.Builder> internal__static_common_message_Request__FieldAccessorTable;
-    internal static pbd::MessageDescriptor internal__static_common_message_RequestFeedback__Descriptor;
-    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.RequestFeedback, global::common.message.RequestFeedback.Builder> internal__static_common_message_RequestFeedback__FieldAccessorTable;
-    internal static pbd::MessageDescriptor internal__static_common_message_SharedFile__Descriptor;
-    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.SharedFile, global::common.message.SharedFile.Builder> internal__static_common_message_SharedFile__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_common_message_FileRequest__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.FileRequest, global::common.message.FileRequest.Builder> internal__static_common_message_FileRequest__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_common_message_FileInfo__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.FileInfo, global::common.message.FileInfo.Builder> internal__static_common_message_FileInfo__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_common_message_FileBlock__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.FileBlock, global::common.message.FileBlock.Builder> internal__static_common_message_FileBlock__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_common_message_CloudStorageTokenRequest__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.CloudStorageTokenRequest, global::common.message.CloudStorageTokenRequest.Builder> internal__static_common_message_CloudStorageTokenRequest__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_common_message_CloudStorageToken__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::common.message.CloudStorageToken, global::common.message.CloudStorageToken.Builder> internal__static_common_message_CloudStorageToken__FieldAccessorTable;
     internal static pbd::MessageDescriptor internal__static_common_message_SharedMessage__Descriptor;
     internal static pb::FieldAccess.FieldAccessorTable<global::common.message.SharedMessage, global::common.message.SharedMessage.Builder> internal__static_common_message_SharedMessage__FieldAccessorTable;
     internal static pbd::MessageDescriptor internal__static_common_message_KeyboardEvent__Descriptor;
@@ -53,60 +57,63 @@ namespace common.message {
     
     static Data() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
-          "CgpkYXRhLnByb3RvEg5jb21tb24ubWVzc2FnZSKlBQoKRGF0YVBhY2tldBJB" + 
-          "Cg5kYXRhUGFja2V0VHlwZRgBIAIoDjIpLmNvbW1vbi5tZXNzYWdlLkRhdGFQ" + 
-          "YWNrZXQuRGF0YVBhY2tldFR5cGUSIgoEaW5mbxgCIAEoCzIULmNvbW1vbi5t" + 
-          "ZXNzYWdlLkluZm8SJAoFdmlkZW8YAyABKAsyFS5jb21tb24ubWVzc2FnZS5W" + 
-          "aWRlbxIkCgVhdWRpbxgEIAEoCzIVLmNvbW1vbi5tZXNzYWdlLkF1ZGlvEigK" + 
-          "B2NvbW1hbmQYBSABKAsyFy5jb21tb24ubWVzc2FnZS5Db21tYW5kEigKB3Jl" + 
-          "cXVlc3QYBiABKAsyFy5jb21tb24ubWVzc2FnZS5SZXF1ZXN0EjgKD3JlcXVl" + 
-          "c3RGZWVkYmFjaxgHIAEoCzIfLmNvbW1vbi5tZXNzYWdlLlJlcXVlc3RGZWVk" + 
-          "YmFjaxI0Cg1zaGFyZWRNZXNzYWdlGAggASgLMh0uY29tbW9uLm1lc3NhZ2Uu" + 
-          "U2hhcmVkTWVzc2FnZRIuCgpzaGFyZWRGaWxlGAkgASgLMhouY29tbW9uLm1l" + 
-          "c3NhZ2UuU2hhcmVkRmlsZRI0Cg1rZXlib2FyZEV2ZW50GAogASgLMh0uY29t" + 
-          "bW9uLm1lc3NhZ2UuS2V5Ym9hcmRFdmVudBIRCgl0aW1lU3RhbXAYCyABKAwi" + 
-          "pgEKDkRhdGFQYWNrZXRUeXBlEggKBEluZm8QARIJCgVWaWRlbxACEgkKBUF1" + 
-          "ZGlvEAMSCwoHQ29tbWFuZBAEEgsKB1JlcXVlc3QQBRITCg9SZXF1ZXN0RmVl" + 
-          "ZGJhY2sQBhIRCg1TaGFyZWRNZXNzYWdlEAcSDgoKU2hhcmVkRmlsZRAIEg8K" + 
-          "C0ZpbmRNeVBob25lEAkSEQoNS2V5Ym9hcmRFdmVudBAKIosDCgdDb21tYW5k" + 
-          "EjgKC2NvbW1hbmRUeXBlGAEgAigOMiMuY29tbW9uLm1lc3NhZ2UuQ29tbWFu" + 
-          "ZC5Db21tYW5kVHlwZRIJCgF4GAIgASgCEgkKAXkYAyABKAIirwIKC0NvbW1h" + 
-          "bmRUeXBlEgwKCE1pbmltaXplEAESDwoLU2hvd0Rlc2t0b3AQAhIPCgtTaHV0" + 
-          "RG93bkFwcBADEg0KCUxlZnRDbGljaxAEEg4KClJpZ2h0Q2xpY2sQBRIKCgZT" + 
-          "Y3JvbGwQBhIQCgxTZWxlY3RXaW5kb3cQBxIZChVTdG9wQXVkaW9UcmFuc21p" + 
-          "c3Npb24QCBIZChVTdG9wVmlkZW9UcmFuc21pc3Npb24QCRIhCh1TdG9wQXVk" + 
-          "aW9BbmRWaWRlb1RyYW5zbWlzc2lvbhAKEhoKFlN0YXJ0QXVkaW9UcmFuc21p" + 
-          "c3Npb24QCxIaChZTdGFydFZpZGVvVHJhbnNtaXNzaW9uEAwSIgoeU3RhcnRB" + 
-          "dWRpb0FuZFZpZGVvVHJhbnNtaXNzaW9uEA0i9gIKBVZpZGVvEjMKCmRpcnR5" + 
-          "UmVjdHMYASADKAsyHy5jb21tb24ubWVzc2FnZS5WaWRlby5SZWN0YW5nbGUS" + 
-          "NgoJbW92ZVJlY3RzGAIgAygLMiMuY29tbW9uLm1lc3NhZ2UuVmlkZW8uTW92" + 
-          "ZVJlY3RhbmdsZRINCgVmcmFtZRgDIAEoDBpPCglSZWN0YW5nbGUSCQoBeBgB" + 
-          "IAIoBRIJCgF5GAIgAigFEg0KBXdpZHRoGAMgAigFEg4KBmhlaWdodBgEIAIo" + 
-          "BRINCgVpbWFnZRgFIAEoDBodCgVQb2ludBIJCgF4GAEgAigFEgkKAXkYAiAC" + 
-          "KAUagAEKDU1vdmVSZWN0YW5nbGUSPQoUZGVzdGluYXRpb25SZWN0YW5nbGUY" + 
-          "ASACKAsyHy5jb21tb24ubWVzc2FnZS5WaWRlby5SZWN0YW5nbGUSMAoLc291" + 
-          "cmNlUG9pbnQYAiACKAsyGy5jb21tb24ubWVzc2FnZS5WaWRlby5Qb2ludCIW" + 
-          "CgVBdWRpbxINCgVzb3VuZBgBIAEoDCK0AQoESW5mbxIvCghpbmZvVHlwZRgB" + 
-          "IAIoDjIdLmNvbW1vbi5tZXNzYWdlLkluZm8uSW5mb1R5cGUSEgoKZGV2aWNl" + 
-          "TmFtZRgCIAEoDBINCgV3aWR0aBgDIAEoBRIOCgZoZWlnaHQYBCABKAUSFQoN" + 
-          "cG9ydEF2YWlsYWJsZRgFIAEoBSIxCghJbmZvVHlwZRIJCgVMb2dpbhABEgoK" + 
-          "BkxvZ291dBACEg4KCk5vcm1hbEluZm8QAyIrCgpSZXNvbHV0aW9uEg0KBXdp" + 
-          "ZHRoGAEgASgFEg4KBmhlaWdodBgCIAEoBSLxAQoHUmVxdWVzdBI4CgtyZXF1" + 
-          "ZXN0VHlwZRgBIAIoDjIjLmNvbW1vbi5tZXNzYWdlLlJlcXVlc3QuUmVxdWVz" + 
-          "dFR5cGUSEAoIZmlsZVBhdGgYAiACKAwimQEKC1JlcXVlc3RUeXBlEgkKBU1v" + 
-          "dmllEAESCQoFTXVzaWMQAhIICgRGaWxlEAMSDwoLUmVtb3ZlTW92aWUQBBIP" + 
-          "CgtSZW1vdmVNdXNpYxAFEg4KClJlbW92ZUZpbGUQBhIMCghTYXZlRmlsZRAH" + 
-          "Eg0KCVNhdmVNdXNpYxAIEg0KCVNhdmVNb3ZpZRAJEgwKCFNlbmRGaWxlEAoi" + 
-          "IwoPUmVxdWVzdEZlZWRiYWNrEhAKCGZpbGVQYXRoGAEgAigMIkMKClNoYXJl" + 
-          "ZEZpbGUSEAoIZmlsZU5hbWUYASABKAwSEgoKZmlsZUxlbmd0aBgCIAIoAxIP" + 
-          "Cgdjb250ZW50GAMgAigMIiAKDVNoYXJlZE1lc3NhZ2USDwoHY29udGVudBgB" + 
-          "IAIoDCIgCg1LZXlib2FyZEV2ZW50Eg8KB2tleUNvZGUYASACKAU=");
+          "CgpkYXRhLnByb3RvEg5jb21tb24ubWVzc2FnZSLuBgoKRGF0YVBhY2tldBIV" + 
+          "Cg11bml4VGltZVN0YW1wGAEgAigEEkEKDmRhdGFQYWNrZXRUeXBlGAIgAigO" + 
+          "MikuY29tbW9uLm1lc3NhZ2UuRGF0YVBhY2tldC5EYXRhUGFja2V0VHlwZRIu" + 
+          "CgpkZXZpY2VJbmZvGAMgASgLMhouY29tbW9uLm1lc3NhZ2UuRGV2aWNlSW5m" + 
+          "bxIkCgV2aWRlbxgEIAEoCzIVLmNvbW1vbi5tZXNzYWdlLlZpZGVvEiQKBWF1" + 
+          "ZGlvGAUgASgLMhUuY29tbW9uLm1lc3NhZ2UuQXVkaW8SKAoHY29tbWFuZBgG" + 
+          "IAEoCzIXLmNvbW1vbi5tZXNzYWdlLkNvbW1hbmQSMAoLZmlsZVJlcXVlc3QY" + 
+          "ByABKAsyGy5jb21tb24ubWVzc2FnZS5GaWxlUmVxdWVzdBIqCghmaWxlSW5m" + 
+          "bxgIIAEoCzIYLmNvbW1vbi5tZXNzYWdlLkZpbGVJbmZvEiwKCWZpbGVCbG9j" + 
+          "axgJIAEoCzIZLmNvbW1vbi5tZXNzYWdlLkZpbGVCbG9jaxI0Cg1zaGFyZWRN" + 
+          "ZXNzYWdlGAogASgLMh0uY29tbW9uLm1lc3NhZ2UuU2hhcmVkTWVzc2FnZRI0" + 
+          "Cg1rZXlib2FyZEV2ZW50GAsgASgLMh0uY29tbW9uLm1lc3NhZ2UuS2V5Ym9h" + 
+          "cmRFdmVudBJKChhjbG91ZFN0b3JhZ2VUb2tlblJlcXVlc3QYDCABKAsyKC5j" + 
+          "b21tb24ubWVzc2FnZS5DbG91ZFN0b3JhZ2VUb2tlblJlcXVlc3QSPAoRY2xv" + 
+          "dWRTdG9yYWdlVG9rZW4YDSABKAsyIS5jb21tb24ubWVzc2FnZS5DbG91ZFN0" + 
+          "b3JhZ2VUb2tlbiLdAQoORGF0YVBhY2tldFR5cGUSDgoKRGV2aWNlSW5mbxAB" + 
+          "EgkKBVZpZGVvEAISCQoFQXVkaW8QAxILCgdDb21tYW5kEAQSDwoLRmlsZVJl" + 
+          "cXVlc3QQBRIMCghGaWxlSW5mbxAGEg0KCUZpbGVCbG9jaxAHEhEKDVNoYXJl" + 
+          "ZE1lc3NhZ2UQCBIRCg1LZXlib2FyZEV2ZW50EAkSHAoYQ2xvdWRTdG9yYWdl" + 
+          "VG9rZW5SZXF1ZXN0EAoSFQoRQ2xvdWRTdG9yYWdlVG9rZW4QCxIPCgtVbnNw" + 
+          "ZWNpZmllZBAMIvkCCgdDb21tYW5kEjgKC2NvbW1hbmRUeXBlGAEgAigOMiMu" + 
+          "Y29tbW9uLm1lc3NhZ2UuQ29tbWFuZC5Db21tYW5kVHlwZRIJCgF4GAIgASgC" + 
+          "EgkKAXkYAyABKAIinQIKC0NvbW1hbmRUeXBlEgwKCE1pbmltaXplEAESDwoL" + 
+          "U2hvd0Rlc2t0b3AQAhIPCgtTaHV0RG93bkFwcBADEg0KCUxlZnRDbGljaxAE" + 
+          "Eg4KClJpZ2h0Q2xpY2sQBRIKCgZTY3JvbGwQBhIQCgxTZWxlY3RXaW5kb3cQ" + 
+          "BxIZChVTdG9wQXVkaW9UcmFuc21pc3Npb24QCBIZChVTdG9wVmlkZW9UcmFu" + 
+          "c21pc3Npb24QCRIhCh1TdG9wQXVkaW9BbmRWaWRlb1RyYW5zbWlzc2lvbhAK" + 
+          "EhoKFlN0YXJ0QXVkaW9UcmFuc21pc3Npb24QCxIaChZTdGFydFZpZGVvVHJh" + 
+          "bnNtaXNzaW9uEAwSEAoMRmluZE15RGV2aWNlEA0i9gIKBVZpZGVvEjMKCmRp" + 
+          "cnR5UmVjdHMYASADKAsyHy5jb21tb24ubWVzc2FnZS5WaWRlby5SZWN0YW5n" + 
+          "bGUSNgoJbW92ZVJlY3RzGAIgAygLMiMuY29tbW9uLm1lc3NhZ2UuVmlkZW8u" + 
+          "TW92ZVJlY3RhbmdsZRINCgVmcmFtZRgDIAEoDBpPCglSZWN0YW5nbGUSCQoB" + 
+          "eBgBIAIoBRIJCgF5GAIgAigFEg0KBXdpZHRoGAMgAigFEg4KBmhlaWdodBgE" + 
+          "IAIoBRINCgVpbWFnZRgFIAEoDBodCgVQb2ludBIJCgF4GAEgAigFEgkKAXkY" + 
+          "AiACKAUagAEKDU1vdmVSZWN0YW5nbGUSPQoUZGVzdGluYXRpb25SZWN0YW5n" + 
+          "bGUYASACKAsyHy5jb21tb24ubWVzc2FnZS5WaWRlby5SZWN0YW5nbGUSMAoL" + 
+          "c291cmNlUG9pbnQYAiACKAsyGy5jb21tb24ubWVzc2FnZS5WaWRlby5Qb2lu" + 
+          "dCIWCgVBdWRpbxINCgVzb3VuZBgBIAEoDCJQCgpEZXZpY2VJbmZvEhIKCmRl" + 
+          "dmljZU5hbWUYASABKAwSLgoKcmVzb2x1dGlvbhgCIAEoCzIaLmNvbW1vbi5t" + 
+          "ZXNzYWdlLlJlc29sdXRpb24iKwoKUmVzb2x1dGlvbhINCgV3aWR0aBgBIAEo" + 
+          "BRIOCgZoZWlnaHQYAiABKAUiugEKC0ZpbGVSZXF1ZXN0EkQKD2ZpbGVSZXF1" + 
+          "ZXN0VHlwZRgBIAIoDjIrLmNvbW1vbi5tZXNzYWdlLkZpbGVSZXF1ZXN0LkZp" + 
+          "bGVSZXF1ZXN0VHlwZRIQCghmaWxlUGF0aBgCIAIoDCJTCg9GaWxlUmVxdWVz" + 
+          "dFR5cGUSFAoQT3BlbkZpbGVSZW1vdGVseRABEg4KCkRlbGV0ZUZpbGUQAhIM" + 
+          "CghTYXZlRmlsZRADEgwKCFNlbmRGaWxlEAQiQAoIRmlsZUluZm8SEAoIZmls" + 
+          "ZVBhdGgYASACKAwSEAoIZmlsZVNpemUYAiACKAQSEAoIZmlsZUljb24YAyAB" + 
+          "KAwiHAoJRmlsZUJsb2NrEg8KB2NvbnRlbnQYASACKAwiMQoYQ2xvdWRTdG9y" + 
+          "YWdlVG9rZW5SZXF1ZXN0EhUKB2V4cGlyZXMYASABKAU6BDM2MDAiIgoRQ2xv" + 
+          "dWRTdG9yYWdlVG9rZW4SDQoFdG9rZW4YASACKAwiIAoNU2hhcmVkTWVzc2Fn" + 
+          "ZRIPCgdjb250ZW50GAEgAigMIiAKDUtleWJvYXJkRXZlbnQSDwoHa2V5Q29k" + 
+          "ZRgBIAIoBQ==");
       pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
         descriptor = root;
         internal__static_common_message_DataPacket__Descriptor = Descriptor.MessageTypes[0];
         internal__static_common_message_DataPacket__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::common.message.DataPacket, global::common.message.DataPacket.Builder>(internal__static_common_message_DataPacket__Descriptor,
-                new string[] { "DataPacketType", "Info", "Video", "Audio", "Command", "Request", "RequestFeedback", "SharedMessage", "SharedFile", "KeyboardEvent", "TimeStamp", });
+                new string[] { "UnixTimeStamp", "DataPacketType", "DeviceInfo", "Video", "Audio", "Command", "FileRequest", "FileInfo", "FileBlock", "SharedMessage", "KeyboardEvent", "CloudStorageTokenRequest", "CloudStorageToken", });
         internal__static_common_message_Command__Descriptor = Descriptor.MessageTypes[1];
         internal__static_common_message_Command__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::common.message.Command, global::common.message.Command.Builder>(internal__static_common_message_Command__Descriptor,
@@ -131,31 +138,39 @@ namespace common.message {
         internal__static_common_message_Audio__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::common.message.Audio, global::common.message.Audio.Builder>(internal__static_common_message_Audio__Descriptor,
                 new string[] { "Sound", });
-        internal__static_common_message_Info__Descriptor = Descriptor.MessageTypes[4];
-        internal__static_common_message_Info__FieldAccessorTable = 
-            new pb::FieldAccess.FieldAccessorTable<global::common.message.Info, global::common.message.Info.Builder>(internal__static_common_message_Info__Descriptor,
-                new string[] { "InfoType", "DeviceName", "Width", "Height", "PortAvailable", });
+        internal__static_common_message_DeviceInfo__Descriptor = Descriptor.MessageTypes[4];
+        internal__static_common_message_DeviceInfo__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::common.message.DeviceInfo, global::common.message.DeviceInfo.Builder>(internal__static_common_message_DeviceInfo__Descriptor,
+                new string[] { "DeviceName", "Resolution", });
         internal__static_common_message_Resolution__Descriptor = Descriptor.MessageTypes[5];
         internal__static_common_message_Resolution__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::common.message.Resolution, global::common.message.Resolution.Builder>(internal__static_common_message_Resolution__Descriptor,
                 new string[] { "Width", "Height", });
-        internal__static_common_message_Request__Descriptor = Descriptor.MessageTypes[6];
-        internal__static_common_message_Request__FieldAccessorTable = 
-            new pb::FieldAccess.FieldAccessorTable<global::common.message.Request, global::common.message.Request.Builder>(internal__static_common_message_Request__Descriptor,
-                new string[] { "RequestType", "FilePath", });
-        internal__static_common_message_RequestFeedback__Descriptor = Descriptor.MessageTypes[7];
-        internal__static_common_message_RequestFeedback__FieldAccessorTable = 
-            new pb::FieldAccess.FieldAccessorTable<global::common.message.RequestFeedback, global::common.message.RequestFeedback.Builder>(internal__static_common_message_RequestFeedback__Descriptor,
-                new string[] { "FilePath", });
-        internal__static_common_message_SharedFile__Descriptor = Descriptor.MessageTypes[8];
-        internal__static_common_message_SharedFile__FieldAccessorTable = 
-            new pb::FieldAccess.FieldAccessorTable<global::common.message.SharedFile, global::common.message.SharedFile.Builder>(internal__static_common_message_SharedFile__Descriptor,
-                new string[] { "FileName", "FileLength", "Content", });
-        internal__static_common_message_SharedMessage__Descriptor = Descriptor.MessageTypes[9];
+        internal__static_common_message_FileRequest__Descriptor = Descriptor.MessageTypes[6];
+        internal__static_common_message_FileRequest__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::common.message.FileRequest, global::common.message.FileRequest.Builder>(internal__static_common_message_FileRequest__Descriptor,
+                new string[] { "FileRequestType", "FilePath", });
+        internal__static_common_message_FileInfo__Descriptor = Descriptor.MessageTypes[7];
+        internal__static_common_message_FileInfo__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::common.message.FileInfo, global::common.message.FileInfo.Builder>(internal__static_common_message_FileInfo__Descriptor,
+                new string[] { "FilePath", "FileSize", "FileIcon", });
+        internal__static_common_message_FileBlock__Descriptor = Descriptor.MessageTypes[8];
+        internal__static_common_message_FileBlock__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::common.message.FileBlock, global::common.message.FileBlock.Builder>(internal__static_common_message_FileBlock__Descriptor,
+                new string[] { "Content", });
+        internal__static_common_message_CloudStorageTokenRequest__Descriptor = Descriptor.MessageTypes[9];
+        internal__static_common_message_CloudStorageTokenRequest__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::common.message.CloudStorageTokenRequest, global::common.message.CloudStorageTokenRequest.Builder>(internal__static_common_message_CloudStorageTokenRequest__Descriptor,
+                new string[] { "Expires", });
+        internal__static_common_message_CloudStorageToken__Descriptor = Descriptor.MessageTypes[10];
+        internal__static_common_message_CloudStorageToken__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::common.message.CloudStorageToken, global::common.message.CloudStorageToken.Builder>(internal__static_common_message_CloudStorageToken__Descriptor,
+                new string[] { "Token", });
+        internal__static_common_message_SharedMessage__Descriptor = Descriptor.MessageTypes[11];
         internal__static_common_message_SharedMessage__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::common.message.SharedMessage, global::common.message.SharedMessage.Builder>(internal__static_common_message_SharedMessage__Descriptor,
                 new string[] { "Content", });
-        internal__static_common_message_KeyboardEvent__Descriptor = Descriptor.MessageTypes[10];
+        internal__static_common_message_KeyboardEvent__Descriptor = Descriptor.MessageTypes[12];
         internal__static_common_message_KeyboardEvent__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::common.message.KeyboardEvent, global::common.message.KeyboardEvent.Builder>(internal__static_common_message_KeyboardEvent__Descriptor,
                 new string[] { "KeyCode", });
@@ -173,8 +188,8 @@ namespace common.message {
   public sealed partial class DataPacket : pb::GeneratedMessage<DataPacket, DataPacket.Builder> {
     private DataPacket() { }
     private static readonly DataPacket defaultInstance = new DataPacket().MakeReadOnly();
-    private static readonly string[] _dataPacketFieldNames = new string[] { "audio", "command", "dataPacketType", "info", "keyboardEvent", "request", "requestFeedback", "sharedFile", "sharedMessage", "timeStamp", "video" };
-    private static readonly uint[] _dataPacketFieldTags = new uint[] { 34, 42, 8, 18, 82, 50, 58, 74, 66, 90, 26 };
+    private static readonly string[] _dataPacketFieldNames = new string[] { "audio", "cloudStorageToken", "cloudStorageTokenRequest", "command", "dataPacketType", "deviceInfo", "fileBlock", "fileInfo", "fileRequest", "keyboardEvent", "sharedMessage", "unixTimeStamp", "video" };
+    private static readonly uint[] _dataPacketFieldTags = new uint[] { 42, 106, 98, 50, 16, 26, 74, 66, 58, 90, 82, 8, 34 };
     public static DataPacket DefaultInstance {
       get { return defaultInstance; }
     }
@@ -199,24 +214,37 @@ namespace common.message {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     public static partial class Types {
       public enum DataPacketType {
-        Info = 1,
+        DeviceInfo = 1,
         Video = 2,
         Audio = 3,
         Command = 4,
-        Request = 5,
-        RequestFeedback = 6,
-        SharedMessage = 7,
-        SharedFile = 8,
-        FindMyPhone = 9,
-        KeyboardEvent = 10,
+        FileRequest = 5,
+        FileInfo = 6,
+        FileBlock = 7,
+        SharedMessage = 8,
+        KeyboardEvent = 9,
+        CloudStorageTokenRequest = 10,
+        CloudStorageToken = 11,
+        Unspecified = 12,
       }
       
     }
     #endregion
     
-    public const int DataPacketTypeFieldNumber = 1;
+    public const int UnixTimeStampFieldNumber = 1;
+    private bool hasUnixTimeStamp;
+    private ulong unixTimeStamp_;
+    public bool HasUnixTimeStamp {
+      get { return hasUnixTimeStamp; }
+    }
+    [global::System.CLSCompliant(false)]
+    public ulong UnixTimeStamp {
+      get { return unixTimeStamp_; }
+    }
+    
+    public const int DataPacketTypeFieldNumber = 2;
     private bool hasDataPacketType;
-    private global::common.message.DataPacket.Types.DataPacketType dataPacketType_ = global::common.message.DataPacket.Types.DataPacketType.Info;
+    private global::common.message.DataPacket.Types.DataPacketType dataPacketType_ = global::common.message.DataPacket.Types.DataPacketType.DeviceInfo;
     public bool HasDataPacketType {
       get { return hasDataPacketType; }
     }
@@ -224,17 +252,17 @@ namespace common.message {
       get { return dataPacketType_; }
     }
     
-    public const int InfoFieldNumber = 2;
-    private bool hasInfo;
-    private global::common.message.Info info_;
-    public bool HasInfo {
-      get { return hasInfo; }
+    public const int DeviceInfoFieldNumber = 3;
+    private bool hasDeviceInfo;
+    private global::common.message.DeviceInfo deviceInfo_;
+    public bool HasDeviceInfo {
+      get { return hasDeviceInfo; }
     }
-    public global::common.message.Info Info {
-      get { return info_ ?? global::common.message.Info.DefaultInstance; }
+    public global::common.message.DeviceInfo DeviceInfo {
+      get { return deviceInfo_ ?? global::common.message.DeviceInfo.DefaultInstance; }
     }
     
-    public const int VideoFieldNumber = 3;
+    public const int VideoFieldNumber = 4;
     private bool hasVideo;
     private global::common.message.Video video_;
     public bool HasVideo {
@@ -244,7 +272,7 @@ namespace common.message {
       get { return video_ ?? global::common.message.Video.DefaultInstance; }
     }
     
-    public const int AudioFieldNumber = 4;
+    public const int AudioFieldNumber = 5;
     private bool hasAudio;
     private global::common.message.Audio audio_;
     public bool HasAudio {
@@ -254,7 +282,7 @@ namespace common.message {
       get { return audio_ ?? global::common.message.Audio.DefaultInstance; }
     }
     
-    public const int CommandFieldNumber = 5;
+    public const int CommandFieldNumber = 6;
     private bool hasCommand;
     private global::common.message.Command command_;
     public bool HasCommand {
@@ -264,27 +292,37 @@ namespace common.message {
       get { return command_ ?? global::common.message.Command.DefaultInstance; }
     }
     
-    public const int RequestFieldNumber = 6;
-    private bool hasRequest;
-    private global::common.message.Request request_;
-    public bool HasRequest {
-      get { return hasRequest; }
+    public const int FileRequestFieldNumber = 7;
+    private bool hasFileRequest;
+    private global::common.message.FileRequest fileRequest_;
+    public bool HasFileRequest {
+      get { return hasFileRequest; }
     }
-    public global::common.message.Request Request {
-      get { return request_ ?? global::common.message.Request.DefaultInstance; }
-    }
-    
-    public const int RequestFeedbackFieldNumber = 7;
-    private bool hasRequestFeedback;
-    private global::common.message.RequestFeedback requestFeedback_;
-    public bool HasRequestFeedback {
-      get { return hasRequestFeedback; }
-    }
-    public global::common.message.RequestFeedback RequestFeedback {
-      get { return requestFeedback_ ?? global::common.message.RequestFeedback.DefaultInstance; }
+    public global::common.message.FileRequest FileRequest {
+      get { return fileRequest_ ?? global::common.message.FileRequest.DefaultInstance; }
     }
     
-    public const int SharedMessageFieldNumber = 8;
+    public const int FileInfoFieldNumber = 8;
+    private bool hasFileInfo;
+    private global::common.message.FileInfo fileInfo_;
+    public bool HasFileInfo {
+      get { return hasFileInfo; }
+    }
+    public global::common.message.FileInfo FileInfo {
+      get { return fileInfo_ ?? global::common.message.FileInfo.DefaultInstance; }
+    }
+    
+    public const int FileBlockFieldNumber = 9;
+    private bool hasFileBlock;
+    private global::common.message.FileBlock fileBlock_;
+    public bool HasFileBlock {
+      get { return hasFileBlock; }
+    }
+    public global::common.message.FileBlock FileBlock {
+      get { return fileBlock_ ?? global::common.message.FileBlock.DefaultInstance; }
+    }
+    
+    public const int SharedMessageFieldNumber = 10;
     private bool hasSharedMessage;
     private global::common.message.SharedMessage sharedMessage_;
     public bool HasSharedMessage {
@@ -294,17 +332,7 @@ namespace common.message {
       get { return sharedMessage_ ?? global::common.message.SharedMessage.DefaultInstance; }
     }
     
-    public const int SharedFileFieldNumber = 9;
-    private bool hasSharedFile;
-    private global::common.message.SharedFile sharedFile_;
-    public bool HasSharedFile {
-      get { return hasSharedFile; }
-    }
-    public global::common.message.SharedFile SharedFile {
-      get { return sharedFile_ ?? global::common.message.SharedFile.DefaultInstance; }
-    }
-    
-    public const int KeyboardEventFieldNumber = 10;
+    public const int KeyboardEventFieldNumber = 11;
     private bool hasKeyboardEvent;
     private global::common.message.KeyboardEvent keyboardEvent_;
     public bool HasKeyboardEvent {
@@ -314,42 +342,53 @@ namespace common.message {
       get { return keyboardEvent_ ?? global::common.message.KeyboardEvent.DefaultInstance; }
     }
     
-    public const int TimeStampFieldNumber = 11;
-    private bool hasTimeStamp;
-    private pb::ByteString timeStamp_ = pb::ByteString.Empty;
-    public bool HasTimeStamp {
-      get { return hasTimeStamp; }
+    public const int CloudStorageTokenRequestFieldNumber = 12;
+    private bool hasCloudStorageTokenRequest;
+    private global::common.message.CloudStorageTokenRequest cloudStorageTokenRequest_;
+    public bool HasCloudStorageTokenRequest {
+      get { return hasCloudStorageTokenRequest; }
     }
-    public pb::ByteString TimeStamp {
-      get { return timeStamp_; }
+    public global::common.message.CloudStorageTokenRequest CloudStorageTokenRequest {
+      get { return cloudStorageTokenRequest_ ?? global::common.message.CloudStorageTokenRequest.DefaultInstance; }
+    }
+    
+    public const int CloudStorageTokenFieldNumber = 13;
+    private bool hasCloudStorageToken;
+    private global::common.message.CloudStorageToken cloudStorageToken_;
+    public bool HasCloudStorageToken {
+      get { return hasCloudStorageToken; }
+    }
+    public global::common.message.CloudStorageToken CloudStorageToken {
+      get { return cloudStorageToken_ ?? global::common.message.CloudStorageToken.DefaultInstance; }
     }
     
     public override bool IsInitialized {
       get {
+        if (!hasUnixTimeStamp) return false;
         if (!hasDataPacketType) return false;
-        if (HasInfo) {
-          if (!Info.IsInitialized) return false;
-        }
         if (HasVideo) {
           if (!Video.IsInitialized) return false;
         }
         if (HasCommand) {
           if (!Command.IsInitialized) return false;
         }
-        if (HasRequest) {
-          if (!Request.IsInitialized) return false;
+        if (HasFileRequest) {
+          if (!FileRequest.IsInitialized) return false;
         }
-        if (HasRequestFeedback) {
-          if (!RequestFeedback.IsInitialized) return false;
+        if (HasFileInfo) {
+          if (!FileInfo.IsInitialized) return false;
+        }
+        if (HasFileBlock) {
+          if (!FileBlock.IsInitialized) return false;
         }
         if (HasSharedMessage) {
           if (!SharedMessage.IsInitialized) return false;
         }
-        if (HasSharedFile) {
-          if (!SharedFile.IsInitialized) return false;
-        }
         if (HasKeyboardEvent) {
           if (!KeyboardEvent.IsInitialized) return false;
+        }
+        if (HasCloudStorageToken) {
+          if (!CloudStorageToken.IsInitialized) return false;
         }
         return true;
       }
@@ -358,38 +397,44 @@ namespace common.message {
     public override void WriteTo(pb::ICodedOutputStream output) {
       int size = SerializedSize;
       string[] field_names = _dataPacketFieldNames;
-      if (hasDataPacketType) {
-        output.WriteEnum(1, field_names[2], (int) DataPacketType, DataPacketType);
+      if (hasUnixTimeStamp) {
+        output.WriteUInt64(1, field_names[11], UnixTimeStamp);
       }
-      if (hasInfo) {
-        output.WriteMessage(2, field_names[3], Info);
+      if (hasDataPacketType) {
+        output.WriteEnum(2, field_names[4], (int) DataPacketType, DataPacketType);
+      }
+      if (hasDeviceInfo) {
+        output.WriteMessage(3, field_names[5], DeviceInfo);
       }
       if (hasVideo) {
-        output.WriteMessage(3, field_names[10], Video);
+        output.WriteMessage(4, field_names[12], Video);
       }
       if (hasAudio) {
-        output.WriteMessage(4, field_names[0], Audio);
+        output.WriteMessage(5, field_names[0], Audio);
       }
       if (hasCommand) {
-        output.WriteMessage(5, field_names[1], Command);
+        output.WriteMessage(6, field_names[3], Command);
       }
-      if (hasRequest) {
-        output.WriteMessage(6, field_names[5], Request);
+      if (hasFileRequest) {
+        output.WriteMessage(7, field_names[8], FileRequest);
       }
-      if (hasRequestFeedback) {
-        output.WriteMessage(7, field_names[6], RequestFeedback);
+      if (hasFileInfo) {
+        output.WriteMessage(8, field_names[7], FileInfo);
+      }
+      if (hasFileBlock) {
+        output.WriteMessage(9, field_names[6], FileBlock);
       }
       if (hasSharedMessage) {
-        output.WriteMessage(8, field_names[8], SharedMessage);
-      }
-      if (hasSharedFile) {
-        output.WriteMessage(9, field_names[7], SharedFile);
+        output.WriteMessage(10, field_names[10], SharedMessage);
       }
       if (hasKeyboardEvent) {
-        output.WriteMessage(10, field_names[4], KeyboardEvent);
+        output.WriteMessage(11, field_names[9], KeyboardEvent);
       }
-      if (hasTimeStamp) {
-        output.WriteBytes(11, field_names[9], TimeStamp);
+      if (hasCloudStorageTokenRequest) {
+        output.WriteMessage(12, field_names[2], CloudStorageTokenRequest);
+      }
+      if (hasCloudStorageToken) {
+        output.WriteMessage(13, field_names[1], CloudStorageToken);
       }
       UnknownFields.WriteTo(output);
     }
@@ -401,38 +446,44 @@ namespace common.message {
         if (size != -1) return size;
         
         size = 0;
-        if (hasDataPacketType) {
-          size += pb::CodedOutputStream.ComputeEnumSize(1, (int) DataPacketType);
+        if (hasUnixTimeStamp) {
+          size += pb::CodedOutputStream.ComputeUInt64Size(1, UnixTimeStamp);
         }
-        if (hasInfo) {
-          size += pb::CodedOutputStream.ComputeMessageSize(2, Info);
+        if (hasDataPacketType) {
+          size += pb::CodedOutputStream.ComputeEnumSize(2, (int) DataPacketType);
+        }
+        if (hasDeviceInfo) {
+          size += pb::CodedOutputStream.ComputeMessageSize(3, DeviceInfo);
         }
         if (hasVideo) {
-          size += pb::CodedOutputStream.ComputeMessageSize(3, Video);
+          size += pb::CodedOutputStream.ComputeMessageSize(4, Video);
         }
         if (hasAudio) {
-          size += pb::CodedOutputStream.ComputeMessageSize(4, Audio);
+          size += pb::CodedOutputStream.ComputeMessageSize(5, Audio);
         }
         if (hasCommand) {
-          size += pb::CodedOutputStream.ComputeMessageSize(5, Command);
+          size += pb::CodedOutputStream.ComputeMessageSize(6, Command);
         }
-        if (hasRequest) {
-          size += pb::CodedOutputStream.ComputeMessageSize(6, Request);
+        if (hasFileRequest) {
+          size += pb::CodedOutputStream.ComputeMessageSize(7, FileRequest);
         }
-        if (hasRequestFeedback) {
-          size += pb::CodedOutputStream.ComputeMessageSize(7, RequestFeedback);
+        if (hasFileInfo) {
+          size += pb::CodedOutputStream.ComputeMessageSize(8, FileInfo);
+        }
+        if (hasFileBlock) {
+          size += pb::CodedOutputStream.ComputeMessageSize(9, FileBlock);
         }
         if (hasSharedMessage) {
-          size += pb::CodedOutputStream.ComputeMessageSize(8, SharedMessage);
-        }
-        if (hasSharedFile) {
-          size += pb::CodedOutputStream.ComputeMessageSize(9, SharedFile);
+          size += pb::CodedOutputStream.ComputeMessageSize(10, SharedMessage);
         }
         if (hasKeyboardEvent) {
-          size += pb::CodedOutputStream.ComputeMessageSize(10, KeyboardEvent);
+          size += pb::CodedOutputStream.ComputeMessageSize(11, KeyboardEvent);
         }
-        if (hasTimeStamp) {
-          size += pb::CodedOutputStream.ComputeBytesSize(11, TimeStamp);
+        if (hasCloudStorageTokenRequest) {
+          size += pb::CodedOutputStream.ComputeMessageSize(12, CloudStorageTokenRequest);
+        }
+        if (hasCloudStorageToken) {
+          size += pb::CodedOutputStream.ComputeMessageSize(13, CloudStorageToken);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
@@ -558,11 +609,14 @@ namespace common.message {
       public override Builder MergeFrom(DataPacket other) {
         if (other == global::common.message.DataPacket.DefaultInstance) return this;
         PrepareBuilder();
+        if (other.HasUnixTimeStamp) {
+          UnixTimeStamp = other.UnixTimeStamp;
+        }
         if (other.HasDataPacketType) {
           DataPacketType = other.DataPacketType;
         }
-        if (other.HasInfo) {
-          MergeInfo(other.Info);
+        if (other.HasDeviceInfo) {
+          MergeDeviceInfo(other.DeviceInfo);
         }
         if (other.HasVideo) {
           MergeVideo(other.Video);
@@ -573,23 +627,26 @@ namespace common.message {
         if (other.HasCommand) {
           MergeCommand(other.Command);
         }
-        if (other.HasRequest) {
-          MergeRequest(other.Request);
+        if (other.HasFileRequest) {
+          MergeFileRequest(other.FileRequest);
         }
-        if (other.HasRequestFeedback) {
-          MergeRequestFeedback(other.RequestFeedback);
+        if (other.HasFileInfo) {
+          MergeFileInfo(other.FileInfo);
+        }
+        if (other.HasFileBlock) {
+          MergeFileBlock(other.FileBlock);
         }
         if (other.HasSharedMessage) {
           MergeSharedMessage(other.SharedMessage);
         }
-        if (other.HasSharedFile) {
-          MergeSharedFile(other.SharedFile);
-        }
         if (other.HasKeyboardEvent) {
           MergeKeyboardEvent(other.KeyboardEvent);
         }
-        if (other.HasTimeStamp) {
-          TimeStamp = other.TimeStamp;
+        if (other.HasCloudStorageTokenRequest) {
+          MergeCloudStorageTokenRequest(other.CloudStorageTokenRequest);
+        }
+        if (other.HasCloudStorageToken) {
+          MergeCloudStorageToken(other.CloudStorageToken);
         }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
@@ -635,6 +692,10 @@ namespace common.message {
               break;
             }
             case 8: {
+              result.hasUnixTimeStamp = input.ReadUInt64(ref result.unixTimeStamp_);
+              break;
+            }
+            case 16: {
               object unknown;
               if(input.ReadEnum(ref result.dataPacketType_, out unknown)) {
                 result.hasDataPacketType = true;
@@ -642,20 +703,20 @@ namespace common.message {
                 if (unknownFields == null) {
                   unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
                 }
-                unknownFields.MergeVarintField(1, (ulong)(int)unknown);
+                unknownFields.MergeVarintField(2, (ulong)(int)unknown);
               }
-              break;
-            }
-            case 18: {
-              global::common.message.Info.Builder subBuilder = global::common.message.Info.CreateBuilder();
-              if (result.hasInfo) {
-                subBuilder.MergeFrom(Info);
-              }
-              input.ReadMessage(subBuilder, extensionRegistry);
-              Info = subBuilder.BuildPartial();
               break;
             }
             case 26: {
+              global::common.message.DeviceInfo.Builder subBuilder = global::common.message.DeviceInfo.CreateBuilder();
+              if (result.hasDeviceInfo) {
+                subBuilder.MergeFrom(DeviceInfo);
+              }
+              input.ReadMessage(subBuilder, extensionRegistry);
+              DeviceInfo = subBuilder.BuildPartial();
+              break;
+            }
+            case 34: {
               global::common.message.Video.Builder subBuilder = global::common.message.Video.CreateBuilder();
               if (result.hasVideo) {
                 subBuilder.MergeFrom(Video);
@@ -664,7 +725,7 @@ namespace common.message {
               Video = subBuilder.BuildPartial();
               break;
             }
-            case 34: {
+            case 42: {
               global::common.message.Audio.Builder subBuilder = global::common.message.Audio.CreateBuilder();
               if (result.hasAudio) {
                 subBuilder.MergeFrom(Audio);
@@ -673,7 +734,7 @@ namespace common.message {
               Audio = subBuilder.BuildPartial();
               break;
             }
-            case 42: {
+            case 50: {
               global::common.message.Command.Builder subBuilder = global::common.message.Command.CreateBuilder();
               if (result.hasCommand) {
                 subBuilder.MergeFrom(Command);
@@ -682,25 +743,34 @@ namespace common.message {
               Command = subBuilder.BuildPartial();
               break;
             }
-            case 50: {
-              global::common.message.Request.Builder subBuilder = global::common.message.Request.CreateBuilder();
-              if (result.hasRequest) {
-                subBuilder.MergeFrom(Request);
-              }
-              input.ReadMessage(subBuilder, extensionRegistry);
-              Request = subBuilder.BuildPartial();
-              break;
-            }
             case 58: {
-              global::common.message.RequestFeedback.Builder subBuilder = global::common.message.RequestFeedback.CreateBuilder();
-              if (result.hasRequestFeedback) {
-                subBuilder.MergeFrom(RequestFeedback);
+              global::common.message.FileRequest.Builder subBuilder = global::common.message.FileRequest.CreateBuilder();
+              if (result.hasFileRequest) {
+                subBuilder.MergeFrom(FileRequest);
               }
               input.ReadMessage(subBuilder, extensionRegistry);
-              RequestFeedback = subBuilder.BuildPartial();
+              FileRequest = subBuilder.BuildPartial();
               break;
             }
             case 66: {
+              global::common.message.FileInfo.Builder subBuilder = global::common.message.FileInfo.CreateBuilder();
+              if (result.hasFileInfo) {
+                subBuilder.MergeFrom(FileInfo);
+              }
+              input.ReadMessage(subBuilder, extensionRegistry);
+              FileInfo = subBuilder.BuildPartial();
+              break;
+            }
+            case 74: {
+              global::common.message.FileBlock.Builder subBuilder = global::common.message.FileBlock.CreateBuilder();
+              if (result.hasFileBlock) {
+                subBuilder.MergeFrom(FileBlock);
+              }
+              input.ReadMessage(subBuilder, extensionRegistry);
+              FileBlock = subBuilder.BuildPartial();
+              break;
+            }
+            case 82: {
               global::common.message.SharedMessage.Builder subBuilder = global::common.message.SharedMessage.CreateBuilder();
               if (result.hasSharedMessage) {
                 subBuilder.MergeFrom(SharedMessage);
@@ -709,16 +779,7 @@ namespace common.message {
               SharedMessage = subBuilder.BuildPartial();
               break;
             }
-            case 74: {
-              global::common.message.SharedFile.Builder subBuilder = global::common.message.SharedFile.CreateBuilder();
-              if (result.hasSharedFile) {
-                subBuilder.MergeFrom(SharedFile);
-              }
-              input.ReadMessage(subBuilder, extensionRegistry);
-              SharedFile = subBuilder.BuildPartial();
-              break;
-            }
-            case 82: {
+            case 90: {
               global::common.message.KeyboardEvent.Builder subBuilder = global::common.message.KeyboardEvent.CreateBuilder();
               if (result.hasKeyboardEvent) {
                 subBuilder.MergeFrom(KeyboardEvent);
@@ -727,8 +788,22 @@ namespace common.message {
               KeyboardEvent = subBuilder.BuildPartial();
               break;
             }
-            case 90: {
-              result.hasTimeStamp = input.ReadBytes(ref result.timeStamp_);
+            case 98: {
+              global::common.message.CloudStorageTokenRequest.Builder subBuilder = global::common.message.CloudStorageTokenRequest.CreateBuilder();
+              if (result.hasCloudStorageTokenRequest) {
+                subBuilder.MergeFrom(CloudStorageTokenRequest);
+              }
+              input.ReadMessage(subBuilder, extensionRegistry);
+              CloudStorageTokenRequest = subBuilder.BuildPartial();
+              break;
+            }
+            case 106: {
+              global::common.message.CloudStorageToken.Builder subBuilder = global::common.message.CloudStorageToken.CreateBuilder();
+              if (result.hasCloudStorageToken) {
+                subBuilder.MergeFrom(CloudStorageToken);
+              }
+              input.ReadMessage(subBuilder, extensionRegistry);
+              CloudStorageToken = subBuilder.BuildPartial();
               break;
             }
           }
@@ -740,6 +815,28 @@ namespace common.message {
         return this;
       }
       
+      
+      public bool HasUnixTimeStamp {
+        get { return result.hasUnixTimeStamp; }
+      }
+      [global::System.CLSCompliant(false)]
+      public ulong UnixTimeStamp {
+        get { return result.UnixTimeStamp; }
+        set { SetUnixTimeStamp(value); }
+      }
+      [global::System.CLSCompliant(false)]
+      public Builder SetUnixTimeStamp(ulong value) {
+        PrepareBuilder();
+        result.hasUnixTimeStamp = true;
+        result.unixTimeStamp_ = value;
+        return this;
+      }
+      public Builder ClearUnixTimeStamp() {
+        PrepareBuilder();
+        result.hasUnixTimeStamp = false;
+        result.unixTimeStamp_ = 0UL;
+        return this;
+      }
       
       public bool HasDataPacketType {
        get { return result.hasDataPacketType; }
@@ -757,47 +854,47 @@ namespace common.message {
       public Builder ClearDataPacketType() {
         PrepareBuilder();
         result.hasDataPacketType = false;
-        result.dataPacketType_ = global::common.message.DataPacket.Types.DataPacketType.Info;
+        result.dataPacketType_ = global::common.message.DataPacket.Types.DataPacketType.DeviceInfo;
         return this;
       }
       
-      public bool HasInfo {
-       get { return result.hasInfo; }
+      public bool HasDeviceInfo {
+       get { return result.hasDeviceInfo; }
       }
-      public global::common.message.Info Info {
-        get { return result.Info; }
-        set { SetInfo(value); }
+      public global::common.message.DeviceInfo DeviceInfo {
+        get { return result.DeviceInfo; }
+        set { SetDeviceInfo(value); }
       }
-      public Builder SetInfo(global::common.message.Info value) {
+      public Builder SetDeviceInfo(global::common.message.DeviceInfo value) {
         pb::ThrowHelper.ThrowIfNull(value, "value");
         PrepareBuilder();
-        result.hasInfo = true;
-        result.info_ = value;
+        result.hasDeviceInfo = true;
+        result.deviceInfo_ = value;
         return this;
       }
-      public Builder SetInfo(global::common.message.Info.Builder builderForValue) {
+      public Builder SetDeviceInfo(global::common.message.DeviceInfo.Builder builderForValue) {
         pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
         PrepareBuilder();
-        result.hasInfo = true;
-        result.info_ = builderForValue.Build();
+        result.hasDeviceInfo = true;
+        result.deviceInfo_ = builderForValue.Build();
         return this;
       }
-      public Builder MergeInfo(global::common.message.Info value) {
+      public Builder MergeDeviceInfo(global::common.message.DeviceInfo value) {
         pb::ThrowHelper.ThrowIfNull(value, "value");
         PrepareBuilder();
-        if (result.hasInfo &&
-            result.info_ != global::common.message.Info.DefaultInstance) {
-            result.info_ = global::common.message.Info.CreateBuilder(result.info_).MergeFrom(value).BuildPartial();
+        if (result.hasDeviceInfo &&
+            result.deviceInfo_ != global::common.message.DeviceInfo.DefaultInstance) {
+            result.deviceInfo_ = global::common.message.DeviceInfo.CreateBuilder(result.deviceInfo_).MergeFrom(value).BuildPartial();
         } else {
-          result.info_ = value;
+          result.deviceInfo_ = value;
         }
-        result.hasInfo = true;
+        result.hasDeviceInfo = true;
         return this;
       }
-      public Builder ClearInfo() {
+      public Builder ClearDeviceInfo() {
         PrepareBuilder();
-        result.hasInfo = false;
-        result.info_ = null;
+        result.hasDeviceInfo = false;
+        result.deviceInfo_ = null;
         return this;
       }
       
@@ -921,83 +1018,123 @@ namespace common.message {
         return this;
       }
       
-      public bool HasRequest {
-       get { return result.hasRequest; }
+      public bool HasFileRequest {
+       get { return result.hasFileRequest; }
       }
-      public global::common.message.Request Request {
-        get { return result.Request; }
-        set { SetRequest(value); }
+      public global::common.message.FileRequest FileRequest {
+        get { return result.FileRequest; }
+        set { SetFileRequest(value); }
       }
-      public Builder SetRequest(global::common.message.Request value) {
+      public Builder SetFileRequest(global::common.message.FileRequest value) {
         pb::ThrowHelper.ThrowIfNull(value, "value");
         PrepareBuilder();
-        result.hasRequest = true;
-        result.request_ = value;
+        result.hasFileRequest = true;
+        result.fileRequest_ = value;
         return this;
       }
-      public Builder SetRequest(global::common.message.Request.Builder builderForValue) {
+      public Builder SetFileRequest(global::common.message.FileRequest.Builder builderForValue) {
         pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
         PrepareBuilder();
-        result.hasRequest = true;
-        result.request_ = builderForValue.Build();
+        result.hasFileRequest = true;
+        result.fileRequest_ = builderForValue.Build();
         return this;
       }
-      public Builder MergeRequest(global::common.message.Request value) {
+      public Builder MergeFileRequest(global::common.message.FileRequest value) {
         pb::ThrowHelper.ThrowIfNull(value, "value");
         PrepareBuilder();
-        if (result.hasRequest &&
-            result.request_ != global::common.message.Request.DefaultInstance) {
-            result.request_ = global::common.message.Request.CreateBuilder(result.request_).MergeFrom(value).BuildPartial();
+        if (result.hasFileRequest &&
+            result.fileRequest_ != global::common.message.FileRequest.DefaultInstance) {
+            result.fileRequest_ = global::common.message.FileRequest.CreateBuilder(result.fileRequest_).MergeFrom(value).BuildPartial();
         } else {
-          result.request_ = value;
+          result.fileRequest_ = value;
         }
-        result.hasRequest = true;
+        result.hasFileRequest = true;
         return this;
       }
-      public Builder ClearRequest() {
+      public Builder ClearFileRequest() {
         PrepareBuilder();
-        result.hasRequest = false;
-        result.request_ = null;
+        result.hasFileRequest = false;
+        result.fileRequest_ = null;
         return this;
       }
       
-      public bool HasRequestFeedback {
-       get { return result.hasRequestFeedback; }
+      public bool HasFileInfo {
+       get { return result.hasFileInfo; }
       }
-      public global::common.message.RequestFeedback RequestFeedback {
-        get { return result.RequestFeedback; }
-        set { SetRequestFeedback(value); }
+      public global::common.message.FileInfo FileInfo {
+        get { return result.FileInfo; }
+        set { SetFileInfo(value); }
       }
-      public Builder SetRequestFeedback(global::common.message.RequestFeedback value) {
+      public Builder SetFileInfo(global::common.message.FileInfo value) {
         pb::ThrowHelper.ThrowIfNull(value, "value");
         PrepareBuilder();
-        result.hasRequestFeedback = true;
-        result.requestFeedback_ = value;
+        result.hasFileInfo = true;
+        result.fileInfo_ = value;
         return this;
       }
-      public Builder SetRequestFeedback(global::common.message.RequestFeedback.Builder builderForValue) {
+      public Builder SetFileInfo(global::common.message.FileInfo.Builder builderForValue) {
         pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
         PrepareBuilder();
-        result.hasRequestFeedback = true;
-        result.requestFeedback_ = builderForValue.Build();
+        result.hasFileInfo = true;
+        result.fileInfo_ = builderForValue.Build();
         return this;
       }
-      public Builder MergeRequestFeedback(global::common.message.RequestFeedback value) {
+      public Builder MergeFileInfo(global::common.message.FileInfo value) {
         pb::ThrowHelper.ThrowIfNull(value, "value");
         PrepareBuilder();
-        if (result.hasRequestFeedback &&
-            result.requestFeedback_ != global::common.message.RequestFeedback.DefaultInstance) {
-            result.requestFeedback_ = global::common.message.RequestFeedback.CreateBuilder(result.requestFeedback_).MergeFrom(value).BuildPartial();
+        if (result.hasFileInfo &&
+            result.fileInfo_ != global::common.message.FileInfo.DefaultInstance) {
+            result.fileInfo_ = global::common.message.FileInfo.CreateBuilder(result.fileInfo_).MergeFrom(value).BuildPartial();
         } else {
-          result.requestFeedback_ = value;
+          result.fileInfo_ = value;
         }
-        result.hasRequestFeedback = true;
+        result.hasFileInfo = true;
         return this;
       }
-      public Builder ClearRequestFeedback() {
+      public Builder ClearFileInfo() {
         PrepareBuilder();
-        result.hasRequestFeedback = false;
-        result.requestFeedback_ = null;
+        result.hasFileInfo = false;
+        result.fileInfo_ = null;
+        return this;
+      }
+      
+      public bool HasFileBlock {
+       get { return result.hasFileBlock; }
+      }
+      public global::common.message.FileBlock FileBlock {
+        get { return result.FileBlock; }
+        set { SetFileBlock(value); }
+      }
+      public Builder SetFileBlock(global::common.message.FileBlock value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.hasFileBlock = true;
+        result.fileBlock_ = value;
+        return this;
+      }
+      public Builder SetFileBlock(global::common.message.FileBlock.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.hasFileBlock = true;
+        result.fileBlock_ = builderForValue.Build();
+        return this;
+      }
+      public Builder MergeFileBlock(global::common.message.FileBlock value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        if (result.hasFileBlock &&
+            result.fileBlock_ != global::common.message.FileBlock.DefaultInstance) {
+            result.fileBlock_ = global::common.message.FileBlock.CreateBuilder(result.fileBlock_).MergeFrom(value).BuildPartial();
+        } else {
+          result.fileBlock_ = value;
+        }
+        result.hasFileBlock = true;
+        return this;
+      }
+      public Builder ClearFileBlock() {
+        PrepareBuilder();
+        result.hasFileBlock = false;
+        result.fileBlock_ = null;
         return this;
       }
       
@@ -1041,46 +1178,6 @@ namespace common.message {
         return this;
       }
       
-      public bool HasSharedFile {
-       get { return result.hasSharedFile; }
-      }
-      public global::common.message.SharedFile SharedFile {
-        get { return result.SharedFile; }
-        set { SetSharedFile(value); }
-      }
-      public Builder SetSharedFile(global::common.message.SharedFile value) {
-        pb::ThrowHelper.ThrowIfNull(value, "value");
-        PrepareBuilder();
-        result.hasSharedFile = true;
-        result.sharedFile_ = value;
-        return this;
-      }
-      public Builder SetSharedFile(global::common.message.SharedFile.Builder builderForValue) {
-        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
-        PrepareBuilder();
-        result.hasSharedFile = true;
-        result.sharedFile_ = builderForValue.Build();
-        return this;
-      }
-      public Builder MergeSharedFile(global::common.message.SharedFile value) {
-        pb::ThrowHelper.ThrowIfNull(value, "value");
-        PrepareBuilder();
-        if (result.hasSharedFile &&
-            result.sharedFile_ != global::common.message.SharedFile.DefaultInstance) {
-            result.sharedFile_ = global::common.message.SharedFile.CreateBuilder(result.sharedFile_).MergeFrom(value).BuildPartial();
-        } else {
-          result.sharedFile_ = value;
-        }
-        result.hasSharedFile = true;
-        return this;
-      }
-      public Builder ClearSharedFile() {
-        PrepareBuilder();
-        result.hasSharedFile = false;
-        result.sharedFile_ = null;
-        return this;
-      }
-      
       public bool HasKeyboardEvent {
        get { return result.hasKeyboardEvent; }
       }
@@ -1121,24 +1218,83 @@ namespace common.message {
         return this;
       }
       
-      public bool HasTimeStamp {
-        get { return result.hasTimeStamp; }
+      public bool HasCloudStorageTokenRequest {
+       get { return result.hasCloudStorageTokenRequest; }
       }
-      public pb::ByteString TimeStamp {
-        get { return result.TimeStamp; }
-        set { SetTimeStamp(value); }
+      public global::common.message.CloudStorageTokenRequest CloudStorageTokenRequest {
+        get { return result.CloudStorageTokenRequest; }
+        set { SetCloudStorageTokenRequest(value); }
       }
-      public Builder SetTimeStamp(pb::ByteString value) {
+      public Builder SetCloudStorageTokenRequest(global::common.message.CloudStorageTokenRequest value) {
         pb::ThrowHelper.ThrowIfNull(value, "value");
         PrepareBuilder();
-        result.hasTimeStamp = true;
-        result.timeStamp_ = value;
+        result.hasCloudStorageTokenRequest = true;
+        result.cloudStorageTokenRequest_ = value;
         return this;
       }
-      public Builder ClearTimeStamp() {
+      public Builder SetCloudStorageTokenRequest(global::common.message.CloudStorageTokenRequest.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
         PrepareBuilder();
-        result.hasTimeStamp = false;
-        result.timeStamp_ = pb::ByteString.Empty;
+        result.hasCloudStorageTokenRequest = true;
+        result.cloudStorageTokenRequest_ = builderForValue.Build();
+        return this;
+      }
+      public Builder MergeCloudStorageTokenRequest(global::common.message.CloudStorageTokenRequest value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        if (result.hasCloudStorageTokenRequest &&
+            result.cloudStorageTokenRequest_ != global::common.message.CloudStorageTokenRequest.DefaultInstance) {
+            result.cloudStorageTokenRequest_ = global::common.message.CloudStorageTokenRequest.CreateBuilder(result.cloudStorageTokenRequest_).MergeFrom(value).BuildPartial();
+        } else {
+          result.cloudStorageTokenRequest_ = value;
+        }
+        result.hasCloudStorageTokenRequest = true;
+        return this;
+      }
+      public Builder ClearCloudStorageTokenRequest() {
+        PrepareBuilder();
+        result.hasCloudStorageTokenRequest = false;
+        result.cloudStorageTokenRequest_ = null;
+        return this;
+      }
+      
+      public bool HasCloudStorageToken {
+       get { return result.hasCloudStorageToken; }
+      }
+      public global::common.message.CloudStorageToken CloudStorageToken {
+        get { return result.CloudStorageToken; }
+        set { SetCloudStorageToken(value); }
+      }
+      public Builder SetCloudStorageToken(global::common.message.CloudStorageToken value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.hasCloudStorageToken = true;
+        result.cloudStorageToken_ = value;
+        return this;
+      }
+      public Builder SetCloudStorageToken(global::common.message.CloudStorageToken.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.hasCloudStorageToken = true;
+        result.cloudStorageToken_ = builderForValue.Build();
+        return this;
+      }
+      public Builder MergeCloudStorageToken(global::common.message.CloudStorageToken value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        if (result.hasCloudStorageToken &&
+            result.cloudStorageToken_ != global::common.message.CloudStorageToken.DefaultInstance) {
+            result.cloudStorageToken_ = global::common.message.CloudStorageToken.CreateBuilder(result.cloudStorageToken_).MergeFrom(value).BuildPartial();
+        } else {
+          result.cloudStorageToken_ = value;
+        }
+        result.hasCloudStorageToken = true;
+        return this;
+      }
+      public Builder ClearCloudStorageToken() {
+        PrepareBuilder();
+        result.hasCloudStorageToken = false;
+        result.cloudStorageToken_ = null;
         return this;
       }
     }
@@ -1189,7 +1345,7 @@ namespace common.message {
         StopAudioAndVideoTransmission = 10,
         StartAudioTransmission = 11,
         StartVideoTransmission = 12,
-        StartAudioAndVideoTransmission = 13,
+        FindMyDevice = 13,
       }
       
     }
@@ -3358,54 +3514,32 @@ namespace common.message {
   }
   
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-  public sealed partial class Info : pb::GeneratedMessage<Info, Info.Builder> {
-    private Info() { }
-    private static readonly Info defaultInstance = new Info().MakeReadOnly();
-    private static readonly string[] _infoFieldNames = new string[] { "deviceName", "height", "infoType", "portAvailable", "width" };
-    private static readonly uint[] _infoFieldTags = new uint[] { 18, 32, 8, 40, 24 };
-    public static Info DefaultInstance {
+  public sealed partial class DeviceInfo : pb::GeneratedMessage<DeviceInfo, DeviceInfo.Builder> {
+    private DeviceInfo() { }
+    private static readonly DeviceInfo defaultInstance = new DeviceInfo().MakeReadOnly();
+    private static readonly string[] _deviceInfoFieldNames = new string[] { "deviceName", "resolution" };
+    private static readonly uint[] _deviceInfoFieldTags = new uint[] { 10, 18 };
+    public static DeviceInfo DefaultInstance {
       get { return defaultInstance; }
     }
     
-    public override Info DefaultInstanceForType {
+    public override DeviceInfo DefaultInstanceForType {
       get { return DefaultInstance; }
     }
     
-    protected override Info ThisMessage {
+    protected override DeviceInfo ThisMessage {
       get { return this; }
     }
     
     public static pbd::MessageDescriptor Descriptor {
-      get { return global::common.message.Data.internal__static_common_message_Info__Descriptor; }
+      get { return global::common.message.Data.internal__static_common_message_DeviceInfo__Descriptor; }
     }
     
-    protected override pb::FieldAccess.FieldAccessorTable<Info, Info.Builder> InternalFieldAccessors {
-      get { return global::common.message.Data.internal__static_common_message_Info__FieldAccessorTable; }
+    protected override pb::FieldAccess.FieldAccessorTable<DeviceInfo, DeviceInfo.Builder> InternalFieldAccessors {
+      get { return global::common.message.Data.internal__static_common_message_DeviceInfo__FieldAccessorTable; }
     }
     
-    #region Nested types
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    public static partial class Types {
-      public enum InfoType {
-        Login = 1,
-        Logout = 2,
-        NormalInfo = 3,
-      }
-      
-    }
-    #endregion
-    
-    public const int InfoTypeFieldNumber = 1;
-    private bool hasInfoType;
-    private global::common.message.Info.Types.InfoType infoType_ = global::common.message.Info.Types.InfoType.Login;
-    public bool HasInfoType {
-      get { return hasInfoType; }
-    }
-    public global::common.message.Info.Types.InfoType InfoType {
-      get { return infoType_; }
-    }
-    
-    public const int DeviceNameFieldNumber = 2;
+    public const int DeviceNameFieldNumber = 1;
     private bool hasDeviceName;
     private pb::ByteString deviceName_ = pb::ByteString.Empty;
     public bool HasDeviceName {
@@ -3415,60 +3549,30 @@ namespace common.message {
       get { return deviceName_; }
     }
     
-    public const int WidthFieldNumber = 3;
-    private bool hasWidth;
-    private int width_;
-    public bool HasWidth {
-      get { return hasWidth; }
+    public const int ResolutionFieldNumber = 2;
+    private bool hasResolution;
+    private global::common.message.Resolution resolution_;
+    public bool HasResolution {
+      get { return hasResolution; }
     }
-    public int Width {
-      get { return width_; }
-    }
-    
-    public const int HeightFieldNumber = 4;
-    private bool hasHeight;
-    private int height_;
-    public bool HasHeight {
-      get { return hasHeight; }
-    }
-    public int Height {
-      get { return height_; }
-    }
-    
-    public const int PortAvailableFieldNumber = 5;
-    private bool hasPortAvailable;
-    private int portAvailable_;
-    public bool HasPortAvailable {
-      get { return hasPortAvailable; }
-    }
-    public int PortAvailable {
-      get { return portAvailable_; }
+    public global::common.message.Resolution Resolution {
+      get { return resolution_ ?? global::common.message.Resolution.DefaultInstance; }
     }
     
     public override bool IsInitialized {
       get {
-        if (!hasInfoType) return false;
         return true;
       }
     }
     
     public override void WriteTo(pb::ICodedOutputStream output) {
       int size = SerializedSize;
-      string[] field_names = _infoFieldNames;
-      if (hasInfoType) {
-        output.WriteEnum(1, field_names[2], (int) InfoType, InfoType);
-      }
+      string[] field_names = _deviceInfoFieldNames;
       if (hasDeviceName) {
-        output.WriteBytes(2, field_names[0], DeviceName);
+        output.WriteBytes(1, field_names[0], DeviceName);
       }
-      if (hasWidth) {
-        output.WriteInt32(3, field_names[4], Width);
-      }
-      if (hasHeight) {
-        output.WriteInt32(4, field_names[1], Height);
-      }
-      if (hasPortAvailable) {
-        output.WriteInt32(5, field_names[3], PortAvailable);
+      if (hasResolution) {
+        output.WriteMessage(2, field_names[1], Resolution);
       }
       UnknownFields.WriteTo(output);
     }
@@ -3480,20 +3584,11 @@ namespace common.message {
         if (size != -1) return size;
         
         size = 0;
-        if (hasInfoType) {
-          size += pb::CodedOutputStream.ComputeEnumSize(1, (int) InfoType);
-        }
         if (hasDeviceName) {
-          size += pb::CodedOutputStream.ComputeBytesSize(2, DeviceName);
+          size += pb::CodedOutputStream.ComputeBytesSize(1, DeviceName);
         }
-        if (hasWidth) {
-          size += pb::CodedOutputStream.ComputeInt32Size(3, Width);
-        }
-        if (hasHeight) {
-          size += pb::CodedOutputStream.ComputeInt32Size(4, Height);
-        }
-        if (hasPortAvailable) {
-          size += pb::CodedOutputStream.ComputeInt32Size(5, PortAvailable);
+        if (hasResolution) {
+          size += pb::CodedOutputStream.ComputeMessageSize(2, Resolution);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
@@ -3501,49 +3596,49 @@ namespace common.message {
       }
     }
     
-    public static Info ParseFrom(pb::ByteString data) {
+    public static DeviceInfo ParseFrom(pb::ByteString data) {
       return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
     }
-    public static Info ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    public static DeviceInfo ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
     }
-    public static Info ParseFrom(byte[] data) {
+    public static DeviceInfo ParseFrom(byte[] data) {
       return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
     }
-    public static Info ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    public static DeviceInfo ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
     }
-    public static Info ParseFrom(global::System.IO.Stream input) {
+    public static DeviceInfo ParseFrom(global::System.IO.Stream input) {
       return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
     }
-    public static Info ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    public static DeviceInfo ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
     }
-    public static Info ParseDelimitedFrom(global::System.IO.Stream input) {
+    public static DeviceInfo ParseDelimitedFrom(global::System.IO.Stream input) {
       return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
     }
-    public static Info ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    public static DeviceInfo ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
       return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
     }
-    public static Info ParseFrom(pb::ICodedInputStream input) {
+    public static DeviceInfo ParseFrom(pb::ICodedInputStream input) {
       return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
     }
-    public static Info ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    public static DeviceInfo ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
     }
-    private Info MakeReadOnly() {
+    private DeviceInfo MakeReadOnly() {
       return this;
     }
     
     public static Builder CreateBuilder() { return new Builder(); }
     public override Builder ToBuilder() { return CreateBuilder(this); }
     public override Builder CreateBuilderForType() { return new Builder(); }
-    public static Builder CreateBuilder(Info prototype) {
+    public static Builder CreateBuilder(DeviceInfo prototype) {
       return new Builder(prototype);
     }
     
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    public sealed partial class Builder : pb::GeneratedBuilder<Info, Builder> {
+    public sealed partial class Builder : pb::GeneratedBuilder<DeviceInfo, Builder> {
       protected override Builder ThisBuilder {
         get { return this; }
       }
@@ -3551,18 +3646,18 @@ namespace common.message {
         result = DefaultInstance;
         resultIsReadOnly = true;
       }
-      internal Builder(Info cloneFrom) {
+      internal Builder(DeviceInfo cloneFrom) {
         result = cloneFrom;
         resultIsReadOnly = true;
       }
       
       private bool resultIsReadOnly;
-      private Info result;
+      private DeviceInfo result;
       
-      private Info PrepareBuilder() {
+      private DeviceInfo PrepareBuilder() {
         if (resultIsReadOnly) {
-          Info original = result;
-          result = new Info();
+          DeviceInfo original = result;
+          result = new DeviceInfo();
           resultIsReadOnly = false;
           MergeFrom(original);
         }
@@ -3573,7 +3668,7 @@ namespace common.message {
         get { return result.IsInitialized; }
       }
       
-      protected override Info MessageBeingBuilt {
+      protected override DeviceInfo MessageBeingBuilt {
         get { return PrepareBuilder(); }
       }
       
@@ -3592,14 +3687,14 @@ namespace common.message {
       }
       
       public override pbd::MessageDescriptor DescriptorForType {
-        get { return global::common.message.Info.Descriptor; }
+        get { return global::common.message.DeviceInfo.Descriptor; }
       }
       
-      public override Info DefaultInstanceForType {
-        get { return global::common.message.Info.DefaultInstance; }
+      public override DeviceInfo DefaultInstanceForType {
+        get { return global::common.message.DeviceInfo.DefaultInstance; }
       }
       
-      public override Info BuildPartial() {
+      public override DeviceInfo BuildPartial() {
         if (resultIsReadOnly) {
           return result;
         }
@@ -3608,31 +3703,22 @@ namespace common.message {
       }
       
       public override Builder MergeFrom(pb::IMessage other) {
-        if (other is Info) {
-          return MergeFrom((Info) other);
+        if (other is DeviceInfo) {
+          return MergeFrom((DeviceInfo) other);
         } else {
           base.MergeFrom(other);
           return this;
         }
       }
       
-      public override Builder MergeFrom(Info other) {
-        if (other == global::common.message.Info.DefaultInstance) return this;
+      public override Builder MergeFrom(DeviceInfo other) {
+        if (other == global::common.message.DeviceInfo.DefaultInstance) return this;
         PrepareBuilder();
-        if (other.HasInfoType) {
-          InfoType = other.InfoType;
-        }
         if (other.HasDeviceName) {
           DeviceName = other.DeviceName;
         }
-        if (other.HasWidth) {
-          Width = other.Width;
-        }
-        if (other.HasHeight) {
-          Height = other.Height;
-        }
-        if (other.HasPortAvailable) {
-          PortAvailable = other.PortAvailable;
+        if (other.HasResolution) {
+          MergeResolution(other.Resolution);
         }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
@@ -3649,9 +3735,9 @@ namespace common.message {
         string field_name;
         while (input.ReadTag(out tag, out field_name)) {
           if(tag == 0 && field_name != null) {
-            int field_ordinal = global::System.Array.BinarySearch(_infoFieldNames, field_name, global::System.StringComparer.Ordinal);
+            int field_ordinal = global::System.Array.BinarySearch(_deviceInfoFieldNames, field_name, global::System.StringComparer.Ordinal);
             if(field_ordinal >= 0)
-              tag = _infoFieldTags[field_ordinal];
+              tag = _deviceInfoFieldTags[field_ordinal];
             else {
               if (unknownFields == null) {
                 unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
@@ -3677,32 +3763,17 @@ namespace common.message {
               ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
               break;
             }
-            case 8: {
-              object unknown;
-              if(input.ReadEnum(ref result.infoType_, out unknown)) {
-                result.hasInfoType = true;
-              } else if(unknown is int) {
-                if (unknownFields == null) {
-                  unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
-                }
-                unknownFields.MergeVarintField(1, (ulong)(int)unknown);
-              }
-              break;
-            }
-            case 18: {
+            case 10: {
               result.hasDeviceName = input.ReadBytes(ref result.deviceName_);
               break;
             }
-            case 24: {
-              result.hasWidth = input.ReadInt32(ref result.width_);
-              break;
-            }
-            case 32: {
-              result.hasHeight = input.ReadInt32(ref result.height_);
-              break;
-            }
-            case 40: {
-              result.hasPortAvailable = input.ReadInt32(ref result.portAvailable_);
+            case 18: {
+              global::common.message.Resolution.Builder subBuilder = global::common.message.Resolution.CreateBuilder();
+              if (result.hasResolution) {
+                subBuilder.MergeFrom(Resolution);
+              }
+              input.ReadMessage(subBuilder, extensionRegistry);
+              Resolution = subBuilder.BuildPartial();
               break;
             }
           }
@@ -3714,26 +3785,6 @@ namespace common.message {
         return this;
       }
       
-      
-      public bool HasInfoType {
-       get { return result.hasInfoType; }
-      }
-      public global::common.message.Info.Types.InfoType InfoType {
-        get { return result.InfoType; }
-        set { SetInfoType(value); }
-      }
-      public Builder SetInfoType(global::common.message.Info.Types.InfoType value) {
-        PrepareBuilder();
-        result.hasInfoType = true;
-        result.infoType_ = value;
-        return this;
-      }
-      public Builder ClearInfoType() {
-        PrepareBuilder();
-        result.hasInfoType = false;
-        result.infoType_ = global::common.message.Info.Types.InfoType.Login;
-        return this;
-      }
       
       public bool HasDeviceName {
         get { return result.hasDeviceName; }
@@ -3756,67 +3807,47 @@ namespace common.message {
         return this;
       }
       
-      public bool HasWidth {
-        get { return result.hasWidth; }
+      public bool HasResolution {
+       get { return result.hasResolution; }
       }
-      public int Width {
-        get { return result.Width; }
-        set { SetWidth(value); }
+      public global::common.message.Resolution Resolution {
+        get { return result.Resolution; }
+        set { SetResolution(value); }
       }
-      public Builder SetWidth(int value) {
+      public Builder SetResolution(global::common.message.Resolution value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
         PrepareBuilder();
-        result.hasWidth = true;
-        result.width_ = value;
+        result.hasResolution = true;
+        result.resolution_ = value;
         return this;
       }
-      public Builder ClearWidth() {
+      public Builder SetResolution(global::common.message.Resolution.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
         PrepareBuilder();
-        result.hasWidth = false;
-        result.width_ = 0;
+        result.hasResolution = true;
+        result.resolution_ = builderForValue.Build();
         return this;
       }
-      
-      public bool HasHeight {
-        get { return result.hasHeight; }
-      }
-      public int Height {
-        get { return result.Height; }
-        set { SetHeight(value); }
-      }
-      public Builder SetHeight(int value) {
+      public Builder MergeResolution(global::common.message.Resolution value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
         PrepareBuilder();
-        result.hasHeight = true;
-        result.height_ = value;
+        if (result.hasResolution &&
+            result.resolution_ != global::common.message.Resolution.DefaultInstance) {
+            result.resolution_ = global::common.message.Resolution.CreateBuilder(result.resolution_).MergeFrom(value).BuildPartial();
+        } else {
+          result.resolution_ = value;
+        }
+        result.hasResolution = true;
         return this;
       }
-      public Builder ClearHeight() {
+      public Builder ClearResolution() {
         PrepareBuilder();
-        result.hasHeight = false;
-        result.height_ = 0;
-        return this;
-      }
-      
-      public bool HasPortAvailable {
-        get { return result.hasPortAvailable; }
-      }
-      public int PortAvailable {
-        get { return result.PortAvailable; }
-        set { SetPortAvailable(value); }
-      }
-      public Builder SetPortAvailable(int value) {
-        PrepareBuilder();
-        result.hasPortAvailable = true;
-        result.portAvailable_ = value;
-        return this;
-      }
-      public Builder ClearPortAvailable() {
-        PrepareBuilder();
-        result.hasPortAvailable = false;
-        result.portAvailable_ = 0;
+        result.hasResolution = false;
+        result.resolution_ = null;
         return this;
       }
     }
-    static Info() {
+    static DeviceInfo() {
       object.ReferenceEquals(global::common.message.Data.Descriptor, null);
     }
   }
@@ -4135,58 +4166,52 @@ namespace common.message {
   }
   
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-  public sealed partial class Request : pb::GeneratedMessage<Request, Request.Builder> {
-    private Request() { }
-    private static readonly Request defaultInstance = new Request().MakeReadOnly();
-    private static readonly string[] _requestFieldNames = new string[] { "filePath", "requestType" };
-    private static readonly uint[] _requestFieldTags = new uint[] { 18, 8 };
-    public static Request DefaultInstance {
+  public sealed partial class FileRequest : pb::GeneratedMessage<FileRequest, FileRequest.Builder> {
+    private FileRequest() { }
+    private static readonly FileRequest defaultInstance = new FileRequest().MakeReadOnly();
+    private static readonly string[] _fileRequestFieldNames = new string[] { "filePath", "fileRequestType" };
+    private static readonly uint[] _fileRequestFieldTags = new uint[] { 18, 8 };
+    public static FileRequest DefaultInstance {
       get { return defaultInstance; }
     }
     
-    public override Request DefaultInstanceForType {
+    public override FileRequest DefaultInstanceForType {
       get { return DefaultInstance; }
     }
     
-    protected override Request ThisMessage {
+    protected override FileRequest ThisMessage {
       get { return this; }
     }
     
     public static pbd::MessageDescriptor Descriptor {
-      get { return global::common.message.Data.internal__static_common_message_Request__Descriptor; }
+      get { return global::common.message.Data.internal__static_common_message_FileRequest__Descriptor; }
     }
     
-    protected override pb::FieldAccess.FieldAccessorTable<Request, Request.Builder> InternalFieldAccessors {
-      get { return global::common.message.Data.internal__static_common_message_Request__FieldAccessorTable; }
+    protected override pb::FieldAccess.FieldAccessorTable<FileRequest, FileRequest.Builder> InternalFieldAccessors {
+      get { return global::common.message.Data.internal__static_common_message_FileRequest__FieldAccessorTable; }
     }
     
     #region Nested types
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     public static partial class Types {
-      public enum RequestType {
-        Movie = 1,
-        Music = 2,
-        File = 3,
-        RemoveMovie = 4,
-        RemoveMusic = 5,
-        RemoveFile = 6,
-        SaveFile = 7,
-        SaveMusic = 8,
-        SaveMovie = 9,
-        SendFile = 10,
+      public enum FileRequestType {
+        OpenFileRemotely = 1,
+        DeleteFile = 2,
+        SaveFile = 3,
+        SendFile = 4,
       }
       
     }
     #endregion
     
-    public const int RequestTypeFieldNumber = 1;
-    private bool hasRequestType;
-    private global::common.message.Request.Types.RequestType requestType_ = global::common.message.Request.Types.RequestType.Movie;
-    public bool HasRequestType {
-      get { return hasRequestType; }
+    public const int FileRequestTypeFieldNumber = 1;
+    private bool hasFileRequestType;
+    private global::common.message.FileRequest.Types.FileRequestType fileRequestType_ = global::common.message.FileRequest.Types.FileRequestType.OpenFileRemotely;
+    public bool HasFileRequestType {
+      get { return hasFileRequestType; }
     }
-    public global::common.message.Request.Types.RequestType RequestType {
-      get { return requestType_; }
+    public global::common.message.FileRequest.Types.FileRequestType FileRequestType {
+      get { return fileRequestType_; }
     }
     
     public const int FilePathFieldNumber = 2;
@@ -4201,7 +4226,7 @@ namespace common.message {
     
     public override bool IsInitialized {
       get {
-        if (!hasRequestType) return false;
+        if (!hasFileRequestType) return false;
         if (!hasFilePath) return false;
         return true;
       }
@@ -4209,9 +4234,9 @@ namespace common.message {
     
     public override void WriteTo(pb::ICodedOutputStream output) {
       int size = SerializedSize;
-      string[] field_names = _requestFieldNames;
-      if (hasRequestType) {
-        output.WriteEnum(1, field_names[1], (int) RequestType, RequestType);
+      string[] field_names = _fileRequestFieldNames;
+      if (hasFileRequestType) {
+        output.WriteEnum(1, field_names[1], (int) FileRequestType, FileRequestType);
       }
       if (hasFilePath) {
         output.WriteBytes(2, field_names[0], FilePath);
@@ -4226,8 +4251,8 @@ namespace common.message {
         if (size != -1) return size;
         
         size = 0;
-        if (hasRequestType) {
-          size += pb::CodedOutputStream.ComputeEnumSize(1, (int) RequestType);
+        if (hasFileRequestType) {
+          size += pb::CodedOutputStream.ComputeEnumSize(1, (int) FileRequestType);
         }
         if (hasFilePath) {
           size += pb::CodedOutputStream.ComputeBytesSize(2, FilePath);
@@ -4238,49 +4263,49 @@ namespace common.message {
       }
     }
     
-    public static Request ParseFrom(pb::ByteString data) {
+    public static FileRequest ParseFrom(pb::ByteString data) {
       return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
     }
-    public static Request ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    public static FileRequest ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
     }
-    public static Request ParseFrom(byte[] data) {
+    public static FileRequest ParseFrom(byte[] data) {
       return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
     }
-    public static Request ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    public static FileRequest ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
     }
-    public static Request ParseFrom(global::System.IO.Stream input) {
+    public static FileRequest ParseFrom(global::System.IO.Stream input) {
       return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
     }
-    public static Request ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    public static FileRequest ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
     }
-    public static Request ParseDelimitedFrom(global::System.IO.Stream input) {
+    public static FileRequest ParseDelimitedFrom(global::System.IO.Stream input) {
       return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
     }
-    public static Request ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    public static FileRequest ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
       return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
     }
-    public static Request ParseFrom(pb::ICodedInputStream input) {
+    public static FileRequest ParseFrom(pb::ICodedInputStream input) {
       return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
     }
-    public static Request ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    public static FileRequest ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
     }
-    private Request MakeReadOnly() {
+    private FileRequest MakeReadOnly() {
       return this;
     }
     
     public static Builder CreateBuilder() { return new Builder(); }
     public override Builder ToBuilder() { return CreateBuilder(this); }
     public override Builder CreateBuilderForType() { return new Builder(); }
-    public static Builder CreateBuilder(Request prototype) {
+    public static Builder CreateBuilder(FileRequest prototype) {
       return new Builder(prototype);
     }
     
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    public sealed partial class Builder : pb::GeneratedBuilder<Request, Builder> {
+    public sealed partial class Builder : pb::GeneratedBuilder<FileRequest, Builder> {
       protected override Builder ThisBuilder {
         get { return this; }
       }
@@ -4288,18 +4313,18 @@ namespace common.message {
         result = DefaultInstance;
         resultIsReadOnly = true;
       }
-      internal Builder(Request cloneFrom) {
+      internal Builder(FileRequest cloneFrom) {
         result = cloneFrom;
         resultIsReadOnly = true;
       }
       
       private bool resultIsReadOnly;
-      private Request result;
+      private FileRequest result;
       
-      private Request PrepareBuilder() {
+      private FileRequest PrepareBuilder() {
         if (resultIsReadOnly) {
-          Request original = result;
-          result = new Request();
+          FileRequest original = result;
+          result = new FileRequest();
           resultIsReadOnly = false;
           MergeFrom(original);
         }
@@ -4310,7 +4335,7 @@ namespace common.message {
         get { return result.IsInitialized; }
       }
       
-      protected override Request MessageBeingBuilt {
+      protected override FileRequest MessageBeingBuilt {
         get { return PrepareBuilder(); }
       }
       
@@ -4329,14 +4354,14 @@ namespace common.message {
       }
       
       public override pbd::MessageDescriptor DescriptorForType {
-        get { return global::common.message.Request.Descriptor; }
+        get { return global::common.message.FileRequest.Descriptor; }
       }
       
-      public override Request DefaultInstanceForType {
-        get { return global::common.message.Request.DefaultInstance; }
+      public override FileRequest DefaultInstanceForType {
+        get { return global::common.message.FileRequest.DefaultInstance; }
       }
       
-      public override Request BuildPartial() {
+      public override FileRequest BuildPartial() {
         if (resultIsReadOnly) {
           return result;
         }
@@ -4345,19 +4370,19 @@ namespace common.message {
       }
       
       public override Builder MergeFrom(pb::IMessage other) {
-        if (other is Request) {
-          return MergeFrom((Request) other);
+        if (other is FileRequest) {
+          return MergeFrom((FileRequest) other);
         } else {
           base.MergeFrom(other);
           return this;
         }
       }
       
-      public override Builder MergeFrom(Request other) {
-        if (other == global::common.message.Request.DefaultInstance) return this;
+      public override Builder MergeFrom(FileRequest other) {
+        if (other == global::common.message.FileRequest.DefaultInstance) return this;
         PrepareBuilder();
-        if (other.HasRequestType) {
-          RequestType = other.RequestType;
+        if (other.HasFileRequestType) {
+          FileRequestType = other.FileRequestType;
         }
         if (other.HasFilePath) {
           FilePath = other.FilePath;
@@ -4377,9 +4402,9 @@ namespace common.message {
         string field_name;
         while (input.ReadTag(out tag, out field_name)) {
           if(tag == 0 && field_name != null) {
-            int field_ordinal = global::System.Array.BinarySearch(_requestFieldNames, field_name, global::System.StringComparer.Ordinal);
+            int field_ordinal = global::System.Array.BinarySearch(_fileRequestFieldNames, field_name, global::System.StringComparer.Ordinal);
             if(field_ordinal >= 0)
-              tag = _requestFieldTags[field_ordinal];
+              tag = _fileRequestFieldTags[field_ordinal];
             else {
               if (unknownFields == null) {
                 unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
@@ -4407,8 +4432,8 @@ namespace common.message {
             }
             case 8: {
               object unknown;
-              if(input.ReadEnum(ref result.requestType_, out unknown)) {
-                result.hasRequestType = true;
+              if(input.ReadEnum(ref result.fileRequestType_, out unknown)) {
+                result.hasFileRequestType = true;
               } else if(unknown is int) {
                 if (unknownFields == null) {
                   unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
@@ -4431,23 +4456,23 @@ namespace common.message {
       }
       
       
-      public bool HasRequestType {
-       get { return result.hasRequestType; }
+      public bool HasFileRequestType {
+       get { return result.hasFileRequestType; }
       }
-      public global::common.message.Request.Types.RequestType RequestType {
-        get { return result.RequestType; }
-        set { SetRequestType(value); }
+      public global::common.message.FileRequest.Types.FileRequestType FileRequestType {
+        get { return result.FileRequestType; }
+        set { SetFileRequestType(value); }
       }
-      public Builder SetRequestType(global::common.message.Request.Types.RequestType value) {
+      public Builder SetFileRequestType(global::common.message.FileRequest.Types.FileRequestType value) {
         PrepareBuilder();
-        result.hasRequestType = true;
-        result.requestType_ = value;
+        result.hasFileRequestType = true;
+        result.fileRequestType_ = value;
         return this;
       }
-      public Builder ClearRequestType() {
+      public Builder ClearFileRequestType() {
         PrepareBuilder();
-        result.hasRequestType = false;
-        result.requestType_ = global::common.message.Request.Types.RequestType.Movie;
+        result.hasFileRequestType = false;
+        result.fileRequestType_ = global::common.message.FileRequest.Types.FileRequestType.OpenFileRemotely;
         return this;
       }
       
@@ -4472,35 +4497,35 @@ namespace common.message {
         return this;
       }
     }
-    static Request() {
+    static FileRequest() {
       object.ReferenceEquals(global::common.message.Data.Descriptor, null);
     }
   }
   
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-  public sealed partial class RequestFeedback : pb::GeneratedMessage<RequestFeedback, RequestFeedback.Builder> {
-    private RequestFeedback() { }
-    private static readonly RequestFeedback defaultInstance = new RequestFeedback().MakeReadOnly();
-    private static readonly string[] _requestFeedbackFieldNames = new string[] { "filePath" };
-    private static readonly uint[] _requestFeedbackFieldTags = new uint[] { 10 };
-    public static RequestFeedback DefaultInstance {
+  public sealed partial class FileInfo : pb::GeneratedMessage<FileInfo, FileInfo.Builder> {
+    private FileInfo() { }
+    private static readonly FileInfo defaultInstance = new FileInfo().MakeReadOnly();
+    private static readonly string[] _fileInfoFieldNames = new string[] { "fileIcon", "filePath", "fileSize" };
+    private static readonly uint[] _fileInfoFieldTags = new uint[] { 26, 10, 16 };
+    public static FileInfo DefaultInstance {
       get { return defaultInstance; }
     }
     
-    public override RequestFeedback DefaultInstanceForType {
+    public override FileInfo DefaultInstanceForType {
       get { return DefaultInstance; }
     }
     
-    protected override RequestFeedback ThisMessage {
+    protected override FileInfo ThisMessage {
       get { return this; }
     }
     
     public static pbd::MessageDescriptor Descriptor {
-      get { return global::common.message.Data.internal__static_common_message_RequestFeedback__Descriptor; }
+      get { return global::common.message.Data.internal__static_common_message_FileInfo__Descriptor; }
     }
     
-    protected override pb::FieldAccess.FieldAccessorTable<RequestFeedback, RequestFeedback.Builder> InternalFieldAccessors {
-      get { return global::common.message.Data.internal__static_common_message_RequestFeedback__FieldAccessorTable; }
+    protected override pb::FieldAccess.FieldAccessorTable<FileInfo, FileInfo.Builder> InternalFieldAccessors {
+      get { return global::common.message.Data.internal__static_common_message_FileInfo__FieldAccessorTable; }
     }
     
     public const int FilePathFieldNumber = 1;
@@ -4513,18 +4538,46 @@ namespace common.message {
       get { return filePath_; }
     }
     
+    public const int FileSizeFieldNumber = 2;
+    private bool hasFileSize;
+    private ulong fileSize_;
+    public bool HasFileSize {
+      get { return hasFileSize; }
+    }
+    [global::System.CLSCompliant(false)]
+    public ulong FileSize {
+      get { return fileSize_; }
+    }
+    
+    public const int FileIconFieldNumber = 3;
+    private bool hasFileIcon;
+    private pb::ByteString fileIcon_ = pb::ByteString.Empty;
+    public bool HasFileIcon {
+      get { return hasFileIcon; }
+    }
+    public pb::ByteString FileIcon {
+      get { return fileIcon_; }
+    }
+    
     public override bool IsInitialized {
       get {
         if (!hasFilePath) return false;
+        if (!hasFileSize) return false;
         return true;
       }
     }
     
     public override void WriteTo(pb::ICodedOutputStream output) {
       int size = SerializedSize;
-      string[] field_names = _requestFeedbackFieldNames;
+      string[] field_names = _fileInfoFieldNames;
       if (hasFilePath) {
-        output.WriteBytes(1, field_names[0], FilePath);
+        output.WriteBytes(1, field_names[1], FilePath);
+      }
+      if (hasFileSize) {
+        output.WriteUInt64(2, field_names[2], FileSize);
+      }
+      if (hasFileIcon) {
+        output.WriteBytes(3, field_names[0], FileIcon);
       }
       UnknownFields.WriteTo(output);
     }
@@ -4539,55 +4592,61 @@ namespace common.message {
         if (hasFilePath) {
           size += pb::CodedOutputStream.ComputeBytesSize(1, FilePath);
         }
+        if (hasFileSize) {
+          size += pb::CodedOutputStream.ComputeUInt64Size(2, FileSize);
+        }
+        if (hasFileIcon) {
+          size += pb::CodedOutputStream.ComputeBytesSize(3, FileIcon);
+        }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
         return size;
       }
     }
     
-    public static RequestFeedback ParseFrom(pb::ByteString data) {
+    public static FileInfo ParseFrom(pb::ByteString data) {
       return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
     }
-    public static RequestFeedback ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    public static FileInfo ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
     }
-    public static RequestFeedback ParseFrom(byte[] data) {
+    public static FileInfo ParseFrom(byte[] data) {
       return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
     }
-    public static RequestFeedback ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    public static FileInfo ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
     }
-    public static RequestFeedback ParseFrom(global::System.IO.Stream input) {
+    public static FileInfo ParseFrom(global::System.IO.Stream input) {
       return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
     }
-    public static RequestFeedback ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    public static FileInfo ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
     }
-    public static RequestFeedback ParseDelimitedFrom(global::System.IO.Stream input) {
+    public static FileInfo ParseDelimitedFrom(global::System.IO.Stream input) {
       return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
     }
-    public static RequestFeedback ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    public static FileInfo ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
       return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
     }
-    public static RequestFeedback ParseFrom(pb::ICodedInputStream input) {
+    public static FileInfo ParseFrom(pb::ICodedInputStream input) {
       return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
     }
-    public static RequestFeedback ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    public static FileInfo ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
     }
-    private RequestFeedback MakeReadOnly() {
+    private FileInfo MakeReadOnly() {
       return this;
     }
     
     public static Builder CreateBuilder() { return new Builder(); }
     public override Builder ToBuilder() { return CreateBuilder(this); }
     public override Builder CreateBuilderForType() { return new Builder(); }
-    public static Builder CreateBuilder(RequestFeedback prototype) {
+    public static Builder CreateBuilder(FileInfo prototype) {
       return new Builder(prototype);
     }
     
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    public sealed partial class Builder : pb::GeneratedBuilder<RequestFeedback, Builder> {
+    public sealed partial class Builder : pb::GeneratedBuilder<FileInfo, Builder> {
       protected override Builder ThisBuilder {
         get { return this; }
       }
@@ -4595,18 +4654,18 @@ namespace common.message {
         result = DefaultInstance;
         resultIsReadOnly = true;
       }
-      internal Builder(RequestFeedback cloneFrom) {
+      internal Builder(FileInfo cloneFrom) {
         result = cloneFrom;
         resultIsReadOnly = true;
       }
       
       private bool resultIsReadOnly;
-      private RequestFeedback result;
+      private FileInfo result;
       
-      private RequestFeedback PrepareBuilder() {
+      private FileInfo PrepareBuilder() {
         if (resultIsReadOnly) {
-          RequestFeedback original = result;
-          result = new RequestFeedback();
+          FileInfo original = result;
+          result = new FileInfo();
           resultIsReadOnly = false;
           MergeFrom(original);
         }
@@ -4617,7 +4676,7 @@ namespace common.message {
         get { return result.IsInitialized; }
       }
       
-      protected override RequestFeedback MessageBeingBuilt {
+      protected override FileInfo MessageBeingBuilt {
         get { return PrepareBuilder(); }
       }
       
@@ -4636,14 +4695,14 @@ namespace common.message {
       }
       
       public override pbd::MessageDescriptor DescriptorForType {
-        get { return global::common.message.RequestFeedback.Descriptor; }
+        get { return global::common.message.FileInfo.Descriptor; }
       }
       
-      public override RequestFeedback DefaultInstanceForType {
-        get { return global::common.message.RequestFeedback.DefaultInstance; }
+      public override FileInfo DefaultInstanceForType {
+        get { return global::common.message.FileInfo.DefaultInstance; }
       }
       
-      public override RequestFeedback BuildPartial() {
+      public override FileInfo BuildPartial() {
         if (resultIsReadOnly) {
           return result;
         }
@@ -4652,19 +4711,25 @@ namespace common.message {
       }
       
       public override Builder MergeFrom(pb::IMessage other) {
-        if (other is RequestFeedback) {
-          return MergeFrom((RequestFeedback) other);
+        if (other is FileInfo) {
+          return MergeFrom((FileInfo) other);
         } else {
           base.MergeFrom(other);
           return this;
         }
       }
       
-      public override Builder MergeFrom(RequestFeedback other) {
-        if (other == global::common.message.RequestFeedback.DefaultInstance) return this;
+      public override Builder MergeFrom(FileInfo other) {
+        if (other == global::common.message.FileInfo.DefaultInstance) return this;
         PrepareBuilder();
         if (other.HasFilePath) {
           FilePath = other.FilePath;
+        }
+        if (other.HasFileSize) {
+          FileSize = other.FileSize;
+        }
+        if (other.HasFileIcon) {
+          FileIcon = other.FileIcon;
         }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
@@ -4681,9 +4746,9 @@ namespace common.message {
         string field_name;
         while (input.ReadTag(out tag, out field_name)) {
           if(tag == 0 && field_name != null) {
-            int field_ordinal = global::System.Array.BinarySearch(_requestFeedbackFieldNames, field_name, global::System.StringComparer.Ordinal);
+            int field_ordinal = global::System.Array.BinarySearch(_fileInfoFieldNames, field_name, global::System.StringComparer.Ordinal);
             if(field_ordinal >= 0)
-              tag = _requestFeedbackFieldTags[field_ordinal];
+              tag = _fileInfoFieldTags[field_ordinal];
             else {
               if (unknownFields == null) {
                 unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
@@ -4713,6 +4778,14 @@ namespace common.message {
               result.hasFilePath = input.ReadBytes(ref result.filePath_);
               break;
             }
+            case 16: {
+              result.hasFileSize = input.ReadUInt64(ref result.fileSize_);
+              break;
+            }
+            case 26: {
+              result.hasFileIcon = input.ReadBytes(ref result.fileIcon_);
+              break;
+            }
           }
         }
         
@@ -4743,59 +4816,82 @@ namespace common.message {
         result.filePath_ = pb::ByteString.Empty;
         return this;
       }
+      
+      public bool HasFileSize {
+        get { return result.hasFileSize; }
+      }
+      [global::System.CLSCompliant(false)]
+      public ulong FileSize {
+        get { return result.FileSize; }
+        set { SetFileSize(value); }
+      }
+      [global::System.CLSCompliant(false)]
+      public Builder SetFileSize(ulong value) {
+        PrepareBuilder();
+        result.hasFileSize = true;
+        result.fileSize_ = value;
+        return this;
+      }
+      public Builder ClearFileSize() {
+        PrepareBuilder();
+        result.hasFileSize = false;
+        result.fileSize_ = 0UL;
+        return this;
+      }
+      
+      public bool HasFileIcon {
+        get { return result.hasFileIcon; }
+      }
+      public pb::ByteString FileIcon {
+        get { return result.FileIcon; }
+        set { SetFileIcon(value); }
+      }
+      public Builder SetFileIcon(pb::ByteString value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.hasFileIcon = true;
+        result.fileIcon_ = value;
+        return this;
+      }
+      public Builder ClearFileIcon() {
+        PrepareBuilder();
+        result.hasFileIcon = false;
+        result.fileIcon_ = pb::ByteString.Empty;
+        return this;
+      }
     }
-    static RequestFeedback() {
+    static FileInfo() {
       object.ReferenceEquals(global::common.message.Data.Descriptor, null);
     }
   }
   
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-  public sealed partial class SharedFile : pb::GeneratedMessage<SharedFile, SharedFile.Builder> {
-    private SharedFile() { }
-    private static readonly SharedFile defaultInstance = new SharedFile().MakeReadOnly();
-    private static readonly string[] _sharedFileFieldNames = new string[] { "content", "fileLength", "fileName" };
-    private static readonly uint[] _sharedFileFieldTags = new uint[] { 26, 16, 10 };
-    public static SharedFile DefaultInstance {
+  public sealed partial class FileBlock : pb::GeneratedMessage<FileBlock, FileBlock.Builder> {
+    private FileBlock() { }
+    private static readonly FileBlock defaultInstance = new FileBlock().MakeReadOnly();
+    private static readonly string[] _fileBlockFieldNames = new string[] { "content" };
+    private static readonly uint[] _fileBlockFieldTags = new uint[] { 10 };
+    public static FileBlock DefaultInstance {
       get { return defaultInstance; }
     }
     
-    public override SharedFile DefaultInstanceForType {
+    public override FileBlock DefaultInstanceForType {
       get { return DefaultInstance; }
     }
     
-    protected override SharedFile ThisMessage {
+    protected override FileBlock ThisMessage {
       get { return this; }
     }
     
     public static pbd::MessageDescriptor Descriptor {
-      get { return global::common.message.Data.internal__static_common_message_SharedFile__Descriptor; }
+      get { return global::common.message.Data.internal__static_common_message_FileBlock__Descriptor; }
     }
     
-    protected override pb::FieldAccess.FieldAccessorTable<SharedFile, SharedFile.Builder> InternalFieldAccessors {
-      get { return global::common.message.Data.internal__static_common_message_SharedFile__FieldAccessorTable; }
+    protected override pb::FieldAccess.FieldAccessorTable<FileBlock, FileBlock.Builder> InternalFieldAccessors {
+      get { return global::common.message.Data.internal__static_common_message_FileBlock__FieldAccessorTable; }
     }
     
-    public const int FileNameFieldNumber = 1;
-    private bool hasFileName;
-    private pb::ByteString fileName_ = pb::ByteString.Empty;
-    public bool HasFileName {
-      get { return hasFileName; }
-    }
-    public pb::ByteString FileName {
-      get { return fileName_; }
-    }
-    
-    public const int FileLengthFieldNumber = 2;
-    private bool hasFileLength;
-    private long fileLength_;
-    public bool HasFileLength {
-      get { return hasFileLength; }
-    }
-    public long FileLength {
-      get { return fileLength_; }
-    }
-    
-    public const int ContentFieldNumber = 3;
+    public const int ContentFieldNumber = 1;
     private bool hasContent;
     private pb::ByteString content_ = pb::ByteString.Empty;
     public bool HasContent {
@@ -4807,7 +4903,6 @@ namespace common.message {
     
     public override bool IsInitialized {
       get {
-        if (!hasFileLength) return false;
         if (!hasContent) return false;
         return true;
       }
@@ -4815,15 +4910,9 @@ namespace common.message {
     
     public override void WriteTo(pb::ICodedOutputStream output) {
       int size = SerializedSize;
-      string[] field_names = _sharedFileFieldNames;
-      if (hasFileName) {
-        output.WriteBytes(1, field_names[2], FileName);
-      }
-      if (hasFileLength) {
-        output.WriteInt64(2, field_names[1], FileLength);
-      }
+      string[] field_names = _fileBlockFieldNames;
       if (hasContent) {
-        output.WriteBytes(3, field_names[0], Content);
+        output.WriteBytes(1, field_names[0], Content);
       }
       UnknownFields.WriteTo(output);
     }
@@ -4835,14 +4924,8 @@ namespace common.message {
         if (size != -1) return size;
         
         size = 0;
-        if (hasFileName) {
-          size += pb::CodedOutputStream.ComputeBytesSize(1, FileName);
-        }
-        if (hasFileLength) {
-          size += pb::CodedOutputStream.ComputeInt64Size(2, FileLength);
-        }
         if (hasContent) {
-          size += pb::CodedOutputStream.ComputeBytesSize(3, Content);
+          size += pb::CodedOutputStream.ComputeBytesSize(1, Content);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
@@ -4850,49 +4933,49 @@ namespace common.message {
       }
     }
     
-    public static SharedFile ParseFrom(pb::ByteString data) {
+    public static FileBlock ParseFrom(pb::ByteString data) {
       return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
     }
-    public static SharedFile ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    public static FileBlock ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
     }
-    public static SharedFile ParseFrom(byte[] data) {
+    public static FileBlock ParseFrom(byte[] data) {
       return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
     }
-    public static SharedFile ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    public static FileBlock ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
     }
-    public static SharedFile ParseFrom(global::System.IO.Stream input) {
+    public static FileBlock ParseFrom(global::System.IO.Stream input) {
       return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
     }
-    public static SharedFile ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    public static FileBlock ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
     }
-    public static SharedFile ParseDelimitedFrom(global::System.IO.Stream input) {
+    public static FileBlock ParseDelimitedFrom(global::System.IO.Stream input) {
       return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
     }
-    public static SharedFile ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    public static FileBlock ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
       return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
     }
-    public static SharedFile ParseFrom(pb::ICodedInputStream input) {
+    public static FileBlock ParseFrom(pb::ICodedInputStream input) {
       return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
     }
-    public static SharedFile ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    public static FileBlock ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
       return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
     }
-    private SharedFile MakeReadOnly() {
+    private FileBlock MakeReadOnly() {
       return this;
     }
     
     public static Builder CreateBuilder() { return new Builder(); }
     public override Builder ToBuilder() { return CreateBuilder(this); }
     public override Builder CreateBuilderForType() { return new Builder(); }
-    public static Builder CreateBuilder(SharedFile prototype) {
+    public static Builder CreateBuilder(FileBlock prototype) {
       return new Builder(prototype);
     }
     
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    public sealed partial class Builder : pb::GeneratedBuilder<SharedFile, Builder> {
+    public sealed partial class Builder : pb::GeneratedBuilder<FileBlock, Builder> {
       protected override Builder ThisBuilder {
         get { return this; }
       }
@@ -4900,18 +4983,18 @@ namespace common.message {
         result = DefaultInstance;
         resultIsReadOnly = true;
       }
-      internal Builder(SharedFile cloneFrom) {
+      internal Builder(FileBlock cloneFrom) {
         result = cloneFrom;
         resultIsReadOnly = true;
       }
       
       private bool resultIsReadOnly;
-      private SharedFile result;
+      private FileBlock result;
       
-      private SharedFile PrepareBuilder() {
+      private FileBlock PrepareBuilder() {
         if (resultIsReadOnly) {
-          SharedFile original = result;
-          result = new SharedFile();
+          FileBlock original = result;
+          result = new FileBlock();
           resultIsReadOnly = false;
           MergeFrom(original);
         }
@@ -4922,7 +5005,7 @@ namespace common.message {
         get { return result.IsInitialized; }
       }
       
-      protected override SharedFile MessageBeingBuilt {
+      protected override FileBlock MessageBeingBuilt {
         get { return PrepareBuilder(); }
       }
       
@@ -4941,14 +5024,14 @@ namespace common.message {
       }
       
       public override pbd::MessageDescriptor DescriptorForType {
-        get { return global::common.message.SharedFile.Descriptor; }
+        get { return global::common.message.FileBlock.Descriptor; }
       }
       
-      public override SharedFile DefaultInstanceForType {
-        get { return global::common.message.SharedFile.DefaultInstance; }
+      public override FileBlock DefaultInstanceForType {
+        get { return global::common.message.FileBlock.DefaultInstance; }
       }
       
-      public override SharedFile BuildPartial() {
+      public override FileBlock BuildPartial() {
         if (resultIsReadOnly) {
           return result;
         }
@@ -4957,23 +5040,17 @@ namespace common.message {
       }
       
       public override Builder MergeFrom(pb::IMessage other) {
-        if (other is SharedFile) {
-          return MergeFrom((SharedFile) other);
+        if (other is FileBlock) {
+          return MergeFrom((FileBlock) other);
         } else {
           base.MergeFrom(other);
           return this;
         }
       }
       
-      public override Builder MergeFrom(SharedFile other) {
-        if (other == global::common.message.SharedFile.DefaultInstance) return this;
+      public override Builder MergeFrom(FileBlock other) {
+        if (other == global::common.message.FileBlock.DefaultInstance) return this;
         PrepareBuilder();
-        if (other.HasFileName) {
-          FileName = other.FileName;
-        }
-        if (other.HasFileLength) {
-          FileLength = other.FileLength;
-        }
         if (other.HasContent) {
           Content = other.Content;
         }
@@ -4992,9 +5069,9 @@ namespace common.message {
         string field_name;
         while (input.ReadTag(out tag, out field_name)) {
           if(tag == 0 && field_name != null) {
-            int field_ordinal = global::System.Array.BinarySearch(_sharedFileFieldNames, field_name, global::System.StringComparer.Ordinal);
+            int field_ordinal = global::System.Array.BinarySearch(_fileBlockFieldNames, field_name, global::System.StringComparer.Ordinal);
             if(field_ordinal >= 0)
-              tag = _sharedFileFieldTags[field_ordinal];
+              tag = _fileBlockFieldTags[field_ordinal];
             else {
               if (unknownFields == null) {
                 unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
@@ -5021,14 +5098,6 @@ namespace common.message {
               break;
             }
             case 10: {
-              result.hasFileName = input.ReadBytes(ref result.fileName_);
-              break;
-            }
-            case 16: {
-              result.hasFileLength = input.ReadInt64(ref result.fileLength_);
-              break;
-            }
-            case 26: {
               result.hasContent = input.ReadBytes(ref result.content_);
               break;
             }
@@ -5041,47 +5110,6 @@ namespace common.message {
         return this;
       }
       
-      
-      public bool HasFileName {
-        get { return result.hasFileName; }
-      }
-      public pb::ByteString FileName {
-        get { return result.FileName; }
-        set { SetFileName(value); }
-      }
-      public Builder SetFileName(pb::ByteString value) {
-        pb::ThrowHelper.ThrowIfNull(value, "value");
-        PrepareBuilder();
-        result.hasFileName = true;
-        result.fileName_ = value;
-        return this;
-      }
-      public Builder ClearFileName() {
-        PrepareBuilder();
-        result.hasFileName = false;
-        result.fileName_ = pb::ByteString.Empty;
-        return this;
-      }
-      
-      public bool HasFileLength {
-        get { return result.hasFileLength; }
-      }
-      public long FileLength {
-        get { return result.FileLength; }
-        set { SetFileLength(value); }
-      }
-      public Builder SetFileLength(long value) {
-        PrepareBuilder();
-        result.hasFileLength = true;
-        result.fileLength_ = value;
-        return this;
-      }
-      public Builder ClearFileLength() {
-        PrepareBuilder();
-        result.hasFileLength = false;
-        result.fileLength_ = 0L;
-        return this;
-      }
       
       public bool HasContent {
         get { return result.hasContent; }
@@ -5104,7 +5132,549 @@ namespace common.message {
         return this;
       }
     }
-    static SharedFile() {
+    static FileBlock() {
+      object.ReferenceEquals(global::common.message.Data.Descriptor, null);
+    }
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class CloudStorageTokenRequest : pb::GeneratedMessage<CloudStorageTokenRequest, CloudStorageTokenRequest.Builder> {
+    private CloudStorageTokenRequest() { }
+    private static readonly CloudStorageTokenRequest defaultInstance = new CloudStorageTokenRequest().MakeReadOnly();
+    private static readonly string[] _cloudStorageTokenRequestFieldNames = new string[] { "expires" };
+    private static readonly uint[] _cloudStorageTokenRequestFieldTags = new uint[] { 8 };
+    public static CloudStorageTokenRequest DefaultInstance {
+      get { return defaultInstance; }
+    }
+    
+    public override CloudStorageTokenRequest DefaultInstanceForType {
+      get { return DefaultInstance; }
+    }
+    
+    protected override CloudStorageTokenRequest ThisMessage {
+      get { return this; }
+    }
+    
+    public static pbd::MessageDescriptor Descriptor {
+      get { return global::common.message.Data.internal__static_common_message_CloudStorageTokenRequest__Descriptor; }
+    }
+    
+    protected override pb::FieldAccess.FieldAccessorTable<CloudStorageTokenRequest, CloudStorageTokenRequest.Builder> InternalFieldAccessors {
+      get { return global::common.message.Data.internal__static_common_message_CloudStorageTokenRequest__FieldAccessorTable; }
+    }
+    
+    public const int ExpiresFieldNumber = 1;
+    private bool hasExpires;
+    private int expires_ = 3600;
+    public bool HasExpires {
+      get { return hasExpires; }
+    }
+    public int Expires {
+      get { return expires_; }
+    }
+    
+    public override bool IsInitialized {
+      get {
+        return true;
+      }
+    }
+    
+    public override void WriteTo(pb::ICodedOutputStream output) {
+      int size = SerializedSize;
+      string[] field_names = _cloudStorageTokenRequestFieldNames;
+      if (hasExpires) {
+        output.WriteInt32(1, field_names[0], Expires);
+      }
+      UnknownFields.WriteTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public override int SerializedSize {
+      get {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+        
+        size = 0;
+        if (hasExpires) {
+          size += pb::CodedOutputStream.ComputeInt32Size(1, Expires);
+        }
+        size += UnknownFields.SerializedSize;
+        memoizedSerializedSize = size;
+        return size;
+      }
+    }
+    
+    public static CloudStorageTokenRequest ParseFrom(pb::ByteString data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static CloudStorageTokenRequest ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static CloudStorageTokenRequest ParseFrom(byte[] data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static CloudStorageTokenRequest ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static CloudStorageTokenRequest ParseFrom(global::System.IO.Stream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static CloudStorageTokenRequest ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    public static CloudStorageTokenRequest ParseDelimitedFrom(global::System.IO.Stream input) {
+      return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+    }
+    public static CloudStorageTokenRequest ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+    }
+    public static CloudStorageTokenRequest ParseFrom(pb::ICodedInputStream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static CloudStorageTokenRequest ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    private CloudStorageTokenRequest MakeReadOnly() {
+      return this;
+    }
+    
+    public static Builder CreateBuilder() { return new Builder(); }
+    public override Builder ToBuilder() { return CreateBuilder(this); }
+    public override Builder CreateBuilderForType() { return new Builder(); }
+    public static Builder CreateBuilder(CloudStorageTokenRequest prototype) {
+      return new Builder(prototype);
+    }
+    
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    public sealed partial class Builder : pb::GeneratedBuilder<CloudStorageTokenRequest, Builder> {
+      protected override Builder ThisBuilder {
+        get { return this; }
+      }
+      public Builder() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+      }
+      internal Builder(CloudStorageTokenRequest cloneFrom) {
+        result = cloneFrom;
+        resultIsReadOnly = true;
+      }
+      
+      private bool resultIsReadOnly;
+      private CloudStorageTokenRequest result;
+      
+      private CloudStorageTokenRequest PrepareBuilder() {
+        if (resultIsReadOnly) {
+          CloudStorageTokenRequest original = result;
+          result = new CloudStorageTokenRequest();
+          resultIsReadOnly = false;
+          MergeFrom(original);
+        }
+        return result;
+      }
+      
+      public override bool IsInitialized {
+        get { return result.IsInitialized; }
+      }
+      
+      protected override CloudStorageTokenRequest MessageBeingBuilt {
+        get { return PrepareBuilder(); }
+      }
+      
+      public override Builder Clear() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+        return this;
+      }
+      
+      public override Builder Clone() {
+        if (resultIsReadOnly) {
+          return new Builder(result);
+        } else {
+          return new Builder().MergeFrom(result);
+        }
+      }
+      
+      public override pbd::MessageDescriptor DescriptorForType {
+        get { return global::common.message.CloudStorageTokenRequest.Descriptor; }
+      }
+      
+      public override CloudStorageTokenRequest DefaultInstanceForType {
+        get { return global::common.message.CloudStorageTokenRequest.DefaultInstance; }
+      }
+      
+      public override CloudStorageTokenRequest BuildPartial() {
+        if (resultIsReadOnly) {
+          return result;
+        }
+        resultIsReadOnly = true;
+        return result.MakeReadOnly();
+      }
+      
+      public override Builder MergeFrom(pb::IMessage other) {
+        if (other is CloudStorageTokenRequest) {
+          return MergeFrom((CloudStorageTokenRequest) other);
+        } else {
+          base.MergeFrom(other);
+          return this;
+        }
+      }
+      
+      public override Builder MergeFrom(CloudStorageTokenRequest other) {
+        if (other == global::common.message.CloudStorageTokenRequest.DefaultInstance) return this;
+        PrepareBuilder();
+        if (other.HasExpires) {
+          Expires = other.Expires;
+        }
+        this.MergeUnknownFields(other.UnknownFields);
+        return this;
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input) {
+        return MergeFrom(input, pb::ExtensionRegistry.Empty);
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+        PrepareBuilder();
+        pb::UnknownFieldSet.Builder unknownFields = null;
+        uint tag;
+        string field_name;
+        while (input.ReadTag(out tag, out field_name)) {
+          if(tag == 0 && field_name != null) {
+            int field_ordinal = global::System.Array.BinarySearch(_cloudStorageTokenRequestFieldNames, field_name, global::System.StringComparer.Ordinal);
+            if(field_ordinal >= 0)
+              tag = _cloudStorageTokenRequestFieldTags[field_ordinal];
+            else {
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              continue;
+            }
+          }
+          switch (tag) {
+            case 0: {
+              throw pb::InvalidProtocolBufferException.InvalidTag();
+            }
+            default: {
+              if (pb::WireFormat.IsEndGroupTag(tag)) {
+                if (unknownFields != null) {
+                  this.UnknownFields = unknownFields.Build();
+                }
+                return this;
+              }
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              break;
+            }
+            case 8: {
+              result.hasExpires = input.ReadInt32(ref result.expires_);
+              break;
+            }
+          }
+        }
+        
+        if (unknownFields != null) {
+          this.UnknownFields = unknownFields.Build();
+        }
+        return this;
+      }
+      
+      
+      public bool HasExpires {
+        get { return result.hasExpires; }
+      }
+      public int Expires {
+        get { return result.Expires; }
+        set { SetExpires(value); }
+      }
+      public Builder SetExpires(int value) {
+        PrepareBuilder();
+        result.hasExpires = true;
+        result.expires_ = value;
+        return this;
+      }
+      public Builder ClearExpires() {
+        PrepareBuilder();
+        result.hasExpires = false;
+        result.expires_ = 3600;
+        return this;
+      }
+    }
+    static CloudStorageTokenRequest() {
+      object.ReferenceEquals(global::common.message.Data.Descriptor, null);
+    }
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class CloudStorageToken : pb::GeneratedMessage<CloudStorageToken, CloudStorageToken.Builder> {
+    private CloudStorageToken() { }
+    private static readonly CloudStorageToken defaultInstance = new CloudStorageToken().MakeReadOnly();
+    private static readonly string[] _cloudStorageTokenFieldNames = new string[] { "token" };
+    private static readonly uint[] _cloudStorageTokenFieldTags = new uint[] { 10 };
+    public static CloudStorageToken DefaultInstance {
+      get { return defaultInstance; }
+    }
+    
+    public override CloudStorageToken DefaultInstanceForType {
+      get { return DefaultInstance; }
+    }
+    
+    protected override CloudStorageToken ThisMessage {
+      get { return this; }
+    }
+    
+    public static pbd::MessageDescriptor Descriptor {
+      get { return global::common.message.Data.internal__static_common_message_CloudStorageToken__Descriptor; }
+    }
+    
+    protected override pb::FieldAccess.FieldAccessorTable<CloudStorageToken, CloudStorageToken.Builder> InternalFieldAccessors {
+      get { return global::common.message.Data.internal__static_common_message_CloudStorageToken__FieldAccessorTable; }
+    }
+    
+    public const int TokenFieldNumber = 1;
+    private bool hasToken;
+    private pb::ByteString token_ = pb::ByteString.Empty;
+    public bool HasToken {
+      get { return hasToken; }
+    }
+    public pb::ByteString Token {
+      get { return token_; }
+    }
+    
+    public override bool IsInitialized {
+      get {
+        if (!hasToken) return false;
+        return true;
+      }
+    }
+    
+    public override void WriteTo(pb::ICodedOutputStream output) {
+      int size = SerializedSize;
+      string[] field_names = _cloudStorageTokenFieldNames;
+      if (hasToken) {
+        output.WriteBytes(1, field_names[0], Token);
+      }
+      UnknownFields.WriteTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public override int SerializedSize {
+      get {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+        
+        size = 0;
+        if (hasToken) {
+          size += pb::CodedOutputStream.ComputeBytesSize(1, Token);
+        }
+        size += UnknownFields.SerializedSize;
+        memoizedSerializedSize = size;
+        return size;
+      }
+    }
+    
+    public static CloudStorageToken ParseFrom(pb::ByteString data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static CloudStorageToken ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static CloudStorageToken ParseFrom(byte[] data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static CloudStorageToken ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static CloudStorageToken ParseFrom(global::System.IO.Stream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static CloudStorageToken ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    public static CloudStorageToken ParseDelimitedFrom(global::System.IO.Stream input) {
+      return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+    }
+    public static CloudStorageToken ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+    }
+    public static CloudStorageToken ParseFrom(pb::ICodedInputStream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static CloudStorageToken ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    private CloudStorageToken MakeReadOnly() {
+      return this;
+    }
+    
+    public static Builder CreateBuilder() { return new Builder(); }
+    public override Builder ToBuilder() { return CreateBuilder(this); }
+    public override Builder CreateBuilderForType() { return new Builder(); }
+    public static Builder CreateBuilder(CloudStorageToken prototype) {
+      return new Builder(prototype);
+    }
+    
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    public sealed partial class Builder : pb::GeneratedBuilder<CloudStorageToken, Builder> {
+      protected override Builder ThisBuilder {
+        get { return this; }
+      }
+      public Builder() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+      }
+      internal Builder(CloudStorageToken cloneFrom) {
+        result = cloneFrom;
+        resultIsReadOnly = true;
+      }
+      
+      private bool resultIsReadOnly;
+      private CloudStorageToken result;
+      
+      private CloudStorageToken PrepareBuilder() {
+        if (resultIsReadOnly) {
+          CloudStorageToken original = result;
+          result = new CloudStorageToken();
+          resultIsReadOnly = false;
+          MergeFrom(original);
+        }
+        return result;
+      }
+      
+      public override bool IsInitialized {
+        get { return result.IsInitialized; }
+      }
+      
+      protected override CloudStorageToken MessageBeingBuilt {
+        get { return PrepareBuilder(); }
+      }
+      
+      public override Builder Clear() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+        return this;
+      }
+      
+      public override Builder Clone() {
+        if (resultIsReadOnly) {
+          return new Builder(result);
+        } else {
+          return new Builder().MergeFrom(result);
+        }
+      }
+      
+      public override pbd::MessageDescriptor DescriptorForType {
+        get { return global::common.message.CloudStorageToken.Descriptor; }
+      }
+      
+      public override CloudStorageToken DefaultInstanceForType {
+        get { return global::common.message.CloudStorageToken.DefaultInstance; }
+      }
+      
+      public override CloudStorageToken BuildPartial() {
+        if (resultIsReadOnly) {
+          return result;
+        }
+        resultIsReadOnly = true;
+        return result.MakeReadOnly();
+      }
+      
+      public override Builder MergeFrom(pb::IMessage other) {
+        if (other is CloudStorageToken) {
+          return MergeFrom((CloudStorageToken) other);
+        } else {
+          base.MergeFrom(other);
+          return this;
+        }
+      }
+      
+      public override Builder MergeFrom(CloudStorageToken other) {
+        if (other == global::common.message.CloudStorageToken.DefaultInstance) return this;
+        PrepareBuilder();
+        if (other.HasToken) {
+          Token = other.Token;
+        }
+        this.MergeUnknownFields(other.UnknownFields);
+        return this;
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input) {
+        return MergeFrom(input, pb::ExtensionRegistry.Empty);
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+        PrepareBuilder();
+        pb::UnknownFieldSet.Builder unknownFields = null;
+        uint tag;
+        string field_name;
+        while (input.ReadTag(out tag, out field_name)) {
+          if(tag == 0 && field_name != null) {
+            int field_ordinal = global::System.Array.BinarySearch(_cloudStorageTokenFieldNames, field_name, global::System.StringComparer.Ordinal);
+            if(field_ordinal >= 0)
+              tag = _cloudStorageTokenFieldTags[field_ordinal];
+            else {
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              continue;
+            }
+          }
+          switch (tag) {
+            case 0: {
+              throw pb::InvalidProtocolBufferException.InvalidTag();
+            }
+            default: {
+              if (pb::WireFormat.IsEndGroupTag(tag)) {
+                if (unknownFields != null) {
+                  this.UnknownFields = unknownFields.Build();
+                }
+                return this;
+              }
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+              break;
+            }
+            case 10: {
+              result.hasToken = input.ReadBytes(ref result.token_);
+              break;
+            }
+          }
+        }
+        
+        if (unknownFields != null) {
+          this.UnknownFields = unknownFields.Build();
+        }
+        return this;
+      }
+      
+      
+      public bool HasToken {
+        get { return result.hasToken; }
+      }
+      public pb::ByteString Token {
+        get { return result.Token; }
+        set { SetToken(value); }
+      }
+      public Builder SetToken(pb::ByteString value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.hasToken = true;
+        result.token_ = value;
+        return this;
+      }
+      public Builder ClearToken() {
+        PrepareBuilder();
+        result.hasToken = false;
+        result.token_ = pb::ByteString.Empty;
+        return this;
+      }
+    }
+    static CloudStorageToken() {
       object.ReferenceEquals(global::common.message.Data.Descriptor, null);
     }
   }

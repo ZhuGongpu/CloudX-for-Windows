@@ -27,33 +27,9 @@ namespace CloudX.DesktopDuplication
             Video.Builder videoBuilder = Video.CreateBuilder();
             if (MoveRectangles != null || DirtyRectangles != null) //出包含完整frame信息外，还包含move/dirty rects
             {
-                //打印数组中内容
-
-                //Console.WriteLine("Print----------");
-
-                //Console.WriteLine("MoveCount:{0}, MoveLength:{1}", MoveCount, MoveRectangles.Length);
-
-                //for (int i = 0; i < MoveCount; i++)
-                //{
-                //    OutputDuplicateMoveRectangle moveRectangle = MoveRectangles[i];
-                //    Rectangle destRect = moveRectangle.DestinationRect;
-                //    Point sourcePoint = moveRectangle.SourcePoint;
-                //    Console.WriteLine("FrameData.WriteToStream MoveRect destRect: {0} sourcePoint: {1}", destRect,
-                //            sourcePoint);
-                //}
-
-                //Console.WriteLine("DirtyCount:{0}, DirtyLength:{1}", DirtyCount, DirtyRectangles.Length);
-
-                //for (int i = 0; i < DirtyCount; i++)
-                //{
-                //    Rectangle dirtyRectangle = DirtyRectangles[i];
-                //    Console.WriteLine("FrameData.WriteToStream dirtyRect:{0}", dirtyRectangle);
-                //}
-
-                //Console.WriteLine("End Print------");
-
                 if (MoveRectangles != null)
                     //只传输moveCount个
+
                     for (int i = 0; i < MoveCount; i++)
                     {
                         OutputDuplicateMoveRectangle moveRectangle = MoveRectangles[i];
@@ -104,6 +80,7 @@ namespace CloudX.DesktopDuplication
             }
 
             DataPacket.CreateBuilder()
+                .SetUnixTimeStamp(0)//TODO set time stamp
                 .SetDataPacketType(DataPacket.Types.DataPacketType.Video)
                 .SetVideo(videoBuilder)
                 .Build()

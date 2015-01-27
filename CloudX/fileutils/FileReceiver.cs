@@ -22,52 +22,52 @@ namespace CloudX.fileutils
 
         public void BeginReceive()
         {
-            new Thread(Receive).Start();
+            //new Thread(Receive).Start();
         }
 
-        public void Receive()
-        {
+        //public void Receive()
+        //{
 
-            Console.WriteLine("FileReceiver : Receive");
-            long receivedSize = 0;
-            while (true)
-            {
-                try
-                {
-                    DataPacket dataPacket = DataPacket.ParseDelimitedFrom(stream);
-                    if (dataPacket.HasSharedFile)
-                    {
-                        Console.WriteLine("FileReceiver : Receive {0} / {1}", receivedSize, dataPacket.SharedFile.FileLength);
+        //    Console.WriteLine("FileReceiver : ReceiveFile");
+        //    long receivedSize = 0;
+        //    while (true)
+        //    {
+        //        try
+        //        {
+        //            DataPacket dataPacket = DataPacket.ParseDelimitedFrom(stream);
+        //            if (dataPacket.HasSharedFile)
+        //            {
+        //                Console.WriteLine("FileReceiver : ReceiveFile {0} / {1}", receivedSize, dataPacket.SharedFile.FileLength);
 
-                        if (receivedSize >= dataPacket.SharedFile.FileLength)
-                            break;
+        //                if (receivedSize >= dataPacket.SharedFile.FileLength)
+        //                    break;
 
-                        byte[] buffer = dataPacket.SharedFile.Content.ToByteArray();
-                        file.Write(buffer, 0, buffer.Length);
-                        file.Flush();
+        //                byte[] buffer = dataPacket.SharedFile.Content.ToByteArray();
+        //                file.Write(buffer, 0, buffer.Length);
+        //                file.Flush();
 
-                        receivedSize += buffer.Length;
+        //                receivedSize += buffer.Length;
 
-                        Console.WriteLine("FileReceiver : Receive {0} / {1}", receivedSize, dataPacket.SharedFile.FileLength);
+        //                Console.WriteLine("FileReceiver : ReceiveFile {0} / {1}", receivedSize, dataPacket.SharedFile.FileLength);
 
 
-                        //todo notify ui
-                        //dispatcher.BeginInvoke(MainWindow.UpdateProgress, (double)receivedSize / dataPacket.SharedFile.FileLength);
-                    }
-                }
-                catch (Exception)
-                {
-                    //todo notify UI
-                    //dispatcher.BeginInvoke(MainWindow.ShowMessageBox, null, null, "文件传输已中断", null);
+        //                //todo notify ui
+        //                //dispatcher.BeginInvoke(MainWindow.UpdateProgress, (double)receivedSize / dataPacket.SharedFile.FileLength);
+        //            }
+        //        }
+        //        catch (Exception)
+        //        {
+        //            //todo notify UI
+        //            //dispatcher.BeginInvoke(MainWindow.ShowMessageBox, null, null, "文件传输已中断", null);
 
-                    Console.WriteLine("File Transimission Failed");
+        //            Console.WriteLine("File Transimission Failed");
 
-                    break;
-                }
-            }
+        //            break;
+        //        }
+        //    }
 
-            file.Close();
-            Console.WriteLine("File Transimission Done");
-        }
+        //    file.Close();
+        //    Console.WriteLine("File Transimission Done");
+        //}
     }
 }
